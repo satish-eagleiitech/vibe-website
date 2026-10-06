@@ -1,26 +1,216 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@custom-variant dark (&:where(.dark, .dark *));
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-plus-jakarta), "Plus Jakarta Sans", sans-serif;
+
+  --color-bg: var(--vybe-bg);
+  --color-surface: var(--vybe-surface);
+  --color-surface-muted: var(--vybe-surface-muted);
+  --color-border: var(--vybe-border);
+  --color-border-strong: var(--vybe-border-strong);
+  --color-text: var(--vybe-text);
+  --color-text-secondary: var(--vybe-text-secondary);
+  --color-text-muted: var(--vybe-text-muted);
+  --color-text-faint: var(--vybe-text-faint);
+  --color-text-soft: var(--vybe-text-soft);
+  --color-text-body: var(--vybe-text-body);
+  --color-icon-muted: var(--vybe-icon-muted);
+  --color-accent: var(--vybe-accent);
+  --color-accent-soft: var(--vybe-accent-soft);
+  --color-danger-bg: var(--vybe-danger-bg);
+  --color-danger-text: var(--vybe-danger-text);
+  --color-cta: var(--vybe-cta);
+  --color-cta-text: var(--vybe-cta-text);
+  --color-menu-divider: var(--vybe-menu-divider);
+  --color-segment-track: var(--vybe-segment-track);
+  --color-segment-active: var(--vybe-segment-active);
+  --color-sidebar: var(--vybe-sidebar);
+  --color-dash: var(--vybe-dash);
 }
 
-@media (prefers-color-scheme: dark) {
+@theme {
+  --breakpoint-3xl: 120rem;
+  --breakpoint-4xl: 160rem;
+}
+
+/* Height of the pinned part of the navbar (search + category tabs below lg) */
+:root {
+  --vybe-header-h: 120px;
+}
+
+@media (min-width: 40rem) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --vybe-header-h: 108px;
   }
 }
 
+@media (min-width: 64rem) {
+  :root {
+    --vybe-header-h: 60px;
+  }
+}
+
+:root {
+  color-scheme: light;
+  --vybe-bg: #f7f7f8;
+  --vybe-surface: #ffffff;
+  --vybe-surface-muted: #f7f7f8;
+  --vybe-border: #f0f0f0;
+  --vybe-border-strong: #efefef;
+  --vybe-text: #111827;
+  --vybe-text-secondary: #6b7280;
+  --vybe-text-muted: #9ca3af;
+  --vybe-text-faint: #d1d5db;
+  --vybe-text-soft: #a1a1aa;
+  --vybe-text-body: #374151;
+  --vybe-icon-muted: #c4c4c4;
+  --vybe-accent: #ff005b;
+  --vybe-accent-soft: rgb(255 0 91 / 10%);
+  --vybe-danger-bg: #fef2f2;
+  --vybe-danger-text: #b91c1c;
+  --vybe-cta: #111827;
+  --vybe-cta-text: #ffffff;
+  --vybe-menu-divider: #f5f5f5;
+  --vybe-segment-track: #f0f0f0;
+  --vybe-segment-active: #ffffff;
+  --vybe-sidebar: #14141b;
+  --vybe-dash: #eeeef2;
+}
+
+html.dark {
+  color-scheme: dark;
+  --vybe-bg: #0b0b0f;
+  --vybe-surface: #16161c;
+  --vybe-surface-muted: #1e1e26;
+  --vybe-border: #2a2a33;
+  --vybe-border-strong: #3a3a45;
+  --vybe-text: #f9fafb;
+  --vybe-text-secondary: #a1a1aa;
+  --vybe-text-muted: #71717a;
+  --vybe-text-faint: #52525b;
+  --vybe-text-soft: #71717a;
+  --vybe-text-body: #d4d4d8;
+  --vybe-icon-muted: #a1a1aa;
+  --vybe-accent: #ff005b;
+  --vybe-accent-soft: rgb(255 0 91 / 18%);
+  --vybe-danger-bg: #3f1219;
+  --vybe-danger-text: #fca5a5;
+  --vybe-cta: #f4f4f5;
+  --vybe-cta-text: #111827;
+  --vybe-menu-divider: #2a2a33;
+  --vybe-segment-track: #1e1e26;
+  --vybe-segment-active: #2a2a33;
+  --vybe-sidebar: #16161c;
+  --vybe-dash: #0f0f14;
+}
+
+html,
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+  padding: 0;
+  min-height: 100%;
+  background: var(--vybe-bg);
+  color: var(--vybe-text);
+}
+
+body {
+  font-family: var(--font-plus-jakarta), "Plus Jakarta Sans", sans-serif;
+  overscroll-behavior: none;
+}
+
+a:focus-visible,
+button:focus-visible {
+  outline: 2px solid #ff005b;
+  outline-offset: 3px;
+}
+
+input:focus,
+input:focus-visible,
+textarea:focus,
+textarea:focus-visible {
+  outline: none;
+}
+
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Account sidebar: active tab melts into the dashboard with concave corners */
+.vybe-side-active {
+  position: relative;
+  background: var(--vybe-dash);
+}
+
+.vybe-side-active::before,
+.vybe-side-active::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  width: 22px;
+  height: 22px;
+  pointer-events: none;
+}
+
+.vybe-side-active::before {
+  top: -22px;
+  background: radial-gradient(
+    circle at 0 0,
+    transparent 21.5px,
+    var(--vybe-dash) 22px
+  );
+}
+
+.vybe-side-active::after {
+  bottom: -22px;
+  background: radial-gradient(
+    circle at 0 100%,
+    transparent 21.5px,
+    var(--vybe-dash) 22px
+  );
+}
+
+@keyframes vybe-marquee-up {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(-50%);
+  }
+}
+
+@keyframes vybe-marquee-down {
+  from {
+    transform: translateY(-50%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+.vybe-marquee-up,
+.vybe-marquee-down {
+  will-change: transform;
+}
+
+.vybe-marquee-up {
+  animation: vybe-marquee-up var(--vybe-marquee-duration, 28s) linear infinite;
+}
+
+.vybe-marquee-down {
+  animation: vybe-marquee-down var(--vybe-marquee-duration, 32s) linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .vybe-marquee-up,
+  .vybe-marquee-down {
+    animation: none;
+    transform: none;
+  }
 }
