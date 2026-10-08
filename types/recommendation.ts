@@ -6,5 +6,5 @@ export type Recommendation = {
   href: string;
   cta: string;
   imageUrl: string;
-  tone?: "accent" | "teal" | "dining";
+  tone?: "accent" | "teal";
 };

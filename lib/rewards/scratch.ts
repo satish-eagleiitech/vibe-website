@@ -17,11 +17,11 @@ export const SCRATCH_CARDS: ScratchCard[] = [
     expires: "Valid till 31 Oct",
   },
   {
-    id: "sc-dessert",
-    category: "Dining",
-    reward: "Free dessert",
-    detail: "With any table booking",
-    code: "SWEETVYBE",
+    id: "sc-events",
+    category: "Events",
+    reward: "10% off",
+    detail: "On your next event pass",
+    code: "LIVEVYBE",
     expires: "Valid till 15 Oct",
   },
   {

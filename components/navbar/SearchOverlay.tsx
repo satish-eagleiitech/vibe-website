@@ -6,7 +6,6 @@ import { Search, X } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import {
   fallbackActivities,
-  fallbackDining,
   fallbackEvents,
   fallbackMovies,
   fallbackPlay,
@@ -15,7 +14,6 @@ import { publicEnv } from "@/config/public";
 
 type SearchCategory =
   | "all"
-  | "dining"
   | "events"
   | "movies"
   | "activities"
@@ -33,9 +31,8 @@ type SearchHit = {
 
 const FILTERS: { id: SearchCategory; label: string }[] = [
   { id: "all", label: "All" },
-  { id: "dining", label: "Dining" },
-  { id: "events", label: "Events" },
   { id: "movies", label: "Movies" },
+  { id: "events", label: "Events" },
   { id: "activities", label: "Activities" },
   { id: "play", label: "Game Zone" },
 ];
@@ -61,16 +58,6 @@ function buildCatalog(): SearchHit[] {
     category: "events",
   }));
 
-  const dining: SearchHit[] = fallbackDining.map((item) => ({
-    id: `dining-${item.id}`,
-    title: item.name,
-    label: "Restaurant",
-    href: `/dining/${item.id}`,
-    imageUrl: item.imageUrl,
-    meta: item.locality || item.cuisine,
-    category: "dining",
-  }));
-
   const activities: SearchHit[] = fallbackActivities.map((item) => ({
     id: `activity-${item.id}`,
     title: item.title,
@@ -91,7 +78,7 @@ function buildCatalog(): SearchHit[] {
     category: "play",
   }));
 
-  return [...movies, ...events, ...dining, ...activities, ...play];
+  return [...movies, ...events, ...activities, ...play];
 }
 
 type SearchOverlayProps = {
@@ -160,7 +147,7 @@ export function SearchOverlay({ open, onClose }: SearchOverlayProps) {
               <input
                 value={query}
                 onChange={(event) => setQuery(event.target.value)}
-                placeholder={`Search for movies, dining, events in ${publicEnv.defaultCity}`}
+                placeholder={`Search for movies, events, activities in ${publicEnv.defaultCity}`}
                 className="w-full bg-transparent text-sm font-semibold text-text outline-none ring-0 focus:outline-none focus:ring-0 focus-visible:outline-none placeholder:text-text-muted"
                 autoFocus
               />

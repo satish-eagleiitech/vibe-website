@@ -1,4 +1,3 @@
-import { getDiningSpots } from "@/lib/api/dining";
 import { getUpcomingEvents } from "@/lib/api/events";
 import { getTrendingMovies } from "@/lib/api/movies";
 import { getPlayItems } from "@/lib/api/play";
@@ -8,24 +7,26 @@ import { formatInr } from "@/lib/format";
 import type { HeroBannerData } from "@/types/hero";
 
 /**
- * Build a full-width hero carousel: Movies, Dining, Play, Activities, Events.
+ * Build a full-width hero carousel: Movies, Play, Activities, Events.
  * Prefers live TMDB / API imagery when available.
  */
 export async function getHeroSlides(): Promise<HeroBannerData[]> {
-  const [movies, dining, play, activities, events] = await Promise.all([
+  const [movies, play, activities, events] = await Promise.all([
     getTrendingMovies(),
-    getDiningSpots(),
     getPlayItems(),
     getActivities(),
     getUpcomingEvents(),
   ]);
 
   const slides = fallbackHeroSlides.map((slide) => ({ ...slide }));
+  const patch = (category: HeroBannerData["category"], data: Partial<HeroBannerData>) => {
+    const index = slides.findIndex((slide) => slide.category === category);
+    if (index >= 0) slides[index] = { ...slides[index], ...data };
+  };
 
   const movie = movies.items.find((item) => item.backdropUrl || item.posterUrl);
   if (movie) {
-    slides[0] = {
-      ...slides[0],
+    patch("movies", {
       id: `hero-movie-${movie.id}`,
       title: movie.title,
       description:
@@ -37,29 +38,12 @@ export async function getHeroSlides(): Promise<HeroBannerData[]> {
       dateLabel: movie.formatBadge || "Now showing",
       ctaLabel: "Book Tickets",
       href: `/movies/${movie.id}`,
-    };
-  }
-
-  const spot = dining.items[0];
-  if (spot) {
-    slides[1] = {
-      ...slides[1],
-      id: `hero-dining-${spot.id}`,
-      title: spot.name,
-      description: `${spot.cuisine} • ${spot.locality}`,
-      imageUrl: spot.imageUrl,
-      imageAlt: spot.name,
-      venue: spot.locality,
-      dateLabel: spot.offer || "Reserve tonight",
-      ctaLabel: "Reserve Table",
-      href: `/dining/${spot.id}`,
-    };
+    });
   }
 
   const playItem = play.items[0];
   if (playItem) {
-    slides[2] = {
-      ...slides[2],
+    patch("play", {
       id: `hero-play-${playItem.id}`,
       title: playItem.title,
       description: playItem.description,
@@ -71,13 +55,12 @@ export async function getHeroSlides(): Promise<HeroBannerData[]> {
         ? `Book from ${formatInr(playItem.price)}`
         : "Book a Slot",
       href: `/play/${playItem.id}`,
-    };
+    });
   }
 
   const activity = activities.items[0];
   if (activity) {
-    slides[3] = {
-      ...slides[3],
+    patch("activities", {
       id: `hero-activity-${activity.id}`,
       title: activity.title,
       description: activity.description,
@@ -87,13 +70,12 @@ export async function getHeroSlides(): Promise<HeroBannerData[]> {
       dateLabel: `${formatInr(activity.price)} ${activity.priceUnit}`,
       ctaLabel: "Book Slot",
       href: `/activities/${activity.id}`,
-    };
+    });
   }
 
   const event = events.items[0];
   if (event) {
-    slides[4] = {
-      ...slides[4],
+    patch("events", {
       id: `hero-event-${event.id}`,
       title: event.title,
       description: event.description,
@@ -103,7 +85,7 @@ export async function getHeroSlides(): Promise<HeroBannerData[]> {
       dateLabel: `${event.month} ${event.day}`,
       ctaLabel: `Book from ${formatInr(event.startingPrice)}`,
       href: `/events/${event.id}`,
-    };
+    });
   }
 
   return slides;

@@ -36,6 +36,12 @@ const nextConfig: NextConfig = {
   images: {
     remotePatterns,
   },
+  async redirects() {
+    return [
+      { source: "/dining", destination: "/", permanent: false },
+      { source: "/dining/:path*", destination: "/", permanent: false },
+    ];
+  },
 };
 
 export default nextConfig;

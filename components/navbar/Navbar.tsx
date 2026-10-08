@@ -22,8 +22,8 @@ export function Navbar() {
     !pathname.includes("/seats") &&
     !pathname.includes("/checkout");
   const activitiesPage = pathname === "/activities";
-  const diningPage = pathname === "/dining";
-  const seamlessHeroTop = diningPage || activitiesPage;
+  const eventsPage = pathname === "/events";
+  const seamlessHeroTop = eventsPage || activitiesPage;
   /** Transparent nav over hero — movies browse only, not detail */
   const overlay = moviesBrowsePage && !scrolled;
 

@@ -28,8 +28,8 @@ function artistPhase(artistIndex: number): ArtistPhase {
 
 const PHASE_Y: Record<ArtistPhase, number> = {
   middle: 0,
-  lower: 78,
-  higher: -78,
+  lower: 64,
+  higher: -64,
 };
 
 const PHASE_Z: Record<ArtistPhase, number> = {
@@ -45,7 +45,10 @@ const MOBILE_VISIBLE = 5;
 const MIN_CARD_GAP = 24;
 
 /** How quickly display progress catches up to scroll (0–1, higher = snappier) */
-const PROGRESS_LERP = 0.14;
+const PROGRESS_LERP = 0.07;
+/** Cards advanced per pixel of page scroll / wheel delta */
+const SCROLL_SPEED = 0.005;
+const WHEEL_SPEED = 0.0014;
 
 function cardWidthForViewport(width: number) {
   if (width < 640) return CARD_WIDTH.sm;
@@ -228,12 +231,12 @@ export function ArtistsSection({ artists }: ArtistsSectionProps) {
       const dy = window.scrollY - lastScrollYRef.current;
       lastScrollYRef.current = window.scrollY;
       if (dy === 0 || !sectionInView(section)) return;
-      nudge(dy * 0.012);
+      nudge(dy * SCROLL_SPEED);
     };
 
     const onWheel = (event: WheelEvent) => {
       if (!sectionInView(section)) return;
-      nudge(event.deltaY * 0.0035);
+      nudge(event.deltaY * WHEEL_SPEED);
     };
 
     window.addEventListener("scroll", onPageScroll, { passive: true });
@@ -267,7 +270,7 @@ export function ArtistsSection({ artists }: ArtistsSectionProps) {
   return (
     <section
       ref={sectionRef}
-      className="relative w-full overflow-x-hidden border-y border-border bg-bg py-12 md:py-16"
+      className="relative w-full overflow-x-hidden border-y border-border bg-bg py-8 md:py-10"
     >
       <div
         aria-hidden
@@ -275,8 +278,8 @@ export function ArtistsSection({ artists }: ArtistsSectionProps) {
       />
 
       <Container className="relative z-10">
-        <div className="mb-8 flex flex-col items-center text-center md:mb-10">
-          <p className="mt-2 text-[28px] font-extrabold tracking-tight text-text uppercase md:text-[36px]">
+        <div className="mb-2 flex flex-col items-center text-center md:mb-3">
+          <p className="text-[28px] font-extrabold tracking-tight text-text uppercase md:text-[36px]">
             Featured acts
           </p>
           <p className="mt-2 max-w-lg text-[14px] text-text-secondary md:text-[15px]">
@@ -286,17 +289,16 @@ export function ArtistsSection({ artists }: ArtistsSectionProps) {
         </div>
       </Container>
 
-      <div className="relative z-10 w-full overflow-visible pt-6 pb-4 sm:pt-8 md:pt-10">
+      <div className="relative z-10 w-full overflow-visible">
         <div
           aria-hidden
-          className="pointer-events-none absolute inset-x-0 top-0 z-[1] flex items-center justify-center px-3 sm:px-6"
-          style={{ height: "clamp(500px, 52vw, 580px)" }}
+          className="pointer-events-none absolute inset-0 z-[1] flex items-center justify-center px-3 sm:px-6"
         >
-          <div className="-translate-y-4 flex w-full max-w-[98vw] flex-col items-center text-center sm:-translate-y-6 md:-translate-y-8">
+          <div className="flex w-full max-w-[98vw] flex-col items-center text-center">
             <span
               className="select-none whitespace-nowrap font-black uppercase leading-none tracking-[-0.03em] bg-gradient-to-r from-accent/80 via-accent/55 to-text/30 bg-clip-text text-transparent dark:from-accent/90 dark:via-accent/60 dark:to-white/25"
               style={{
-                fontSize: "clamp(4rem, 19vw, 13.5rem)",
+                fontSize: "clamp(3rem, 13vw, 9.5rem)",
                 paddingTop: "0.06em",
               }}
             >
@@ -305,8 +307,8 @@ export function ArtistsSection({ artists }: ArtistsSectionProps) {
             <span
               className="select-none whitespace-nowrap font-black uppercase leading-none tracking-[-0.04em] bg-gradient-to-r from-accent via-accent/70 to-text/35 bg-clip-text text-transparent dark:from-accent dark:via-accent/75 dark:to-white/30"
               style={{
-                fontSize: "clamp(5rem, 27vw, 26rem)",
-                marginTop: "clamp(0.1rem, 0.6vw, 0.35rem)",
+                fontSize: "clamp(4rem, 19vw, 17rem)",
+                marginTop: "clamp(0.1rem, 0.5vw, 0.3rem)",
               }}
             >
               VYBE
@@ -315,7 +317,7 @@ export function ArtistsSection({ artists }: ArtistsSectionProps) {
         </div>
         <div
           ref={stageRef}
-          className="relative h-[500px] w-full overflow-hidden sm:h-[520px] md:h-[540px]"
+          className="relative h-[450px] w-full overflow-hidden sm:h-[480px] md:h-[500px]"
         >
           {virtualCards.map(({ virtualIndex, artistIndex }) => {
             const centerDist = Math.abs(virtualIndex - displayProgress);

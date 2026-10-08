@@ -14,11 +14,13 @@ export async function generateMetadata({
 
 export default async function BookPlayPage({
   params,
+  searchParams,
 }: {
   params: Promise<{ id: string }>;
+  searchParams: Promise<{ date?: string }>;
 }) {
-  const { id } = await params;
+  const [{ id }, { date }] = await Promise.all([params, searchParams]);
   const item = await getPlayById(id);
   if (!item) notFound();
-  return <BookPlaySlots item={item} />;
+  return <BookPlaySlots item={item} initialDate={date} />;
 }

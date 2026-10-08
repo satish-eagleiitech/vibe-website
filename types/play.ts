@@ -10,6 +10,8 @@ export type PlayItem = {
   price?: number;
   priceUnit?: string;
   sport?: string;
+  /** Every sport the venue offers; `sport` stays the primary one */
+  sports?: string[];
   locality?: string;
   distanceKm?: number;
   kind?: PlayKind;
@@ -31,4 +33,6 @@ export type PlaySport = {
   label: string;
   href: string;
   imageUrl: string;
+  /** Heading on the sport listing page, e.g. "Box Cricket Turfs" */
+  listingTitle: string;
 };

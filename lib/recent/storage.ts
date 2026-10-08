@@ -1,9 +1,6 @@
-export type RecentCategory =
-  | "movies"
-  | "dining"
-  | "events"
-  | "play"
-  | "activities";
+export type RecentCategory = "movies" | "events" | "play" | "activities";
+
+const RECENT_CATEGORIES: RecentCategory[] = ["movies", "events", "play", "activities"];
 
 export type RecentItem = {
   id: string;
@@ -28,7 +25,9 @@ export function readRecent(): RecentItem[] {
     const raw = window.localStorage.getItem(STORAGE_KEY);
     if (!raw) return [];
     const parsed = JSON.parse(raw) as RecentItem[];
-    return Array.isArray(parsed) ? parsed : [];
+    return Array.isArray(parsed)
+      ? parsed.filter((item) => RECENT_CATEGORIES.includes(item.category))
+      : [];
   } catch {
     return [];
   }

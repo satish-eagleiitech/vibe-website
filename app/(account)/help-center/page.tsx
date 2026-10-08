@@ -42,7 +42,7 @@ const contact = [
 const faqs = [
   {
     q: "Where are my tickets?",
-    a: "Open Profile → Bookings. Filter by Movies, Dining, Events or Game Zone, then tap View ticket for the QR and seat details.",
+    a: "Open Profile → Bookings. Filter by Movies, Events, Game Zone or Activities, then tap View ticket for the QR and seat details.",
   },
   {
     q: "How do I change my city?",
@@ -54,11 +54,11 @@ const faqs = [
   },
   {
     q: "How do refunds work?",
-    a: "Movie tickets can be cancelled from the ticket page before showtime. Dining and events follow the venue policy shown at checkout.",
+    a: "Movie tickets can be cancelled from the ticket page before showtime. Events, activities and Game Zone follow the venue policy shown at checkout.",
   },
   {
     q: "How do scratch cards work?",
-    a: "Every booking unlocks a scratch card in Rewards. Scratch it to reveal a discount code for movies, dining, events or Game Zone.",
+    a: "Every booking unlocks a scratch card in Rewards. Scratch it to reveal a discount code for movies, events, activities or Game Zone.",
   },
 ];
 

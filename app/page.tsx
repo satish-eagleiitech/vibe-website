@@ -1,5 +1,4 @@
 import { CategoryGrid } from "@/components/categories/CategoryGrid";
-import { DiningSection } from "@/components/dining/DiningSection";
 import { EventsSection } from "@/components/events/EventsSection";
 import { ArtistsSection } from "@/components/landing/ArtistsSection";
 import { LandingHero } from "@/components/landing/LandingHero";
@@ -7,7 +6,6 @@ import { PosterRailSection } from "@/components/landing/PosterRailSection";
 import { VideoRailSection } from "@/components/landing/VideoRailSection";
 import { TrendingMovies } from "@/components/movies/TrendingMovies";
 import { getFeaturedArtists } from "@/lib/api/artists";
-import { getDiningSpots } from "@/lib/api/dining";
 import { getUpcomingEvents } from "@/lib/api/events";
 import { getLandingHeroMovies, getNewReleaseMovies } from "@/lib/api/movies";
 import { fallbackCategories } from "@/lib/data/fallback";
@@ -26,17 +24,16 @@ export default async function Home({
   const { language } = await searchParams;
   const movieLanguage = language || "all";
 
-  const [hero, latest, events, dining, artists] = await Promise.all([
+  const [hero, latest, events, artists] = await Promise.all([
     getLandingHeroMovies(),
     getNewReleaseMovies(movieLanguage),
     getUpcomingEvents(),
-    getDiningSpots(),
     getFeaturedArtists(),
   ]);
 
   return (
     <div className="flex w-full flex-col">
-      {/* Latest 4 Tollywood + 3 Bollywood + 3 Hollywood, refreshed daily */}
+      {/* Latest 4 Tollywood + 3 Bollywood + 3 Hollywood, refreshed hourly */}
       <LandingHero movies={hero.items} />
 
       {/* 1. Movies — newest across all languages, or the selected one */}
@@ -58,10 +55,7 @@ export default async function Home({
       {/* 5. Artists */}
       <ArtistsSection artists={artists} />
 
-      {/* 6. Dining */}
-      <DiningSection spots={dining.items.slice(0, 12)} />
-
-      {/* 7. Crowd favourites */}
+      {/* 6. Crowd favourites */}
       <VideoRailSection
         title="Crowd favourite activities"
         description="Tours, parks, and plans everyone is booking"
@@ -69,7 +63,7 @@ export default async function Home({
         items={landingCrowdFavourites}
       />
 
-      {/* 8. Music events */}
+      {/* 7. Music events */}
       <PosterRailSection
         title="Explore music events near you"
         description="Gigs, live bands, and nights worth booking"
@@ -77,15 +71,15 @@ export default async function Home({
         items={landingMusicEvents}
       />
 
-      {/* 9. Moments */}
+      {/* 8. Moments */}
       <VideoRailSection
         title="Moments on VYBE"
-        description="Short clips from dining and game nights"
-        href="/dining"
+        description="Short clips from game nights and turf matches"
+        href="/play"
         items={landingMomentsVideos}
       />
 
-      {/* 10. Game Zone */}
+      {/* 9. Game Zone */}
       <VideoRailSection
         title="Game Zone"
         description="Bowling, VR, karting and arcade spots near you"

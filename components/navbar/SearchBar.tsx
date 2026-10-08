@@ -22,7 +22,7 @@ export function SearchBar({ overlay = false, variant = "desktop" }: SearchBarPro
         >
           <Search className="size-[18px] shrink-0 text-text-muted" strokeWidth={2.25} />
           <span className="truncate text-[14px] font-medium text-text-muted">
-            Search for events, movies and restaurants
+            Search for movies, events and activities
           </span>
         </button>
       ) : (

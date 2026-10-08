@@ -22,6 +22,7 @@ import {
   DetailSection,
   buildGallery,
 } from "@/components/detail/DetailParts";
+import { useSectionSpy } from "@/components/detail/useSectionSpy";
 import { RecordRecentView } from "@/components/recent/RecordRecentView";
 import {
   createBookingCode,
@@ -40,7 +41,7 @@ const TABS = [
   { id: "location", label: "Location" },
 ] as const;
 
-type TabId = (typeof TABS)[number]["id"];
+const TAB_IDS = TABS.map((item) => item.id);
 
 type ActivityDetailViewProps = {
   activity: Activity;
@@ -48,7 +49,10 @@ type ActivityDetailViewProps = {
 };
 
 export function ActivityDetailView({ activity, related }: ActivityDetailViewProps) {
-  const [tab, setTab] = useState<TabId>("offers");
+  const { active: tab, scrollTo: scrollToSection } = useSectionSpy(
+    "activity",
+    TAB_IDS,
+  );
   const [compact, setCompact] = useState(false);
   const [guests, setGuests] = useState(2);
   const [booking, setBooking] = useState<VybeBooking | null>(null);
@@ -86,20 +90,13 @@ export function ActivityDetailView({ activity, related }: ActivityDetailViewProp
     const sentinel = document.getElementById("activity-hero-sentinel");
     if (!sentinel) return;
     const observer = new IntersectionObserver(
-      ([entry]) => setCompact(!entry.isIntersecting),
+      ([entry]) =>
+        setCompact(!entry.isIntersecting && entry.boundingClientRect.top < (entry.rootBounds?.top ?? 0)),
       { rootMargin: "-72px 0px 0px 0px", threshold: 0 },
     );
     observer.observe(sentinel);
     return () => observer.disconnect();
   }, []);
-
-  function scrollToSection(id: TabId) {
-    setTab(id);
-    document.getElementById(`activity-${id}`)?.scrollIntoView({
-      behavior: "smooth",
-      block: "start",
-    });
-  }
 
   if (booking) {
     return <BookingConfirmed booking={booking} />;

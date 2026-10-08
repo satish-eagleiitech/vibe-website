@@ -1,104 +1,57 @@
 import type { PlayItem, PlaySport } from "@/types/play";
 
+function sport(
+  id: string,
+  label: string,
+  listingTitle: string,
+): PlaySport {
+  return {
+    id,
+    label,
+    listingTitle,
+    href: `/play/sports/${id}`,
+    imageUrl: `/images/explore/play/${id}.png`,
+  };
+}
+
 export const playSports: PlaySport[] = [
-  {
-    id: "badminton",
-    label: "Badminton",
-    href: "/play?sport=badminton#all-venues",
-    imageUrl: "/images/explore/play/badminton.png",
-  },
-  {
-    id: "swimming",
-    label: "Swimming",
-    href: "/play?sport=swimming#all-venues",
-    imageUrl: "/images/explore/play/swimming.png",
-  },
-  {
-    id: "pickleball",
-    label: "Pickleball",
-    href: "/play?sport=pickleball#all-venues",
-    imageUrl: "/images/explore/play/pickleball.png",
-  },
-  {
-    id: "turf-football",
-    label: "Turf Football",
-    href: "/play?sport=turf-football#all-venues",
-    imageUrl: "/images/explore/play/turf-football.png",
-  },
-  {
-    id: "table-tennis",
-    label: "Table Tennis",
-    href: "/play?sport=table-tennis#all-venues",
-    imageUrl: "/images/explore/play/table-tennis.png",
-  },
-  {
-    id: "box-cricket",
-    label: "Box Cricket",
-    href: "/play?sport=box-cricket#all-venues",
-    imageUrl: "/images/explore/play/box-cricket.png",
-  },
-  {
-    id: "padel",
-    label: "Padel",
-    href: "/play?sport=padel#all-venues",
-    imageUrl: "/images/explore/play/padel.png",
-  },
-  {
-    id: "cricket-nets",
-    label: "Cricket Nets",
-    href: "/play?sport=cricket-nets#all-venues",
-    imageUrl: "/images/explore/play/cricket-nets.png",
-  },
-  {
-    id: "tennis",
-    label: "Tennis",
-    href: "/play?sport=tennis#all-venues",
-    imageUrl: "/images/explore/play/tennis.png",
-  },
-  {
-    id: "basketball",
-    label: "Basketball",
-    href: "/play?sport=basketball#all-venues",
-    imageUrl: "/images/explore/play/basketball.png",
-  },
-  {
-    id: "snooker",
-    label: "Snooker",
-    href: "/play?sport=snooker#all-venues",
-    imageUrl: "/images/explore/play/snooker.png",
-  },
-  {
-    id: "pool",
-    label: "Pool",
-    href: "/play?sport=pool#all-venues",
-    imageUrl: "/images/explore/play/pool.png",
-  },
-  {
-    id: "volleyball",
-    label: "Volleyball",
-    href: "/play?sport=volleyball#all-venues",
-    imageUrl: "/images/explore/play/volleyball.png",
-  },
-  {
-    id: "football",
-    label: "Football",
-    href: "/play?sport=football#all-venues",
-    imageUrl: "/images/explore/play/football.png",
-  },
-  {
-    id: "cricket",
-    label: "Cricket",
-    href: "/play?sport=cricket#all-venues",
-    imageUrl: "/images/explore/play/cricket.png",
-  },
+  sport("badminton", "Badminton", "Badminton Courts"),
+  sport("swimming", "Swimming", "Swimming Pools"),
+  sport("pickleball", "Pickleball", "Pickleball Courts"),
+  sport("turf-football", "Turf Football", "Football Turfs"),
+  sport("table-tennis", "Table Tennis", "Table Tennis Venues"),
+  sport("box-cricket", "Box Cricket", "Box Cricket Turfs"),
+  sport("padel", "Padel", "Padel Courts"),
+  sport("cricket-nets", "Cricket Nets", "Cricket Nets"),
+  sport("tennis", "Tennis", "Tennis Courts"),
+  sport("basketball", "Basketball", "Basketball Courts"),
+  sport("snooker", "Snooker", "Snooker Parlours"),
+  sport("pool", "Pool", "Pool Tables"),
+  sport("volleyball", "Volleyball", "Volleyball Courts"),
+  sport("football", "Football", "Football Grounds"),
 ];
 
+export function findPlaySport(sportId: string) {
+  return playSports.find((entry) => entry.id === sportId) ?? null;
+}
+
+export function playItemSports(item: PlayItem): string[] {
+  if (item.sports?.length) return item.sports;
+  return item.sport ? [item.sport] : [];
+}
+
+/** Venue tag match first; falls back to text search for items without tags */
 export function matchesPlaySport(item: PlayItem, sportId?: string) {
   if (!sportId) return true;
-  const sport = playSports.find((entry) => entry.id === sportId);
+  const entry = findPlaySport(sportId);
+  const label = (entry?.label ?? sportId.replace(/-/g, " ")).toLowerCase();
+
+  if (item.sports?.length) {
+    return item.sports.some((tag) => tag.toLowerCase() === label);
+  }
+
   const hay = `${item.sport ?? ""} ${item.title} ${item.description}`.toLowerCase();
-  if (sport) return hay.includes(sport.label.toLowerCase()) || hay.includes(sportId.replace("-", " "));
-  return hay.includes(sportId.toLowerCase());
+  return hay.includes(label);
 }
 
 export function isPlayEvent(item: PlayItem) {

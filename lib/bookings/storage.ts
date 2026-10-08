@@ -1,9 +1,6 @@
-export type BookingCategory =
-  | "movies"
-  | "dining"
-  | "events"
-  | "play"
-  | "activities";
+export type BookingCategory = "movies" | "events" | "play" | "activities";
+
+const BOOKING_CATEGORIES: BookingCategory[] = ["movies", "events", "play", "activities"];
 
 export type VybeBooking = {
   id: string;
@@ -41,7 +38,9 @@ export function readBookings(): VybeBooking[] {
     const raw = window.localStorage.getItem(STORAGE_KEY);
     if (!raw) return [];
     const parsed = JSON.parse(raw) as VybeBooking[];
-    return Array.isArray(parsed) ? parsed : [];
+    return Array.isArray(parsed)
+      ? parsed.filter((item) => BOOKING_CATEGORIES.includes(item.category))
+      : [];
   } catch {
     return [];
   }
@@ -76,7 +75,6 @@ export const BOOKING_TABS: {
 }[] = [
   { id: "all", label: "All" },
   { id: "movies", label: "Movies" },
-  { id: "dining", label: "Dining" },
   { id: "events", label: "Events" },
   { id: "play", label: "Game Zone" },
   { id: "activities", label: "Activities" },

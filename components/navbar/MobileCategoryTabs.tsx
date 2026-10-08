@@ -7,7 +7,6 @@ import {
   PartyPopper,
   Sparkles,
   Trophy,
-  UtensilsCrossed,
   type LucideIcon,
 } from "lucide-react";
 import { Container } from "@/components/common/Container";
@@ -16,7 +15,6 @@ import { siteConfig } from "@/config/site";
 const icons: Record<(typeof siteConfig.nav)[number]["href"], LucideIcon> = {
   "/movies": Clapperboard,
   "/events": PartyPopper,
-  "/dining": UtensilsCrossed,
   "/activities": Sparkles,
   "/play": Trophy,
 };
@@ -26,7 +24,7 @@ export function MobileCategoryTabs() {
 
   return (
     <nav aria-label="Categories">
-      <Container className="grid h-[60px] grid-cols-5 items-center gap-1 pb-2 sm:h-12 sm:gap-2">
+      <Container className="grid h-[60px] grid-cols-4 items-center gap-1 pb-2 sm:h-12 sm:gap-2">
         {siteConfig.nav.map((item) => {
           const active =
             pathname === item.href || pathname.startsWith(`${item.href}/`);

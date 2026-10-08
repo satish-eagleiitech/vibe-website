@@ -16,7 +16,7 @@ export function CategoryGrid({ categories }: CategoryGridProps) {
           title="Explore by Experience"
           href="/play"
         />
-        <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-5">
+        <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
           {categories.map((category) => (
             <CategoryCard key={category.id} category={category} />
           ))}

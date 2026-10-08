@@ -1,7 +1,8 @@
 import { hasPublicApi } from "@/config/env";
 import { apiGet } from "@/lib/api/client";
 import { fallbackPlay } from "@/lib/data/fallback";
-import { isPlayEvent, isPlayVenue } from "@/lib/data/playSports";
+import { findGeneratedPlayVenue, generatedPlayVenues } from "@/lib/data/playGenerated";
+import { isPlayEvent, isPlayVenue, matchesPlaySport } from "@/lib/data/playSports";
 import type { PlayItem, PlayListResult } from "@/types/play";
 
 /**
@@ -54,12 +55,20 @@ export async function getPlayItems(): Promise<PlayListResult> {
 
 export async function getPlayById(id: string): Promise<PlayItem | null> {
   const { items } = await getPlayItems();
-  return items.find((item) => item.id === id) ?? null;
+  const found = items.find((item) => item.id === id);
+  if (found) return found;
+  const generated = findGeneratedPlayVenue(id);
+  return generated ? enrichItem(generated) : null;
 }
 
 export async function getPlayVenues(): Promise<PlayItem[]> {
   const { items } = await getPlayItems();
   return items.filter(isPlayVenue);
+}
+
+export async function getPlaySportVenues(sportId: string): Promise<PlayItem[]> {
+  const venues = (await getPlayVenues()).filter((venue) => matchesPlaySport(venue, sportId));
+  return [...venues, ...generatedPlayVenues(sportId, venues.length).map(enrichItem)];
 }
 
 export async function getPlayEvents(): Promise<PlayItem[]> {

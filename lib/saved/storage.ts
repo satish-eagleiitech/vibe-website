@@ -1,4 +1,6 @@
-export type SavedCategory = "movies" | "dining" | "events" | "play" | "activities";
+export type SavedCategory = "movies" | "events" | "play" | "activities";
+
+const SAVED_CATEGORIES: SavedCategory[] = ["movies", "events", "play", "activities"];
 
 export type SavedItem = {
   id: string;
@@ -22,7 +24,9 @@ export function readSaved(): SavedItem[] {
     const raw = window.localStorage.getItem(STORAGE_KEY);
     if (!raw) return [];
     const parsed = JSON.parse(raw) as SavedItem[];
-    return Array.isArray(parsed) ? parsed : [];
+    return Array.isArray(parsed)
+      ? parsed.filter((item) => SAVED_CATEGORIES.includes(item.category))
+      : [];
   } catch {
     return [];
   }
@@ -55,7 +59,6 @@ export function removeSaved(id: string) {
 export const SAVED_TABS: { id: SavedCategory | "all"; label: string }[] = [
   { id: "all", label: "All" },
   { id: "movies", label: "Movies" },
-  { id: "dining", label: "Dining" },
   { id: "events", label: "Events" },
   { id: "play", label: "Game Zone" },
   { id: "activities", label: "Activities" },

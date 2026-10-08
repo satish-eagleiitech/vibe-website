@@ -30,7 +30,7 @@ export function RewardsView() {
     <div>
       <AccountPageHeader
         title="Rewards"
-        subtitle="Scratch your cards to reveal offers on movies, dining and more"
+        subtitle="Scratch your cards to reveal offers on movies, events and more"
       />
 
       <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">

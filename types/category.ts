@@ -1,5 +1,4 @@
 export type CategoryId =
-  | "dining"
   | "movies"
   | "events"
   | "activities"

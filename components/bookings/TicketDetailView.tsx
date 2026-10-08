@@ -23,7 +23,6 @@ import {
 
 const CATEGORY_LABEL: Record<BookingCategory, string> = {
   movies: "Movies",
-  dining: "Dining",
   events: "Events",
   play: "Game Zone",
   activities: "Activities",
@@ -31,7 +30,6 @@ const CATEGORY_LABEL: Record<BookingCategory, string> = {
 
 const SEAT_LABEL: Record<BookingCategory, string> = {
   movies: "Seats",
-  dining: "Table",
   events: "Passes",
   play: "Slot",
   activities: "Guests",
@@ -42,11 +40,6 @@ const TIPS: Record<BookingCategory, string[]> = {
     "Arrive 20 minutes before showtime for security checks.",
     "Outside food and beverages are not allowed.",
     "Carry a valid ID for age-restricted films.",
-  ],
-  dining: [
-    "Your table is held for 15 minutes past the slot.",
-    "Let the host know about allergies when you arrive.",
-    "Cover charges, if any, are paid at the venue.",
   ],
   events: [
     "Gates open 60 minutes before the event starts.",

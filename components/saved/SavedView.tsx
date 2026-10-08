@@ -22,7 +22,7 @@ export function SavedView() {
     <div>
       <AccountPageHeader
         title="Saved spots"
-        subtitle="Movies, dining and plans you bookmarked"
+        subtitle="Movies, events and plans you bookmarked"
         action={
           <span className="rounded-full bg-accent-soft px-3 py-1.5 text-[12px] font-extrabold text-accent">
             {items.length} saved
@@ -70,7 +70,7 @@ export function SavedView() {
           </span>
           <p className="mt-3 text-[16px] font-extrabold text-text">Nothing saved yet</p>
           <p className="mt-1 text-[14px] text-text-secondary">
-            Tap the bookmark on a movie, event or restaurant to keep it here.
+            Tap the bookmark on a movie, event or activity to keep it here.
           </p>
           <div className="mt-5 flex flex-wrap justify-center gap-2">
             <Link
@@ -80,10 +80,10 @@ export function SavedView() {
               Browse movies
             </Link>
             <Link
-              href="/dining"
+              href="/events"
               className="inline-flex rounded-full bg-surface-muted px-5 py-2.5 text-sm font-bold text-text"
             >
-              Find dining
+              Find events
             </Link>
           </div>
         </div>

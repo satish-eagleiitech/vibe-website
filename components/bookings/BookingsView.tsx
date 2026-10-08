@@ -11,7 +11,6 @@ import { BOOKING_TABS, type BookingCategory, type VybeBooking } from "@/lib/book
 
 const CATEGORY_LABEL: Record<BookingCategory, string> = {
   movies: "Movies",
-  dining: "Dining",
   events: "Events",
   play: "Game Zone",
   activities: "Activities",
@@ -114,7 +113,7 @@ export function BookingsView() {
     <div>
       <AccountPageHeader
         title="My bookings"
-        subtitle="Movies, dining, events and game zone tickets in one place"
+        subtitle="Movies, events, activities and game zone tickets in one place"
       />
 
       <div className="flex flex-col gap-3 rounded-[24px] border border-border bg-surface p-3 sm:p-4 xl:flex-row xl:items-center">

@@ -21,6 +21,7 @@ import {
   DetailSection,
   buildGallery,
 } from "@/components/detail/DetailParts";
+import { useSectionSpy } from "@/components/detail/useSectionSpy";
 import { RecordRecentView } from "@/components/recent/RecordRecentView";
 import { formatInr } from "@/lib/format";
 import type { LiveEvent } from "@/types/event";
@@ -33,7 +34,7 @@ const TABS = [
   { id: "location", label: "Location" },
 ] as const;
 
-type TabId = (typeof TABS)[number]["id"];
+const TAB_IDS = TABS.map((item) => item.id);
 
 type EventDetailViewProps = {
   event: LiveEvent;
@@ -41,7 +42,10 @@ type EventDetailViewProps = {
 };
 
 export function EventDetailView({ event, related }: EventDetailViewProps) {
-  const [tab, setTab] = useState<TabId>("offers");
+  const { active: tab, scrollTo: scrollToSection } = useSectionSpy(
+    "event",
+    TAB_IDS,
+  );
   const [compact, setCompact] = useState(false);
 
   const dateLabel = [event.day, event.month].filter(Boolean).join(" ");
@@ -59,20 +63,13 @@ export function EventDetailView({ event, related }: EventDetailViewProps) {
     const sentinel = document.getElementById("event-hero-sentinel");
     if (!sentinel) return;
     const observer = new IntersectionObserver(
-      ([entry]) => setCompact(!entry.isIntersecting),
+      ([entry]) =>
+        setCompact(!entry.isIntersecting && entry.boundingClientRect.top < (entry.rootBounds?.top ?? 0)),
       { rootMargin: "-72px 0px 0px 0px", threshold: 0 },
     );
     observer.observe(sentinel);
     return () => observer.disconnect();
   }, []);
-
-  function scrollToSection(id: TabId) {
-    setTab(id);
-    document.getElementById(`event-${id}`)?.scrollIntoView({
-      behavior: "smooth",
-      block: "start",
-    });
-  }
 
   const highlights = useMemo(
     () => [

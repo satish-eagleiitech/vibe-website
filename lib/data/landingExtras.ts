@@ -245,25 +245,25 @@ export const landingCrowdFavourites: LandingVideoCard[] = [
   },
 ];
 
-/** Moments — dining + game posters only (no event/activity reuse) */
+/** Moments — sport and game posters only (no event/activity reuse) */
 export const landingMomentsVideos: LandingVideoCard[] = [
   {
     id: "moment-1",
-    title: "Late night bites",
-    venue: "Banjara Hills",
-    schedule: "Open tables tonight",
-    posterUrl: "/images/dining/dining-8.jpg",
+    title: "Floodlit box cricket",
+    venue: "Gachibowli",
+    schedule: "Night slots till 12 AM",
+    posterUrl: "/images/play/sport-cricket.jpg",
     videoUrl: "/assets/videos/vybe-1.mp4",
-    href: "/dining",
+    href: "/play/sports/box-cricket",
   },
   {
     id: "moment-2",
-    title: "Chef's table vibes",
-    venue: "Jubilee Hills",
-    schedule: "Fri – Sat, 8:00 PM",
-    posterUrl: "/images/dining/dining-9.jpg",
+    title: "Sunrise badminton",
+    venue: "Kondapur",
+    schedule: "Daily, 6:00 AM",
+    posterUrl: "/images/play/sport-badminton.jpg",
     videoUrl: "/assets/videos/vybe-2.mp4",
-    href: "/dining",
+    href: "/play/sports/badminton",
   },
   {
     id: "moment-3",

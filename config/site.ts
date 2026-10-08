@@ -3,7 +3,7 @@ export const siteConfig = {
   tagline: "Plans • Events • Experiences",
   title: "VYBE — Plans • Events • Experiences",
   description:
-    "Discover movies, events, dining, activities and play near you with VYBE.",
+    "Discover movies, events, activities and play near you with VYBE.",
   defaultCity: "Hyderabad",
   availableCities: ["Hyderabad", "Bengaluru", "Mumbai", "Delhi NCR"] as const,
   contact: {
@@ -17,7 +17,6 @@ export const siteConfig = {
   nav: [
     { href: "/movies", label: "Movies" },
     { href: "/events", label: "Events" },
-    { href: "/dining", label: "Dining" },
     { href: "/activities", label: "Activities" },
     { href: "/play", label: "Play" },
   ] as const,
@@ -25,7 +24,6 @@ export const siteConfig = {
     explore: [
       { href: "/movies", label: "Movies" },
       { href: "/events", label: "Events" },
-      { href: "/dining", label: "Dining" },
       { href: "/activities", label: "Activities" },
       { href: "/play", label: "Play" },
     ],

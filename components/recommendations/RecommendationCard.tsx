@@ -5,7 +5,6 @@ import type { Recommendation } from "@/types/recommendation";
 const toneClass = {
   accent: "text-accent",
   teal: "text-[#00647E]",
-  dining: "text-[#803816]",
 } as const;
 
 type RecommendationCardProps = {

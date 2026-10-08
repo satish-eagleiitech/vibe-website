@@ -8,7 +8,6 @@ import { RailPager, useRailPager } from "@/components/common/RailPager";
 import type { LandingPosterCard } from "@/lib/data/landingExtras";
 import { trackRecentView } from "@/lib/recent/storage";
 
-/** Match `DiningCarousel` card slots and scroller */
 const RAIL_CARD_SLOT =
   "w-[46%] shrink-0 snap-start sm:w-[calc((100%-2.5rem)/3)] md:w-[calc((100%-3.75rem)/4)] lg:w-[calc((100%-5rem)/5)]";
 
@@ -21,7 +20,6 @@ type PosterRailSectionProps = {
 };
 
 function recentCategory(href: string) {
-  if (href.includes("/dining")) return "dining" as const;
   if (href.includes("/play")) return "play" as const;
   if (href.includes("/activities")) return "activities" as const;
   return "events" as const;

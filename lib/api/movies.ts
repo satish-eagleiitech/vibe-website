@@ -550,7 +550,7 @@ export async function getMoviesCatalog(
   }
 }
 
-const DAY_SECONDS = 60 * 60 * 24;
+const HOUR_SECONDS = 60 * 60;
 
 /**
  * Newest theatrical releases in one original language, latest first.
@@ -624,7 +624,7 @@ const HERO_MIX = [
 
 /**
  * Landing hero: latest 4 Tollywood, 3 Bollywood and 3 Hollywood releases.
- * Cached for 24 hours so newly released titles rotate in daily.
+ * Cached for an hour so newly released titles rotate in the same day.
  */
 export async function getLandingHeroMovies(): Promise<MovieListResult> {
   if (!hasMoviesApi()) {
@@ -634,7 +634,7 @@ export async function getLandingHeroMovies(): Promise<MovieListResult> {
   try {
     const groups = await Promise.all(
       HERO_MIX.map(({ iso, badge }) =>
-        fetchNewReleasesFor(iso, 1, { formatBadge: badge }, DAY_SECONDS),
+        fetchNewReleasesFor(iso, 1, { formatBadge: badge }, HOUR_SECONDS),
       ),
     );
     const items = HERO_MIX.flatMap(({ count }, index) =>

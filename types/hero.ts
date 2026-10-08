@@ -1,6 +1,5 @@
 export type HeroSlideCategory =
   | "movies"
-  | "dining"
   | "play"
   | "activities"
   | "events";

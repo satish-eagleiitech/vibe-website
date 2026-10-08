@@ -23,11 +23,11 @@ const SEED: Omit<VybeNotification, "read">[] = [
     minutesAgo: 25,
   },
   {
-    id: "n-dining-reminder",
+    id: "n-play-reminder",
     kind: "reminder",
-    title: "Table tonight at 8:00 PM",
-    body: "Lakeview Olive Kitchen is holding your table for 15 minutes past the slot.",
-    href: "/tickets?tab=dining",
+    title: "Court booked tonight at 8:00 PM",
+    body: "Report 15 minutes early at Highball, Gachibowli to collect your gear.",
+    href: "/tickets?tab=play",
     minutesAgo: 140,
   },
   {

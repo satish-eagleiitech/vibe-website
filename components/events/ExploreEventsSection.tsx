@@ -5,7 +5,10 @@ import { eventExploreCategories } from "@/lib/data/eventCategories";
 
 export function ExploreEventsSection() {
   return (
-    <section className="w-full py-6 md:py-8">
+    <section
+      id="explore-events"
+      className="w-full scroll-mt-[var(--vybe-header-h)] py-6 md:py-8"
+    >
       <Container>
         <h2 className="text-[26px] font-extrabold tracking-tight text-text md:text-[30px]">
           Explore Events

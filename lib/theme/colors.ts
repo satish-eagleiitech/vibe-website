@@ -61,7 +61,6 @@ export const darkColors = {
 } as const;
 
 export const categoryColors = {
-  dining: { from: "#803816", to: "#59240C" },
   movies: { from: "#3B1663", to: "#21083D" },
   events: { from: "#831843", to: "#50072B" },
   activities: { from: "#064E3B", to: "#022C22" },

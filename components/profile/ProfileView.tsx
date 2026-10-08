@@ -24,7 +24,6 @@ import { writeProfile, type VybeProfile } from "@/lib/profile/storage";
 
 const CATEGORY_LABEL: Record<BookingCategory, string> = {
   movies: "Movies",
-  dining: "Dining",
   events: "Events",
   play: "Game Zone",
   activities: "Activities",
