@@ -12,26 +12,6 @@ type PlayVenueCardProps = {
   variant?: "browse" | "classic";
 };
 
-function locationLine(item: PlayItem) {
-  if (item.kind === "event" && item.venue) {
-    return [item.venue, item.locality].filter(Boolean).join(", ");
-  }
-  return [item.title, item.locality ?? item.venue].filter(Boolean).join(", ");
-}
-
-function headlineLine(item: PlayItem) {
-  if (item.kind === "event") return item.title;
-  const blurb = item.description?.split(".")[0]?.trim();
-  return blurb || item.title;
-}
-
-function scheduleLine(item: PlayItem) {
-  if (item.dateLabel && item.timeLabel) {
-    return `${item.dateLabel}, ${item.timeLabel}`;
-  }
-  return item.schedule ?? item.hours ?? "";
-}
-
 export function PlayVenueCard({ item, variant = "browse" }: PlayVenueCardProps) {
   const onTrack = () =>
     trackRecentView({
@@ -44,44 +24,41 @@ export function PlayVenueCard({ item, variant = "browse" }: PlayVenueCardProps) 
     });
 
   if (variant === "browse") {
-    const when = scheduleLine(item);
+    const distance = item.distanceKm != null ? `${item.distanceKm} km` : null;
+    const place = item.locality || item.venue;
+    const meta = [distance, place].filter(Boolean).join(" • ");
 
     return (
       <Link
         href={`/play/${item.id}`}
         onClick={onTrack}
-        className="flex w-full flex-col"
+        className="flex w-full flex-col overflow-hidden rounded-2xl border border-[#E8E8E8] bg-white"
       >
-        <div className="relative h-[260px] w-full overflow-hidden border border-border bg-surface-muted sm:h-[300px] md:h-[320px]">
+        <div className="relative aspect-[16/10] w-full bg-[#F4F4F5]">
           <Image
             src={item.imageUrl}
             alt={item.title}
             fill
             className="object-cover object-center"
-            sizes="(max-width: 640px) 45vw, (max-width: 1024px) 30vw, 240px"
+            sizes="(max-width: 640px) 50vw, 280px"
           />
         </div>
 
-        <div className="mt-3 flex flex-col gap-1 px-0.5">
-          <p className="line-clamp-1 text-[12px] font-semibold text-text-secondary">
-            {locationLine(item)}
-          </p>
-          <h3 className="line-clamp-2 text-[14px] leading-snug font-extrabold text-text sm:text-[15px]">
-            {headlineLine(item)}
+        <div className="flex flex-col px-3 pt-3 pb-3">
+          <h3 className="line-clamp-1 text-[15px] leading-5 font-bold text-[#111111]">
+            {item.title}
           </h3>
-          {when ? (
-            <p className="text-[12px] text-text-muted">{when}</p>
-          ) : null}
-          {item.price != null ? (
-            <p className="mt-0.5 text-[13px] font-extrabold text-text">
-              ₹{item.price.toLocaleString("en-IN")}
-              {item.priceUnit ? (
-                <span className="font-medium text-text-secondary">
-                  {" "}
-                  {item.priceUnit}
-                </span>
-              ) : null}
+          {meta ? (
+            <p className="mt-0.5 line-clamp-1 text-[12px] leading-4 font-normal text-[#9A9A9A]">
+              {meta}
             </p>
+          ) : null}
+          {item.sport ? (
+            <div className="mt-2.5 flex flex-wrap gap-1.5">
+              <span className="inline-flex items-center rounded-full border border-[#E6E6E6] bg-white px-2.5 py-1 text-[12px] leading-none font-medium text-[#3A3A3A]">
+                {item.sport}
+              </span>
+            </div>
           ) : null}
         </div>
       </Link>

@@ -10,7 +10,7 @@ function sport(
     label,
     listingTitle,
     href: `/play/sports/${id}`,
-    imageUrl: `/images/explore/play/${id}.png`,
+    imageUrl: `/images/explore/play/${id}.jpg`,
   };
 }
 
@@ -29,6 +29,8 @@ export const playSports: PlaySport[] = [
   sport("pool", "Pool", "Pool Tables"),
   sport("volleyball", "Volleyball", "Volleyball Courts"),
   sport("football", "Football", "Football Grounds"),
+  sport("squash", "Squash", "Squash Courts"),
+  sport("cricket", "Cricket", "Cricket Grounds"),
 ];
 
 export function findPlaySport(sportId: string) {

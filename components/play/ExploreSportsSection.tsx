@@ -3,34 +3,48 @@ import Link from "next/link";
 import { Container } from "@/components/common/Container";
 import { playSports } from "@/lib/data/playSports";
 
+const sceneSports = new Set([
+  "turf-football",
+  "box-cricket",
+  "cricket-nets",
+  "football",
+]);
+
 export function ExploreSportsSection() {
   return (
-    <section className="w-full py-6 md:py-8">
+    <section className="w-full bg-bg py-7 md:py-9">
       <Container>
-        <h2 className="text-[26px] font-extrabold tracking-tight text-text md:text-[30px]">
+        <h2 className="text-[22px] font-bold tracking-tight text-[#111827] md:text-[24px] dark:text-white">
           Explore Sports
         </h2>
-        <div className="mt-4 grid grid-cols-3 gap-2.5 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-8">
-          {playSports.map((sport) => (
-            <Link
-              key={sport.id}
-              href={sport.href}
-              className="group flex flex-col items-center rounded-2xl border border-border bg-surface px-2 py-3 transition-transform hover:-translate-y-0.5"
-            >
-              <div className="relative size-[56px] sm:size-[64px]">
-                <Image
-                  src={sport.imageUrl}
-                  alt=""
-                  fill
-                  className="object-contain drop-shadow-sm"
-                  sizes="64px"
-                />
-              </div>
-              <span className="mt-2 line-clamp-2 text-center text-[11px] font-bold leading-tight text-text sm:text-[12px]">
-                {sport.label}
-              </span>
-            </Link>
-          ))}
+        <div className="mt-5 grid grid-cols-2 gap-3 min-[480px]:grid-cols-3 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8">
+          {playSports.map((sport) => {
+            const scene = sceneSports.has(sport.id);
+            return (
+              <Link
+                key={sport.id}
+                href={sport.href}
+                className="group flex aspect-[5/6] flex-col overflow-hidden rounded-[18px] border border-[#E6E8EC] bg-white text-[#1C1C1C] shadow-none transition-colors hover:border-[#D4D7DE] dark:border-[#E4E4E7] dark:bg-white dark:text-[#1C1C1C]"
+              >
+                <span className="flex h-9 shrink-0 items-center justify-center px-1.5 text-center text-[12px] font-semibold leading-[1.15] text-[#1C1C1C] sm:text-[13px] dark:text-[#1C1C1C]">
+                  {sport.label}
+                </span>
+                <div className="relative min-h-0 flex-1">
+                  <Image
+                    src={sport.imageUrl}
+                    alt=""
+                    fill
+                    className={
+                      scene
+                        ? "object-cover object-[center_68%]"
+                        : "origin-center object-contain object-center scale-[1.22]"
+                    }
+                    sizes="(max-width: 640px) 46vw, 150px"
+                  />
+                </div>
+              </Link>
+            );
+          })}
         </div>
       </Container>
     </section>
