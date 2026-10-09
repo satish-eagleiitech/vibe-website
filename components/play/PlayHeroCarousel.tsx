@@ -39,7 +39,7 @@ export function PlayHeroCarousel({ items }: PlayHeroCarouselProps) {
     .join(" · ");
 
   return (
-    <section className="relative w-full overflow-hidden bg-black lg:-mt-[60px]">
+    <section className="relative w-full overflow-hidden bg-black lg:-mt-[var(--vybe-header-h)]">
       <div className="relative h-[min(680px,calc(100svh-var(--vybe-header-h)))] min-h-[500px] w-full lg:h-screen lg:min-h-[100dvh]">
         {slides.map((item, i) => (
           <div

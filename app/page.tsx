@@ -1,17 +1,19 @@
 import { CategoryGrid } from "@/components/categories/CategoryGrid";
 import { EventsSection } from "@/components/events/EventsSection";
+import { ActivitiesForYouSection } from "@/components/landing/ActivitiesForYouSection";
 import { ArtistsSection } from "@/components/landing/ArtistsSection";
 import { LandingHero } from "@/components/landing/LandingHero";
 import { PosterRailSection } from "@/components/landing/PosterRailSection";
 import { VideoRailSection } from "@/components/landing/VideoRailSection";
 import { TrendingMovies } from "@/components/movies/TrendingMovies";
+import { PlayEventsSection } from "@/components/play/PlayEventsSection";
 import { getFeaturedArtists } from "@/lib/api/artists";
 import { getUpcomingEvents } from "@/lib/api/events";
 import { getLandingHeroMovies, getNewReleaseMovies } from "@/lib/api/movies";
+import { getPlayEvents } from "@/lib/api/play";
 import { fallbackCategories } from "@/lib/data/fallback";
 import {
   landingCrowdFavourites,
-  landingGameZoneVideos,
   landingMomentsVideos,
   landingMusicEvents,
 } from "@/lib/data/landingExtras";
@@ -24,11 +26,12 @@ export default async function Home({
   const { language } = await searchParams;
   const movieLanguage = language || "all";
 
-  const [hero, latest, events, artists] = await Promise.all([
+  const [hero, latest, events, artists, playEvents] = await Promise.all([
     getLandingHeroMovies(),
     getNewReleaseMovies(movieLanguage),
     getUpcomingEvents(),
     getFeaturedArtists(),
+    getPlayEvents(),
   ]);
 
   return (
@@ -79,13 +82,15 @@ export default async function Home({
         items={landingMomentsVideos}
       />
 
-      {/* 9. Game Zone */}
-      <VideoRailSection
+      {/* 9. Game Zone — same cards as Play → Featured sports events */}
+      <PlayEventsSection
         title="Game Zone"
-        description="Bowling, VR, karting and arcade spots near you"
-        href="/play"
-        items={landingGameZoneVideos}
+        emptyTitle="No Game Zone events right now"
+        events={playEvents}
       />
+
+      {/* 10. Activities for you */}
+      <ActivitiesForYouSection />
     </div>
   );
 }

@@ -349,21 +349,20 @@ export function LocationButton({
         <button
           type="button"
           onClick={() => setOpen(true)}
-          className={`inline-flex max-w-[180px] items-center gap-1 text-left ${className}`}
+          className={`inline-flex max-w-[200px] items-center gap-2 text-left text-[13px] font-semibold tracking-[0.08em] uppercase ${
+            overlay ? "text-white" : "text-text"
+          } ${className}`}
           aria-label={`Current location ${city}. Open location picker.`}
         >
-          <span
-            className={`truncate text-[14px] font-bold ${
-              overlay ? "text-white" : "text-text"
-            }`}
-          >
-            {city}
-          </span>
+          <MapPin
+            className={`size-[18px] shrink-0 ${overlay ? "text-white" : "text-accent"}`}
+            strokeWidth={1.6}
+            aria-hidden="true"
+          />
+          <span className="truncate">{city}</span>
           <ChevronDown
-            className={`size-4 shrink-0 ${
-              overlay ? "text-white/80" : "text-text"
-            }`}
-            strokeWidth={2.25}
+            className={`size-[18px] shrink-0 ${overlay ? "text-white/80" : "text-text"}`}
+            strokeWidth={1.6}
             aria-hidden="true"
           />
         </button>

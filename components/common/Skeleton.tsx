@@ -92,34 +92,34 @@ export function LandingSkeleton() {
   return (
     <div className="flex flex-col gap-10 py-6 md:py-8">
       <section className="w-full">
-        <div className="mx-auto w-full max-w-[1240px] px-4 md:px-8 lg:px-12">
+        <div className="mx-auto w-full max-w-[1360px] px-4 md:px-8 lg:px-12">
           <Skeleton className="mb-4 h-8 w-40 rounded-lg" />
           <HorizontalRailSkeleton />
         </div>
       </section>
 
       <section className="w-full">
-        <div className="mx-auto w-full max-w-[1240px] px-4 md:px-8 lg:px-12">
+        <div className="mx-auto w-full max-w-[1360px] px-4 md:px-8 lg:px-12">
           <CategoryRowSkeleton />
         </div>
       </section>
 
       <section className="w-full">
-        <div className="mx-auto w-full max-w-[1240px] px-4 md:px-8 lg:px-12">
+        <div className="mx-auto w-full max-w-[1360px] px-4 md:px-8 lg:px-12">
           <Skeleton className="mb-4 h-8 w-36 rounded-lg" />
           <HorizontalRailSkeleton />
         </div>
       </section>
 
       <section className="w-full">
-        <div className="mx-auto w-full max-w-[1240px] px-4 md:px-8 lg:px-12">
+        <div className="mx-auto w-full max-w-[1360px] px-4 md:px-8 lg:px-12">
           <Skeleton className="mb-4 h-8 w-48 rounded-lg" />
           <ArtistRowSkeleton />
         </div>
       </section>
 
       <section className="w-full">
-        <div className="mx-auto w-full max-w-[1240px] px-4 md:px-8 lg:px-12">
+        <div className="mx-auto w-full max-w-[1360px] px-4 md:px-8 lg:px-12">
           <Skeleton className="mb-4 h-8 w-52 rounded-lg" />
           <div className="hide-scrollbar flex gap-5 overflow-hidden">
             {Array.from({ length: 4 }).map((_, index) => (

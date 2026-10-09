@@ -4,7 +4,6 @@ import {
   getMoviesCatalog,
   getNewReleaseMovies,
   getTopRatedMovies,
-  getTrendingMovies,
   interleaveRegionalMovies,
 } from "@/lib/api/movies";
 
@@ -12,10 +11,11 @@ export const metadata = {
   title: "Movies",
 };
 
+const HERO_SLIDES = 10;
+
 export default async function MoviesPage() {
-  const [hero, fresh, catalogTelugu, catalogHindi, catalogEnglish, topRated] =
+  const [fresh, catalogTelugu, catalogHindi, catalogEnglish, topRated] =
     await Promise.all([
-      getTrendingMovies(),
       getNewReleaseMovies(),
       getMoviesCatalog("telugu", 40),
       getMoviesCatalog("hindi", 40),
@@ -30,9 +30,13 @@ export default async function MoviesPage() {
     60,
   );
 
+  const heroMovies = fresh.items
+    .filter((movie) => movie.backdropUrl && movie.description)
+    .slice(0, HERO_SLIDES);
+
   return (
     <div className="w-full pb-12">
-      <MovieHeroCarousel movies={hero.items.slice(0, 8)} />
+      <MovieHeroCarousel movies={heroMovies} />
       <MovieBrowser
         latest={fresh.items.slice(0, 16)}
         catalogs={{

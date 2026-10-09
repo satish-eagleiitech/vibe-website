@@ -1,6 +1,6 @@
 import { AllEventsSection } from "@/components/events/AllEventsSection";
 import { EventArtistsRow } from "@/components/events/EventArtistsRow";
-import { EventsHero } from "@/components/events/EventsHero";
+// import { EventsHero } from "@/components/events/EventsHero";
 import { ExploreEventsSection } from "@/components/events/ExploreEventsSection";
 import { FeaturedEventsSection } from "@/components/events/FeaturedEventsSection";
 import { getFeaturedArtists } from "@/lib/api/artists";
@@ -26,7 +26,7 @@ export default async function EventsPage({
 
   return (
     <div className="w-full pb-12">
-      <EventsHero events={events} />
+      {/* <EventsHero events={events} /> */}
       <ExploreEventsSection />
       <FeaturedEventsSection events={events.slice(0, 10)} />
       <EventArtistsRow artists={artists} />

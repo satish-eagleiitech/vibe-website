@@ -2,147 +2,188 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { ChevronLeft, ChevronRight, Plus, Ticket } from "lucide-react";
-import { useEffect, useState } from "react";
+import { Plus, Ticket } from "lucide-react";
+import { useEffect, useRef, useState, type CSSProperties } from "react";
 import type { Movie } from "@/types/movie";
 
 type MovieHeroCarouselProps = {
   movies: Movie[];
 };
 
+type SlideNav = { index: number; prev: number; dir: 1 | -1 };
+
+const SLIDE_MS = 5000;
+
+function titleCase(value: string) {
+  return value.charAt(0).toUpperCase() + value.slice(1);
+}
+
+const pad = (n: number) => String(n).padStart(2, "0");
+
 export function MovieHeroCarousel({ movies }: MovieHeroCarouselProps) {
   const slides = movies.filter((movie) => movie.backdropUrl || movie.posterUrl);
-  const [index, setIndex] = useState(0);
+  const [nav, setNav] = useState<SlideNav>({ index: 0, prev: -1, dir: 1 });
+  const remainingRef = useRef(SLIDE_MS);
   const count = slides.length;
+  const { index, prev, dir } = nav;
   const slide = slides[index];
+  const animating = prev >= 0;
 
   useEffect(() => {
-    if (count <= 1) return;
-    const timer = window.setInterval(() => {
-      setIndex((current) => (current + 1) % count);
-    }, 6000);
-    return () => window.clearInterval(timer);
-  }, [count, index]);
+    remainingRef.current = SLIDE_MS;
+  }, [index]);
+
+  useEffect(() => {
+    if (count < 2) return;
+    const startedAt = Date.now();
+    const timer = window.setTimeout(
+      () => setNav((cur) => ({ index: (cur.index + 1) % count, prev: cur.index, dir: 1 })),
+      remainingRef.current,
+    );
+    return () => {
+      window.clearTimeout(timer);
+      remainingRef.current = Math.max(0, remainingRef.current - (Date.now() - startedAt));
+    };
+  }, [index, count]);
 
   if (!slide) return null;
 
-  function go(delta: number) {
-    setIndex((current) => (current + delta + count) % count);
-  }
-
-  const meta = [
-    new Date().getFullYear().toString(),
-    slide.certification,
-    slide.duration,
-    slide.languages[0]
-      ? slide.languages[0].charAt(0).toUpperCase() + slide.languages[0].slice(1)
-      : null,
-  ]
-    .filter(Boolean)
-    .join(" · ");
+  const layer = (i: number) => (i === index ? "z-[2]" : i === prev ? "z-[1]" : "z-0 opacity-0");
+  const textStack = [prev, index].filter((i, n, all) => i >= 0 && all.indexOf(i) === n);
 
   return (
-    <section className="relative w-full overflow-hidden bg-black lg:-mt-[60px]">
-      <div className="relative h-[min(680px,calc(100svh-var(--vybe-header-h)))] min-h-[500px] w-full lg:h-screen lg:min-h-[100dvh]">
+    <section
+      className="relative w-full overflow-hidden bg-black lg:-mt-[var(--vybe-header-h)]"
+      style={{ "--exo-dir": dir } as CSSProperties}
+      aria-roledescription="carousel"
+      aria-label="New movies"
+    >
+      <div className="relative h-[min(680px,100svh)] min-h-[500px] w-full lg:h-screen lg:min-h-[100dvh]">
         {slides.map((item, i) => (
-          <div
-            key={item.id}
-            className={`absolute inset-0 transition-opacity duration-700 ${
-              i === index ? "opacity-100" : "pointer-events-none opacity-0"
-            }`}
-            aria-hidden={i !== index}
-          >
-            <Image
-              src={item.backdropUrl || item.posterUrl}
-              alt={`${item.title} backdrop`}
-              fill
-              priority={i === 0}
-              className="object-cover object-center"
-              sizes="100vw"
-            />
+          <div key={item.id} className={`absolute inset-0 ${layer(i)}`} aria-hidden={i !== index}>
+            <div className={`absolute inset-0 overflow-hidden ${i === index && animating ? "exo-wipe" : ""}`}>
+              <Image
+                src={item.backdropUrl || item.posterUrl}
+                alt={`${item.title} backdrop`}
+                fill
+                priority={i === 0}
+                className={`object-cover object-center ${
+                  i === index && animating ? "exo-settle" : i === prev ? "exo-recede" : ""
+                }`}
+                sizes="100vw"
+              />
+            </div>
           </div>
         ))}
 
-        <div className="absolute inset-0 bg-gradient-to-r from-black via-black/50 to-transparent" />
-        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/25 to-black/30" />
-        <div className="absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-black/60 to-transparent" />
+        <div className="pointer-events-none absolute inset-0 z-[3] bg-[linear-gradient(to_right,rgba(0,0,0,0.78)_0%,rgba(0,0,0,0.32)_42%,rgba(0,0,0,0)_64%)]" />
+        <div className="pointer-events-none absolute inset-0 z-[3] bg-[linear-gradient(to_top,rgba(0,0,0,0.6),rgba(0,0,0,0)_36%)]" />
+        <div className="pointer-events-none absolute inset-x-0 top-0 z-[3] h-32 bg-gradient-to-b from-black/60 to-transparent" />
 
-        <div className="relative z-10 mx-auto flex h-full w-full flex-col justify-end px-5 pt-10 pb-14 sm:px-8 md:px-12 md:pb-16 lg:px-16 lg:pt-32 xl:px-20 3xl:px-28">
-          <div className="max-w-[560px] 3xl:max-w-[720px]">
-            <h1 className="text-[34px] leading-[1.02] font-extrabold tracking-tight break-words text-white uppercase sm:text-[48px] md:text-[60px] lg:text-[72px] 3xl:text-[88px]">
-              {slide.title}
-            </h1>
-            <p className="mt-3 text-[13px] font-bold text-accent md:text-[14px]">
-              Newly Added
-            </p>
-            {meta ? (
-              <p className="mt-2 text-[14px] font-semibold text-white/85 md:text-[15px]">
-                {meta}
-              </p>
-            ) : null}
-            <p className="mt-3 line-clamp-3 max-w-[520px] text-[14px] leading-6 text-white/75 md:text-[15px] md:leading-7">
-              {slide.description ||
-                "Discover this title in theatres near you on VYBE."}
-            </p>
-            {slide.genres.length ? (
-              <p className="mt-3 text-[13px] font-semibold text-white/60">
-                {slide.genres.slice(0, 4).join(" | ")}
-              </p>
-            ) : null}
-
-            <div className="mt-7 flex items-center gap-3">
-              <Link
-                href={`/movies/${slide.id}/book`}
-                className="inline-flex min-w-0 flex-1 items-center justify-center gap-2 rounded-xl bg-accent px-6 py-3.5 sm:min-w-[220px] sm:flex-none sm:px-8 text-[15px] font-extrabold text-white shadow-[0_12px_36px_rgba(255,0,91,0.35)] transition-transform hover:scale-[1.02]"
-              >
-                <Ticket className="size-5" />
-                Book Tickets
-              </Link>
-              <Link
-                href={`/movies/${slide.id}`}
-                className="inline-flex size-12 items-center justify-center rounded-xl bg-white/15 text-white backdrop-blur-md transition-colors hover:bg-white/25"
-                aria-label={`Details for ${slide.title}`}
-              >
-                <Plus className="size-6" strokeWidth={2.5} />
-              </Link>
+        <div className="absolute top-1/2 right-[8vw] z-[4] hidden aspect-[2/3] w-[18vw] max-w-[300px] -translate-y-1/2 overflow-hidden rounded-xl bg-[#111] shadow-[0_40px_90px_rgba(0,0,0,0.35)] lg:block">
+          {slides.map((item, i) => (
+            <div
+              key={item.id}
+              className={`absolute inset-0 overflow-hidden rounded-xl ${layer(i)} ${
+                i === index && animating ? "exo-wipe-rev" : ""
+              }`}
+              aria-hidden
+            >
+              <Image
+                src={item.posterUrl || item.backdropUrl || ""}
+                alt=""
+                fill
+                className={`object-cover ${
+                  i === index && animating ? "exo-drop" : i === prev ? "exo-push" : ""
+                }`}
+                sizes="300px"
+              />
             </div>
+          ))}
+        </div>
+
+        <div className="relative z-[5] mx-auto flex h-full w-full flex-col justify-end px-5 pt-10 pb-14 sm:px-8 md:px-12 md:pb-24 lg:justify-center lg:px-[7vw] lg:pt-24 lg:pb-24">
+          <div className="grid max-w-[560px] overflow-hidden pb-3 lg:w-[min(38vw,560px)] 3xl:max-w-[720px]">
+            {textStack.map((i) => {
+              const item = slides[i];
+              const active = i === index;
+              const meta = [
+                item.certification,
+                item.duration,
+                item.releaseDate?.slice(0, 4),
+                item.languages[0] ? titleCase(item.languages[0]) : null,
+              ]
+                .filter(Boolean)
+                .join(" · ");
+              return (
+                <div
+                  key={item.id}
+                  aria-hidden={!active}
+                  className={`[grid-area:1/1] ${
+                    active ? (animating ? "exo-rise-in" : "") : "exo-rise-out pointer-events-none"
+                  }`}
+                >
+                  {item.genres.length ? (
+                    <p className="text-[11px] font-semibold tracking-[0.16em] text-white/70 uppercase md:text-[12px]">
+                      {item.genres.slice(0, 3).join(" · ")}
+                    </p>
+                  ) : null}
+                  <h1 className="mt-3 text-[34px] leading-[0.98] font-semibold tracking-[-0.03em] break-words text-white sm:text-[44px] lg:text-[clamp(2.4rem,4vw,4.2rem)]">
+                    {item.title}
+                  </h1>
+                  <p className="mt-4 flex flex-wrap items-center gap-x-2 text-[13px] tracking-[0.04em] text-white/85">
+                    <span className="font-bold text-accent">{item.formatBadge || "New Release"}</span>
+                    {meta ? <span aria-hidden>·</span> : null}
+                    {meta}
+                  </p>
+                  <p className="mt-4 line-clamp-3 max-w-[40ch] text-[14px] leading-6 font-light text-white/90 md:text-[15px]">
+                    {item.description || "Discover this title in theatres near you on VYBE."}
+                  </p>
+
+                  <div className="mt-7 flex items-center gap-3">
+                    <Link
+                      href={`/movies/${item.id}/book`}
+                      tabIndex={active ? undefined : -1}
+                      className="inline-flex min-w-0 flex-1 items-center justify-center gap-2 rounded-xl bg-accent px-6 py-3.5 text-[15px] font-extrabold text-white shadow-[0_12px_36px_rgba(255,0,91,0.35)] transition-transform hover:scale-[1.02] sm:min-w-[220px] sm:flex-none sm:px-8"
+                    >
+                      <Ticket className="size-5" />
+                      Book Tickets
+                    </Link>
+                    <Link
+                      href={`/movies/${item.id}`}
+                      tabIndex={active ? undefined : -1}
+                      className="inline-flex size-12 items-center justify-center rounded-xl bg-white/15 text-white backdrop-blur-md transition-colors hover:bg-white/25"
+                      aria-label={`Details for ${item.title}`}
+                    >
+                      <Plus className="size-6" strokeWidth={2.5} />
+                    </Link>
+                  </div>
+                </div>
+              );
+            })}
           </div>
         </div>
 
         {count > 1 ? (
-          <>
-            <button
-              type="button"
-              aria-label="Previous movie"
-              onClick={() => go(-1)}
-              className="absolute top-1/2 left-3 z-20 hidden size-11 -translate-y-1/2 items-center justify-center rounded-full bg-black/45 text-white backdrop-blur-md transition-colors hover:bg-black/65 md:left-6 md:inline-flex"
-            >
-              <ChevronLeft className="size-6" strokeWidth={2.25} />
-            </button>
-            <button
-              type="button"
-              aria-label="Next movie"
-              onClick={() => go(1)}
-              className="absolute top-1/2 right-3 z-20 hidden size-11 -translate-y-1/2 items-center justify-center rounded-full bg-black/45 text-white backdrop-blur-md transition-colors hover:bg-black/65 md:right-6 md:inline-flex"
-            >
-              <ChevronRight className="size-6" strokeWidth={2.25} />
-            </button>
-            <div className="absolute bottom-5 left-1/2 z-20 flex -translate-x-1/2 items-center gap-2 md:bottom-7">
-              {slides.map((item, i) => (
-                <button
-                  key={item.id}
-                  type="button"
-                  aria-label={`Show ${item.title}`}
-                  onClick={() => setIndex(i)}
-                  className={`h-2 rounded-full transition-all ${
-                    i === index
-                      ? "w-6 bg-accent"
-                      : "w-2 bg-white/45 hover:bg-white/70"
+          <div
+            className="absolute right-8 bottom-8 z-[6] hidden items-baseline gap-[0.18em] text-[14px] tracking-[0.05em] text-white tabular-nums md:flex lg:right-12"
+            aria-hidden
+          >
+            <div className="relative grid h-4 w-[2ch] overflow-hidden leading-4">
+              {textStack.map((i) => (
+                <p
+                  key={slides[i].id}
+                  className={`[grid-area:1/1] ${
+                    i === index ? (animating ? "exo-rise-in" : "") : "exo-rise-out"
                   }`}
-                />
+                >
+                  {pad(i + 1)}
+                </p>
               ))}
             </div>
-          </>
+            <p className="opacity-50">/</p>
+            <p className="opacity-50">{pad(count)}</p>
+          </div>
         ) : null}
       </div>
     </section>

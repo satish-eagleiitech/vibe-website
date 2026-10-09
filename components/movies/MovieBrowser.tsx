@@ -10,6 +10,7 @@ import {
   type MovieFilterValues,
 } from "@/components/movies/MovieFilterModal";
 import { MoviePosterCard } from "@/components/movies/MoviePosterCard";
+import { useCardStand } from "@/components/movies/useCardStand";
 import type { Movie } from "@/types/movie";
 
 export type MovieBrowseCatalogs = {
@@ -90,6 +91,9 @@ export function MovieBrowser({ latest, catalogs }: MovieBrowserProps) {
   const [genreCatalogs, setGenreCatalogs] = useState<Partial<Record<string, Movie[]>>>({});
   const [genreLoading, setGenreLoading] = useState(false);
   const railRef = useRef<HTMLDivElement>(null);
+  const browseRef = useRef<HTMLDivElement>(null);
+  const gridRef = useRef<HTMLElement>(null);
+  const cardsRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (!isGenreTab(quickTab)) return;
@@ -146,6 +150,8 @@ export function MovieBrowser({ latest, catalogs }: MovieBrowserProps) {
     return list;
   }, [baseList, quickTab, modalFilters]);
 
+  useCardStand(gridRef, cardsRef, genreLoading ? null : visible);
+
   const gridHeading = useMemo(() => {
     if (modalFilters.languages.length || modalFilters.genres.length || modalFilters.formats.length) {
       return "Filtered results";
@@ -193,12 +199,29 @@ export function MovieBrowser({ latest, catalogs }: MovieBrowserProps) {
     );
   }
 
+  function scrollToGrid() {
+    requestAnimationFrame(() => {
+      const grid = gridRef.current;
+      if (!grid) return;
+      const header =
+        parseFloat(
+          getComputedStyle(document.documentElement).getPropertyValue("--vybe-header-h"),
+        ) || 0;
+      const bar = (browseRef.current?.firstElementChild as HTMLElement | null)?.offsetHeight ?? 0;
+      const padding = parseFloat(getComputedStyle(grid).paddingTop) || 0;
+      const top =
+        grid.getBoundingClientRect().top + window.scrollY - header - bar + padding - 20;
+      window.scrollTo({ top, behavior: "smooth" });
+    });
+  }
+
   function selectQuickTab(id: QuickTab) {
     setQuickTab((current) => (current === id ? "all" : id));
+    scrollToGrid();
   }
 
   return (
-    <div id="browse" className="scroll-mt-[var(--vybe-header-h)]">
+    <div id="browse" ref={browseRef} className="scroll-mt-[var(--vybe-header-h)]">
       <StickyFilterBar containerClassName="gap-3">
           <button
             type="button"
@@ -272,7 +295,10 @@ export function MovieBrowser({ latest, catalogs }: MovieBrowserProps) {
         genreOptions={GENRE_TABS}
         formatOptions={FORMAT_OPTIONS}
         onClose={() => setFilterOpen(false)}
-        onApply={setModalFilters}
+        onApply={(values) => {
+          setModalFilters(values);
+          scrollToGrid();
+        }}
         onClear={() => {
           setModalFilters(EMPTY_FILTERS);
           setQuickTab("all");
@@ -321,12 +347,22 @@ export function MovieBrowser({ latest, catalogs }: MovieBrowserProps) {
         </section>
       ) : null}
 
-      <section className="py-10 md:py-12">
+      <section ref={gridRef} className="overflow-x-clip py-10 md:py-12">
         <Container>
-          <div className="mb-6 flex flex-col gap-1 sm:flex-row sm:items-end sm:justify-between">
-            <h2 className="text-[20px] font-extrabold tracking-tight text-text md:text-[24px]">
-              {gridHeading}
-            </h2>
+          <div className="mb-8 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between md:mb-10">
+            <div className="flex flex-col gap-3">
+              <h2 className="text-[clamp(2.25rem,4vw,3.75rem)] leading-[0.92] font-semibold tracking-[-0.04em] capitalize">
+                {gridHeading.split(" ").map((word, i) => (
+                  <span key={`${word}-${i}`} data-stand-word>
+                    {i > 0 ? " " : ""}
+                    {word}
+                  </span>
+                ))}
+              </h2>
+              <p className="max-w-md text-[14px] leading-[1.4] font-semibold text-text-muted">
+                Grab best seats at theatres around you
+              </p>
+            </div>
             <p className="text-[14px] font-semibold text-text-muted">
               {visible.length} {visible.length === 1 ? "title" : "titles"}
             </p>
@@ -336,7 +372,10 @@ export function MovieBrowser({ latest, catalogs }: MovieBrowserProps) {
           ) : visible.length === 0 ? (
             <EmptyState title="No movies found for this filter" />
           ) : (
-            <div className="grid grid-cols-2 gap-x-4 gap-y-8 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 md:gap-x-6 2xl:grid-cols-6">
+            <div
+              ref={cardsRef}
+              className="grid grid-cols-2 gap-x-4 gap-y-7 sm:grid-cols-3 md:grid-cols-4 md:gap-x-5 lg:grid-cols-5 xl:grid-cols-6"
+            >
               {visible.map((movie) => (
                 <MoviePosterCard key={movie.id} movie={movie} />
               ))}

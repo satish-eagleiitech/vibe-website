@@ -48,7 +48,7 @@
 
 @media (min-width: 64rem) {
   :root {
-    --vybe-header-h: 60px;
+    --vybe-header-h: 78px;
   }
 }
 
@@ -205,6 +205,154 @@ textarea:focus-visible {
 
 .vybe-marquee-down {
   animation: vybe-marquee-down var(--vybe-marquee-duration, 32s) linear infinite;
+}
+
+@keyframes vybe-hero-progress {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+.vybe-hero-progress {
+  transform-origin: left;
+  animation: vybe-hero-progress var(--vybe-hero-duration, 5s) linear forwards;
+}
+
+.vybe-hero-paused .vybe-hero-progress {
+  animation-play-state: paused;
+}
+
+[data-stand-word] {
+  color: color-mix(
+    in srgb,
+    var(--color-accent) calc(var(--stand-mix, 0) * 100%),
+    var(--color-text)
+  );
+}
+
+/* Movies hero slide transition. --exo-dir is 1 (next) or -1 (previous). */
+@keyframes exo-wipe {
+  from {
+    clip-path: inset(calc((1 + var(--exo-dir, 1)) * 50%) 0 calc((1 - var(--exo-dir, 1)) * 50%) 0);
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+@keyframes exo-wipe-rev {
+  from {
+    clip-path: inset(calc((1 - var(--exo-dir, 1)) * 50%) 0 calc((1 + var(--exo-dir, 1)) * 50%) 0);
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+@keyframes exo-settle {
+  from {
+    transform: scale(1.06);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+@keyframes exo-recede {
+  to {
+    transform: scale(1.03);
+  }
+}
+
+@keyframes exo-drop {
+  from {
+    transform: translateY(calc(var(--exo-dir, 1) * -50%));
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+@keyframes exo-push {
+  to {
+    transform: translateY(calc(var(--exo-dir, 1) * 50%));
+  }
+}
+
+@keyframes exo-rise-in {
+  from {
+    transform: translateY(calc(var(--exo-dir, 1) * 110%));
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+@keyframes exo-rise-out {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(calc(var(--exo-dir, 1) * -110%));
+  }
+}
+
+.exo-wipe,
+.exo-wipe-rev,
+.exo-settle,
+.exo-recede,
+.exo-drop,
+.exo-push,
+.exo-rise-in,
+.exo-rise-out {
+  animation-duration: 1.25s;
+  animation-timing-function: cubic-bezier(0.65, 0, 0.35, 1);
+  animation-fill-mode: both;
+}
+
+.exo-wipe {
+  animation-name: exo-wipe;
+}
+.exo-wipe-rev {
+  animation-name: exo-wipe-rev;
+}
+.exo-settle {
+  animation-name: exo-settle;
+}
+.exo-recede {
+  animation-name: exo-recede;
+}
+.exo-drop {
+  animation-name: exo-drop;
+}
+.exo-push {
+  animation-name: exo-push;
+}
+.exo-rise-in {
+  animation-name: exo-rise-in;
+}
+.exo-rise-out {
+  animation-name: exo-rise-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .exo-wipe,
+  .exo-wipe-rev,
+  .exo-settle,
+  .exo-recede,
+  .exo-drop,
+  .exo-push,
+  .exo-rise-in,
+  .exo-rise-out {
+    animation: none;
+  }
+
+  .exo-rise-out {
+    visibility: hidden;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
