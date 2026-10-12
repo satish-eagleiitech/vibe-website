@@ -60,11 +60,12 @@ export const darkColors = {
   segmentIdleText: "#A1A1AA",
 } as const;
 
+/** Matched to each card art edge so translate shift never shows a seam */
 export const categoryColors = {
-  movies: { from: "#3B1663", to: "#21083D" },
-  events: { from: "#831843", to: "#50072B" },
-  activities: { from: "#064E3B", to: "#022C22" },
-  play: { from: "#0E7490", to: "#083344" },
+  movies: { from: "#0E1729", to: "#00020A" },
+  events: { from: "#78ACCB", to: "#8EBEDC" },
+  activities: { from: "#18322F", to: "#142625" },
+  play: { from: "#52A678", to: "#3E9A68" },
 } as const;
 
 export type ThemeName = "light" | "dark";

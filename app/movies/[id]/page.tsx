@@ -6,7 +6,6 @@ import type { ReactNode } from "react";
 import { Container } from "@/components/common/Container";
 import { MovieDetailPhotosGrid } from "@/components/movies/MovieDetailPhotosGrid";
 import { MovieDetailPosterActions } from "@/components/movies/MovieDetailPosterActions";
-import { MovieDetailScoreRing } from "@/components/movies/MovieDetailScoreRing";
 import { StickyBookBar } from "@/components/movies/StickyBookBar";
 import { RecordRecentView } from "@/components/recent/RecordRecentView";
 import { getMovieById } from "@/lib/api/movies";
@@ -34,7 +33,6 @@ export default async function MovieDetailPage({
   const cast = movie.castMembers ?? [];
   const crew = movie.crew ?? [];
   const videos = movie.videos ?? [];
-  const year = movie.releaseDate?.slice(0, 4);
   const director =
     crew.find((person) => /director/i.test(person.role ?? ""))?.name ??
     crew[0]?.name;
@@ -54,18 +52,7 @@ export default async function MovieDetailPage({
   const posters =
     movie.images?.filter((image) => image.type === "poster") ?? [];
   const galleryImages = [...wallpapers, ...posters];
-  const trailerHref =
-    movie.trailerUrl ?? videos.find((v) => v.type === "Trailer")?.watchUrl;
   const featuredVideo = videos[0];
-
-  const heroMeta = [
-    year,
-    movie.certification,
-    "Movie",
-    movie.duration,
-  ]
-    .filter(Boolean)
-    .join(" • ");
 
   return (
     <div className="w-full bg-bg pb-16">
@@ -80,61 +67,8 @@ export default async function MovieDetailPage({
 
       <section
         id="movie-detail-hero"
-        className="relative min-h-[min(82vh,780px)] text-white"
+        className="relative z-10 border-b border-border bg-bg py-8 md:py-10"
       >
-        <div className="absolute inset-0 overflow-hidden">
-          {movie.backdropUrl ? (
-            <Image
-              src={movie.backdropUrl}
-              alt=""
-              fill
-              priority
-              className="object-cover object-[center_20%]"
-              sizes="100vw"
-            />
-          ) : (
-            <div className="size-full bg-[#0b0b0f]" />
-          )}
-          <div className="absolute inset-0 bg-gradient-to-t from-[#0b0b0f] via-[#0b0b0f]/65 to-black/25" />
-          <div className="absolute inset-0 bg-gradient-to-r from-black/55 via-black/15 to-black/30" />
-        </div>
-
-        <Container className="relative z-10 flex min-h-[min(82vh,780px)] flex-col justify-end pb-10 pt-8 md:pb-12">
-          <p className="text-[11px] font-extrabold tracking-[0.16em] text-accent uppercase">
-            {movie.statusBadge || "Now showing"}
-          </p>
-          <h1 className="mt-2 max-w-4xl text-[34px] font-extrabold tracking-tight md:text-[48px] lg:text-[56px]">
-            {movie.title}
-          </h1>
-          {heroMeta ? (
-            <p className="mt-3 text-[14px] font-medium text-white/75 md:text-[15px]">
-              {heroMeta}
-            </p>
-          ) : null}
-          <div className="mt-6 flex flex-wrap gap-3">
-            <Link
-              href={`/movies/${movie.id}/book`}
-              className="inline-flex items-center gap-2 rounded-full bg-surface px-7 py-3 text-sm font-bold text-text shadow-lg transition-transform hover:scale-[1.02]"
-            >
-              <Play className="size-4 fill-text" />
-              Book seats
-            </Link>
-            {trailerHref ? (
-              <a
-                href={trailerHref}
-                target="_blank"
-                rel="noreferrer"
-                className="inline-flex items-center gap-2 rounded-full border border-white/25 bg-white/10 px-6 py-3 text-sm font-bold text-white backdrop-blur-md"
-              >
-                <Play className="size-4 fill-white" />
-                Trailer
-              </a>
-            ) : null}
-          </div>
-        </Container>
-      </section>
-
-      <section className="relative z-10 border-b border-border bg-bg py-8 md:py-10">
         <Container>
           <div className="grid gap-10 lg:grid-cols-[220px_minmax(0,1fr)_240px] lg:items-start lg:gap-12">
             <MovieDetailPosterActions movie={movie} />
@@ -165,12 +99,16 @@ export default async function MovieDetailPage({
                   {movie.description}
                 </p>
               ) : null}
+              <Link
+                href={`/movies/${movie.id}/book`}
+                className="inline-flex items-center gap-2.5 rounded-full bg-accent px-7 py-3 text-[15px] font-extrabold text-white transition-transform hover:scale-[1.02]"
+              >
+                <Ticket className="size-5" strokeWidth={2.5} />
+                Book tickets
+              </Link>
             </div>
 
             <div className="flex flex-col items-center gap-6 lg:items-end">
-              {movie.rating ? (
-                <MovieDetailScoreRing value={movie.rating} />
-              ) : null}
               {featuredVideo ? (
                 <a
                   href={featuredVideo.watchUrl}
@@ -193,7 +131,10 @@ export default async function MovieDetailPage({
                     </span>
                   </div>
                   <p className="line-clamp-2 px-3 py-2.5 text-[12px] font-bold text-text">
-                    {featuredVideo.name}
+                    {featuredVideo.type === "Trailer" ||
+                    featuredVideo.type === "Teaser"
+                      ? featuredVideo.type
+                      : featuredVideo.name}
                   </p>
                 </a>
               ) : null}
@@ -202,13 +143,10 @@ export default async function MovieDetailPage({
         </Container>
       </section>
 
-      {galleryImages.length > 0 ? (
-        <MovieDetailPhotosGrid title={movie.title} images={galleryImages} />
-      ) : null}
-
       <StickyBookBar
         title={movie.title}
         bookHref={`/movies/${movie.id}/book`}
+        bookLabel="Book tickets"
       />
 
       <section className="bg-bg py-8 md:py-10">
@@ -244,6 +182,10 @@ export default async function MovieDetailPage({
           ) : null}
         </Container>
       </section>
+
+      {galleryImages.length > 0 ? (
+        <MovieDetailPhotosGrid title={movie.title} images={galleryImages} />
+      ) : null}
     </div>
   );
 }
@@ -281,7 +223,7 @@ function DetailScroller({
 function PersonCard({ person }: { person: MoviePerson }) {
   return (
     <div className="w-[100px] shrink-0 text-center md:w-[112px]">
-      <div className="relative mx-auto size-[84px] overflow-hidden rounded-full bg-surface-muted md:size-[96px]">
+      <div className="relative mx-auto size-[84px] overflow-hidden rounded-full border-2 border-white bg-surface-muted shadow-[0_0_0_1px_rgba(0,0,0,0.06)] md:size-[96px]">
         {person.imageUrl ? (
           <Image
             src={person.imageUrl}

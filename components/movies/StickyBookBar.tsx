@@ -54,7 +54,7 @@ export function StickyBookBar({
         <Link
           href={bookHref}
           tabIndex={visible ? 0 : -1}
-          className="inline-flex shrink-0 items-center gap-2 rounded-lg bg-accent px-5 py-2.5 text-[13px] font-bold text-white transition-transform hover:scale-[1.02] md:rounded-xl md:px-6 md:py-3 md:text-sm"
+          className="inline-flex shrink-0 items-center gap-2 rounded-full bg-accent px-6 py-2.5 text-[14px] font-extrabold text-white transition-transform hover:scale-[1.02] md:px-7 md:py-3 md:text-[15px]"
         >
           <Ticket className="size-4 md:size-5" />
           {bookLabel}

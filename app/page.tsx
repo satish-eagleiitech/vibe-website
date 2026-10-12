@@ -56,7 +56,7 @@ export default async function Home({
       <EventsSection events={events.items.slice(0, 8)} />
 
       {/* 5. Artists */}
-      <ArtistsSection artists={artists} />
+      {/* <ArtistsSection artists={artists} /> */}
 
       {/* 6. Crowd favourites */}
       <VideoRailSection

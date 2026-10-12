@@ -14,7 +14,7 @@ import { ThemeToggle } from "@/components/navbar/ThemeToggle";
 
 export function Navbar() {
   const pathname = usePathname();
-  /** Only Movies browse has a full-bleed dark hero under the nav right now */
+  /** Only Movies browse has a full-bleed dark hero under the nav */
   const darkHeroPage = pathname === "/movies";
   const [onLight, setOnLight] = useState(!darkHeroPage);
 
