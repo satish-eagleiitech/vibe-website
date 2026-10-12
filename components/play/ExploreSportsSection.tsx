@@ -8,6 +8,7 @@ const sceneSports = new Set([
   "box-cricket",
   "cricket-nets",
   "football",
+  "cricket",
 ]);
 
 export function ExploreSportsSection() {
@@ -26,10 +27,10 @@ export function ExploreSportsSection() {
                 href={sport.href}
                 className="group flex aspect-[5/6] flex-col overflow-hidden rounded-[18px] border border-[#E6E8EC] bg-white text-[#1C1C1C] shadow-none transition-colors hover:border-[#D4D7DE] dark:border-[#E4E4E7] dark:bg-white dark:text-[#1C1C1C]"
               >
-                <span className="flex h-9 shrink-0 items-center justify-center px-1.5 text-center text-[12px] font-semibold leading-[1.15] text-[#1C1C1C] sm:text-[13px] dark:text-[#1C1C1C]">
+                <span className="relative z-10 flex min-h-10 shrink-0 items-center justify-center bg-white px-2 pt-2.5 pb-1.5 text-center text-[12px] font-semibold leading-tight text-[#1C1C1C] sm:min-h-11 sm:text-[13px]">
                   {sport.label}
                 </span>
-                <div className="relative min-h-0 flex-1">
+                <div className="relative min-h-0 flex-1 overflow-hidden bg-white">
                   <Image
                     src={sport.imageUrl}
                     alt=""
@@ -37,7 +38,7 @@ export function ExploreSportsSection() {
                     className={
                       scene
                         ? "object-cover object-[center_68%]"
-                        : "origin-center object-contain object-center scale-[1.22]"
+                        : "origin-center object-contain object-center scale-[1.12]"
                     }
                     sizes="(max-width: 640px) 46vw, 150px"
                   />
