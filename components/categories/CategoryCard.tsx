@@ -11,28 +11,27 @@ export function CategoryCard({ category }: CategoryCardProps) {
   return (
     <Link
       href={category.href}
-      className="relative flex aspect-[16/9] min-h-[200px] flex-col justify-between overflow-hidden rounded-[32px] p-7 text-white md:min-h-[240px] md:p-8"
+      className="relative aspect-[2.15/1] min-h-[148px] overflow-hidden rounded-[28px] text-white md:min-h-[168px] md:rounded-[32px]"
       style={{ backgroundColor: category.gradientFrom }}
     >
-      {/* object-contain = full art visible, no top/side crop */}
+      {/* Full-bleed card art — same composition as the sports reference */}
       <Image
         src={category.imageUrl}
         alt=""
         fill
         unoptimized
-        className="object-contain object-center"
-        sizes="(max-width: 768px) 100vw, 50vw"
+        className="object-cover object-right"
+        sizes="(max-width: 768px) 92vw, 48vw"
       />
 
-      <div className="relative z-10 max-w-[48%]">
-        <h3 className="text-[30px] leading-[1] font-extrabold tracking-[-0.03em] drop-shadow-[0_1px_8px_rgba(0,0,0,0.25)] md:text-[36px]">
+      <div className="relative z-10 flex h-full flex-col justify-between p-5 md:p-6 lg:p-7">
+        <h3 className="max-w-[9ch] text-[22px] leading-[1.05] font-extrabold tracking-[-0.03em] md:text-[26px] lg:text-[30px]">
           {category.title}
         </h3>
-      </div>
-
-      <div className="relative z-10 mt-auto inline-flex items-center gap-2 text-[12px] font-extrabold tracking-[0.16em] uppercase drop-shadow-[0_1px_6px_rgba(0,0,0,0.25)]">
-        <ArrowUpRight className="size-4" strokeWidth={2.5} />
-        Explore more
+        <div className="inline-flex items-center gap-1.5 text-[10px] font-extrabold tracking-[0.14em] text-white/90 uppercase md:text-[11px]">
+          <ArrowUpRight className="size-3.5" strokeWidth={2.5} />
+          Explore more
+        </div>
       </div>
     </Link>
   );
