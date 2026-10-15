@@ -85,7 +85,7 @@ export function AllActivitiesSection({
   }
 
   function chipClass(selected: boolean) {
-    return `shrink-0 rounded-full border px-4 py-2 text-[13px] font-bold transition-colors ${
+    return `shrink-0 rounded-full border px-3 py-1.5 text-[12px] font-bold transition-colors ${
       selected
         ? "border-accent bg-accent-soft text-accent"
         : "border-border bg-surface text-text hover:border-accent/40"
@@ -95,13 +95,29 @@ export function AllActivitiesSection({
   return (
     <section
       id="all-activities"
-      className="scroll-mt-[var(--vybe-header-h)] w-full py-8 md:py-10"
+      className="scroll-mt-[var(--vybe-header-h)] w-full overflow-x-clip pt-8 md:pt-10"
     >
+      <Container>
+        <div className="mb-5 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between md:mb-6">
+          <div>
+            <h2 className="text-[20px] font-extrabold tracking-tight text-text md:text-[24px]">
+              All activities
+            </h2>
+            <p className="mt-0.5 text-[13px] text-text-secondary">
+              Parks, thrills and day trips near you
+            </p>
+          </div>
+          <p className="text-[14px] font-semibold text-text-muted">
+            {filtered.length} {filtered.length === 1 ? "activity" : "activities"}
+          </p>
+        </div>
+      </Container>
+
       <StickyFilterBar>
-        <span className="inline-flex shrink-0 items-center gap-1.5 rounded-full border border-border bg-surface px-3.5 py-2 text-[13px] font-bold text-text">
-          <SlidersHorizontal className="size-3.5" />
+        <span className="inline-flex shrink-0 items-center gap-1 rounded-full border border-border bg-surface px-2.5 py-1.5 text-[12px] font-bold text-text">
+          <SlidersHorizontal className="size-3" />
           Filters
-          <ChevronDown className="size-3.5 text-text-muted" />
+          <ChevronDown className="size-3 text-text-muted" />
         </span>
 
         {WHEN_FILTERS.map((item) => {
@@ -149,16 +165,7 @@ export function AllActivitiesSection({
         })}
       </StickyFilterBar>
 
-      <Container className="mt-7">
-        <div className="mb-6 flex items-end justify-between gap-4">
-          <h2 className="text-[20px] font-extrabold tracking-tight text-text md:text-[24px]">
-            All activities
-          </h2>
-          <p className="text-[14px] font-semibold text-text-muted">
-            {filtered.length} {filtered.length === 1 ? "activity" : "activities"}
-          </p>
-        </div>
-
+      <Container className="pt-6 pb-10 md:pt-8 md:pb-12">
         {filtered.length === 0 ? (
           <EmptyState title="No activities for this filter" />
         ) : (

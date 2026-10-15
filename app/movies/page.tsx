@@ -1,5 +1,4 @@
 import { MovieBrowser } from "@/components/movies/MovieBrowser";
-import { MovieHeroCarousel } from "@/components/movies/MovieHeroCarousel";
 import {
   getMoviesCatalog,
   getNewReleaseMovies,
@@ -10,8 +9,6 @@ import {
 export const metadata = {
   title: "Movies",
 };
-
-const HERO_SLIDES = 10;
 
 export default async function MoviesPage() {
   const [fresh, catalogTelugu, catalogHindi, catalogEnglish, topRated] =
@@ -30,13 +27,9 @@ export default async function MoviesPage() {
     60,
   );
 
-  const heroMovies = fresh.items
-    .filter((movie) => movie.backdropUrl && movie.description)
-    .slice(0, HERO_SLIDES);
-
   return (
     <div className="w-full pb-12">
-      <MovieHeroCarousel movies={heroMovies} />
+      {/* Hero moved to landing page — movies starts from Latest added */}
       <MovieBrowser
         latest={fresh.items.slice(0, 16)}
         catalogs={{

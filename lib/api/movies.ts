@@ -14,7 +14,13 @@ import type {
   TmdbMovieDetailsResponse,
   TmdbMovieListItem,
   TmdbPagedResponse,
+  TmdbVideos,
 } from "@/types/tmdb";
+import {
+  applyTrailerOverrides,
+  CERT_OVERRIDES,
+  preferTrailersFirst,
+} from "@/lib/movies/trailerOverrides";
 
 const LANGUAGE_TO_ISO: Record<string, string> = {
   telugu: "te",
@@ -61,23 +67,30 @@ function indianCertification(details: TmdbMovieDetailsResponse): string | undefi
   return certified?.certification || undefined;
 }
 
-function mapVideos(details: TmdbMovieDetailsResponse): MovieVideo[] {
-  return (details.videos?.results ?? [])
-    .filter((video) => video.site === "YouTube")
-    .slice(0, 12)
-    .map((video) => ({
-      id: video.key,
-      key: video.key,
-      name: video.name,
-      type: video.type,
-      site: video.site,
-      thumbnailUrl: `https://i.ytimg.com/vi/${video.key}/hqdefault.jpg`,
-      watchUrl: `https://www.youtube.com/watch?v=${video.key}`,
-    }));
+function mapVideoResults(
+  results: TmdbVideos["results"] | undefined,
+): MovieVideo[] {
+  return preferTrailersFirst(
+    (results ?? [])
+      .filter((video) => video.site === "YouTube")
+      .slice(0, 12)
+      .map((video) => ({
+        id: video.key,
+        key: video.key,
+        name: video.name,
+        type: video.type,
+        site: video.site,
+        thumbnailUrl: `https://i.ytimg.com/vi/${video.key}/hqdefault.jpg`,
+        watchUrl: `https://www.youtube.com/watch?v=${video.key}`,
+      })),
+  );
 }
 
-function trailerUrl(details: TmdbMovieDetailsResponse): string | undefined {
-  const videos = mapVideos(details);
+function mapVideos(details: TmdbMovieDetailsResponse): MovieVideo[] {
+  return mapVideoResults(details.videos?.results);
+}
+
+function pickTrailerUrl(videos: MovieVideo[]): string | undefined {
   const trailer =
     videos.find((video) => video.type === "Trailer") ?? videos[0];
   return trailer?.watchUrl;
@@ -145,7 +158,8 @@ function mapDetails(raw: TmdbMovieDetailsResponse): MovieDetails {
     12,
   );
 
-  const videos = mapVideos(raw);
+  const movieId = String(raw.id);
+  const videos = applyTrailerOverrides(movieId, mapVideos(raw));
   const backdrops = (raw.images?.backdrops ?? [])
     .slice(0, 10)
     .map((image) => ({
@@ -160,13 +174,13 @@ function mapDetails(raw: TmdbMovieDetailsResponse): MovieDetails {
   }));
 
   return {
-    id: String(raw.id),
+    id: movieId,
     title: raw.title,
     posterUrl: resolveTmdbImage(raw.poster_path, "w500"),
     backdropUrl: resolveTmdbImage(raw.backdrop_path, "w1280"),
     rating: raw.vote_average || undefined,
     voteLabel: raw.vote_count ? formatVoteCount(raw.vote_count) : undefined,
-    certification: indianCertification(raw),
+    certification: CERT_OVERRIDES[movieId] ?? indianCertification(raw),
     genres,
     languages: raw.spoken_languages?.length
       ? raw.spoken_languages.map((item) => mapLanguage(item.iso_639_1))
@@ -180,7 +194,7 @@ function mapDetails(raw: TmdbMovieDetailsResponse): MovieDetails {
     crew,
     videos,
     images: [...backdrops, ...posters],
-    trailerUrl: trailerUrl(raw),
+    trailerUrl: pickTrailerUrl(videos),
   };
 }
 
@@ -561,15 +575,15 @@ async function fetchNewReleasesFor(
   iso: string,
   pages: number,
   extras?: Partial<Movie>,
-  revalidate?: number,
+  revalidate = 300,
 ): Promise<MovieListResult> {
   const result = await fetchMoviePages(
     "/discover/movie",
     pages,
     {
       sort_by: "popularity.desc",
-      "primary_release_date.gte": isoDaysFromToday(-90),
-      "primary_release_date.lte": isoDaysFromToday(0),
+      "primary_release_date.gte": isoDaysFromToday(-60),
+      "primary_release_date.lte": isoDaysFromToday(7),
       region: "IN",
       with_release_type: "2|3",
       include_adult: "false",
@@ -604,12 +618,16 @@ export async function getNewReleaseMovies(
       fetchNewReleasesFor(LANGUAGE_TO_ISO.hindi, 1, { formatBadge: "New Release" }),
       fetchNewReleasesFor(LANGUAGE_TO_ISO.english, 1, { formatBadge: "New Release" }),
     ]);
-    const items = interleaveRegionalMovies(
-      telugu.items,
-      hindi.items,
-      english.items,
-      24,
-    );
+    // Pool recent popular titles across languages, then show absolute latest first
+    // (interleave alone can bury a newer English/Hindi release behind older Telugu).
+    const seen = new Set<string>();
+    const merged: Movie[] = [];
+    for (const movie of [...telugu.items, ...hindi.items, ...english.items]) {
+      if (seen.has(movie.id)) continue;
+      seen.add(movie.id);
+      merged.push(movie);
+    }
+    const items = newestFirst(merged).slice(0, 24);
     return { items, total: items.length, source: "api" };
   } catch {
     return { items: filterFallback(language), source: "fallback" };
@@ -622,9 +640,14 @@ const HERO_MIX = [
   { iso: "en", count: 3, badge: "Hollywood" },
 ] as const;
 
+/** Always lead the landing hero with these titles */
+const HERO_PIN_IDS = ["1620668", "1234139"] as const; // Mayookha, Jailer 2
+/** Drop from landing hero carousel */
+const HERO_EXCLUDE_IDS = new Set(["1787082", "1785244"]); // Poniiy, AAKHRI MULAQAT
+
 /**
- * Landing hero: latest 4 Tollywood, 3 Bollywood and 3 Hollywood releases.
- * Cached for an hour so newly released titles rotate in the same day.
+ * Landing hero: pinned Mayookha + Jailer 2, then latest regional releases.
+ * Excludes Poniiy / AAKHRI MULAQAT.
  */
 export async function getLandingHeroMovies(): Promise<MovieListResult> {
   if (!hasMoviesApi()) {
@@ -632,14 +655,30 @@ export async function getLandingHeroMovies(): Promise<MovieListResult> {
   }
 
   try {
-    const groups = await Promise.all(
-      HERO_MIX.map(({ iso, badge }) =>
-        fetchNewReleasesFor(iso, 1, { formatBadge: badge }, HOUR_SECONDS),
+    const [pinnedDetails, ...groups] = await Promise.all([
+      Promise.all(HERO_PIN_IDS.map((id) => getMovieById(id))),
+      ...HERO_MIX.map(({ iso }) =>
+        fetchNewReleasesFor(iso, 1, { formatBadge: "New Release" }, 300),
       ),
+    ]);
+
+    const pinned = pinnedDetails.filter((movie): movie is MovieDetails =>
+      Boolean(movie?.posterUrl || movie?.backdropUrl),
     );
-    const items = HERO_MIX.flatMap(({ count }, index) =>
-      groups[index].items.filter((movie) => movie.posterUrl).slice(0, count),
+    const pinnedIds = new Set(pinned.map((movie) => movie.id));
+
+    const mixed = HERO_MIX.flatMap(({ count }, index) =>
+      groups[index].items
+        .filter(
+          (movie) =>
+            movie.posterUrl &&
+            !HERO_EXCLUDE_IDS.has(movie.id) &&
+            !pinnedIds.has(movie.id),
+        )
+        .slice(0, count),
     );
+
+    const items = [...pinned, ...newestFirst(mixed)].slice(0, 10);
     return { items, total: items.length, source: "api" };
   } catch {
     return { items: fallbackMovies.slice(0, 10), source: "fallback" };
@@ -688,17 +727,39 @@ export async function getMovieById(id: string): Promise<MovieDetails | null> {
   }
 
   try {
-    return mapDetails(
-      await apiGet<TmdbMovieDetailsResponse>(`/movie/${id}`, {
+    const [details, videoPayload] = await Promise.all([
+      apiGet<TmdbMovieDetailsResponse>(`/movie/${id}`, {
         movies: true,
         query: {
           language: "en-IN",
           append_to_response: "credits,release_dates,videos,images",
-          include_image_language: "en,null",
+          include_image_language: "en,hi,te,ta,null",
         },
         revalidate: 300,
       }),
-    );
+      // Unfiltered videos — language=en-IN often returns zero rows for Indian titles
+      apiGet<TmdbVideos>(`/movie/${id}/videos`, {
+        movies: true,
+        query: {},
+        revalidate: 300,
+      }).catch(() => ({ results: [] as TmdbVideos["results"] })),
+    ]);
+
+    const mergedResults = [
+      ...(details.videos?.results ?? []),
+      ...(videoPayload.results ?? []),
+    ];
+    const seenKeys = new Set<string>();
+    const deduped = mergedResults.filter((video) => {
+      if (seenKeys.has(video.key)) return false;
+      seenKeys.add(video.key);
+      return true;
+    });
+
+    return mapDetails({
+      ...details,
+      videos: { results: deduped },
+    });
   } catch {
     return null;
   }

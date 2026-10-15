@@ -4,6 +4,8 @@ export type PopularCity = {
   state: string;
   /** Landmark artwork under /public/images/cities */
   image?: string;
+  /** Soft colorful tile behind the landmark icon */
+  tone?: string;
   lat: number;
   lng: number;
 };
@@ -15,6 +17,7 @@ export const POPULAR_CITIES: PopularCity[] = [
     name: "Hyderabad",
     state: "Telangana",
     image: "/images/cities/hyderabad.png",
+    tone: "#FFD0E4",
     lat: 17.385,
     lng: 78.4867,
   },
@@ -23,6 +26,7 @@ export const POPULAR_CITIES: PopularCity[] = [
     name: "Mumbai",
     state: "Maharashtra",
     image: "/images/cities/mumbai.png",
+    tone: "#CDE3FF",
     lat: 19.076,
     lng: 72.8777,
   },
@@ -31,6 +35,7 @@ export const POPULAR_CITIES: PopularCity[] = [
     name: "Delhi NCR",
     state: "Delhi",
     image: "/images/cities/delhi.png",
+    tone: "#FFE0B8",
     lat: 28.6139,
     lng: 77.209,
   },
@@ -39,6 +44,7 @@ export const POPULAR_CITIES: PopularCity[] = [
     name: "Bengaluru",
     state: "Karnataka",
     image: "/images/cities/bengaluru.png",
+    tone: "#C6F0D6",
     lat: 12.9716,
     lng: 77.5946,
   },
@@ -47,6 +53,7 @@ export const POPULAR_CITIES: PopularCity[] = [
     name: "Chennai",
     state: "Tamil Nadu",
     image: "/images/cities/chennai.png",
+    tone: "#E4D0FF",
     lat: 13.0827,
     lng: 80.2707,
   },
@@ -55,6 +62,7 @@ export const POPULAR_CITIES: PopularCity[] = [
     name: "Pune",
     state: "Maharashtra",
     image: "/images/cities/pune.png",
+    tone: "#FFE9A8",
     lat: 18.5204,
     lng: 73.8567,
   },
@@ -63,6 +71,7 @@ export const POPULAR_CITIES: PopularCity[] = [
     name: "Kolkata",
     state: "West Bengal",
     image: "/images/cities/kolkata.png",
+    tone: "#C8ECFF",
     lat: 22.5726,
     lng: 88.3639,
   },
@@ -71,6 +80,7 @@ export const POPULAR_CITIES: PopularCity[] = [
     name: "Ahmedabad",
     state: "Gujarat",
     image: "/images/cities/ahmedabad.png",
+    tone: "#FFD4C4",
     lat: 23.0225,
     lng: 72.5714,
   },
@@ -79,6 +89,7 @@ export const POPULAR_CITIES: PopularCity[] = [
     name: "Jaipur",
     state: "Rajasthan",
     image: "/images/cities/jaipur.png",
+    tone: "#FFC9DC",
     lat: 26.9124,
     lng: 75.7873,
   },
@@ -87,6 +98,7 @@ export const POPULAR_CITIES: PopularCity[] = [
     name: "Kochi",
     state: "Kerala",
     image: "/images/cities/kochi.png",
+    tone: "#B8F5DE",
     lat: 9.9312,
     lng: 76.2673,
   },
@@ -95,6 +107,7 @@ export const POPULAR_CITIES: PopularCity[] = [
     name: "Chandigarh",
     state: "Chandigarh",
     image: "/images/cities/chandigarh.png",
+    tone: "#D4D8FF",
     lat: 30.7333,
     lng: 76.7794,
   },
@@ -103,6 +116,7 @@ export const POPULAR_CITIES: PopularCity[] = [
     name: "Goa",
     state: "Goa",
     image: "/images/cities/goa.png",
+    tone: "#B6F5E4",
     lat: 15.2993,
     lng: 74.124,
   },

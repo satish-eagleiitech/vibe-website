@@ -34,7 +34,7 @@ const FILTERS: { id: SearchCategory; label: string }[] = [
   { id: "movies", label: "Movies" },
   { id: "events", label: "Events" },
   { id: "activities", label: "Activities" },
-  { id: "play", label: "Game Zone" },
+  { id: "play", label: "Play" },
 ];
 
 function buildCatalog(): SearchHit[] {
@@ -71,7 +71,7 @@ function buildCatalog(): SearchHit[] {
   const play: SearchHit[] = fallbackPlay.map((item) => ({
     id: `play-${item.id}`,
     title: item.title,
-    label: "Game Zone",
+    label: "Play",
     href: `/play/${item.id}`,
     imageUrl: item.imageUrl,
     meta: item.venue || item.schedule,
@@ -84,7 +84,6 @@ function buildCatalog(): SearchHit[] {
 type SearchOverlayProps = {
   open: boolean;
   onClose: () => void;
-  overlayChrome?: boolean;
 };
 
 export function SearchOverlay({ open, onClose }: SearchOverlayProps) {
@@ -98,7 +97,11 @@ export function SearchOverlay({ open, onClose }: SearchOverlayProps) {
       if (event.key === "Escape") onClose();
     };
     window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
+    document.body.style.overflow = "hidden";
+    return () => {
+      window.removeEventListener("keydown", onKey);
+      document.body.style.overflow = "";
+    };
   }, [open, onClose]);
 
   useEffect(() => {
@@ -133,22 +136,26 @@ export function SearchOverlay({ open, onClose }: SearchOverlayProps) {
   if (!open) return null;
 
   return (
-    <div className="fixed inset-0 z-[80] flex items-start justify-center bg-black/45 px-4 py-10 backdrop-blur-[2px] md:py-14">
+    <div
+      className="fixed inset-0 z-[80] flex items-start justify-center bg-black/50 px-4 py-10 backdrop-blur-[3px] md:py-14 dark:bg-black/70"
+      onClick={onClose}
+    >
       <div
         role="dialog"
         aria-modal="true"
         aria-label="Search VYBE"
-        className="relative max-h-[88vh] w-full max-w-4xl overflow-hidden rounded-3xl border border-border bg-surface shadow-2xl"
+        onClick={(event) => event.stopPropagation()}
+        className="relative max-h-[88vh] w-full max-w-4xl overflow-hidden rounded-3xl border border-border bg-surface shadow-2xl dark:border-white/10 dark:bg-sheet dark:shadow-[0_24px_80px_rgba(0,0,0,0.65)]"
       >
-        <div className="border-b border-border p-4 md:p-5">
+        <div className="border-b border-border p-4 md:p-5 dark:border-white/10">
           <div className="flex items-center gap-3">
-            <label className="flex h-12 flex-1 items-center gap-2 rounded-xl border border-border bg-bg px-3 focus-within:border-border">
-              <Search className="size-4 text-text-muted" />
+            <label className="label-focus-ring-none flex h-12 flex-1 items-center gap-2.5 rounded-xl border border-border bg-bg px-3.5 dark:border-white/12 dark:bg-surface-muted">
+              <Search className="size-4 shrink-0 text-accent" />
               <input
                 value={query}
                 onChange={(event) => setQuery(event.target.value)}
                 placeholder={`Search for movies, events, activities in ${publicEnv.defaultCity}`}
-                className="w-full bg-transparent text-sm font-semibold text-text outline-none ring-0 focus:outline-none focus:ring-0 focus-visible:outline-none placeholder:text-text-muted"
+                className="w-full bg-transparent text-sm font-semibold text-text outline-none ring-0 placeholder:text-text-muted"
                 autoFocus
               />
             </label>
@@ -156,7 +163,7 @@ export function SearchOverlay({ open, onClose }: SearchOverlayProps) {
               type="button"
               aria-label="Close search"
               onClick={onClose}
-              className="inline-flex size-10 items-center justify-center rounded-full bg-surface-muted text-text"
+              className="focus-ring-none inline-flex size-10 items-center justify-center rounded-full bg-surface-muted text-text transition-colors hover:bg-accent hover:text-white dark:bg-white/10"
             >
               <X className="size-4" />
             </button>
@@ -172,8 +179,8 @@ export function SearchOverlay({ open, onClose }: SearchOverlayProps) {
                   onClick={() => setFilter(item.id)}
                   className={`shrink-0 rounded-full px-4 py-2 text-[13px] font-bold transition-colors ${
                     active
-                      ? "bg-accent text-white"
-                      : "bg-surface-muted text-text hover:bg-border"
+                      ? "bg-accent text-white shadow-[0_6px_16px_rgba(255,0,91,0.28)]"
+                      : "bg-surface-muted text-text hover:bg-border dark:bg-white/8 dark:hover:bg-white/14"
                   }`}
                 >
                   {item.label}
@@ -201,7 +208,7 @@ export function SearchOverlay({ open, onClose }: SearchOverlayProps) {
                   key={item.id}
                   href={item.href}
                   onClick={onClose}
-                  className="flex items-center gap-3 rounded-xl p-1.5 transition-colors hover:bg-surface-muted"
+                  className="flex items-center gap-3 rounded-xl p-1.5 transition-colors hover:bg-surface-muted dark:hover:bg-white/6"
                 >
                   <div className="relative size-14 shrink-0 overflow-hidden rounded-xl bg-surface-muted">
                     <Image

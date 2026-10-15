@@ -1,9 +1,9 @@
 import Image from "next/image";
-import Link from "next/link";
 import { Play, Ticket } from "lucide-react";
 import { notFound } from "next/navigation";
 import type { ReactNode } from "react";
 import { Container } from "@/components/common/Container";
+import { BookTicketsButton } from "@/components/movies/BookTicketsButton";
 import { MovieDetailPhotosGrid } from "@/components/movies/MovieDetailPhotosGrid";
 import { MovieDetailPosterActions } from "@/components/movies/MovieDetailPosterActions";
 import { StickyBookBar } from "@/components/movies/StickyBookBar";
@@ -52,7 +52,11 @@ export default async function MovieDetailPage({
   const posters =
     movie.images?.filter((image) => image.type === "poster") ?? [];
   const galleryImages = [...wallpapers, ...posters];
-  const featuredVideo = videos[0];
+  const featuredVideo =
+    videos.find((video) => video.type === "Trailer") ??
+    videos.find((video) => video.type === "Teaser") ??
+    videos[0];
+  const trailerUrl = movie.trailerUrl || featuredVideo?.watchUrl;
 
   return (
     <div className="w-full bg-bg pb-16">
@@ -71,10 +75,13 @@ export default async function MovieDetailPage({
       >
         <Container>
           <div className="grid gap-10 lg:grid-cols-[220px_minmax(0,1fr)_240px] lg:items-start lg:gap-12">
-            <MovieDetailPosterActions movie={movie} />
+            <MovieDetailPosterActions movie={movie} trailerUrl={trailerUrl} />
 
             <div className="min-w-0 space-y-5 text-[14px] md:text-[15px]">
               <MetaRow label="Title" value={movie.title} />
+              {movie.certification ? (
+                <MetaRow label="Rating" value={movie.certification} />
+              ) : null}
               {castLine ? <MetaRow label="Casts" value={castLine} /> : null}
               {director ? <MetaRow label="Creator" value={director} /> : null}
               {movie.genres.length > 0 ? (
@@ -99,13 +106,14 @@ export default async function MovieDetailPage({
                   {movie.description}
                 </p>
               ) : null}
-              <Link
+              <BookTicketsButton
                 href={`/movies/${movie.id}/book`}
+                certification={movie.certification}
                 className="inline-flex items-center gap-2.5 rounded-full bg-accent px-7 py-3 text-[15px] font-extrabold text-white transition-transform hover:scale-[1.02]"
               >
                 <Ticket className="size-5" strokeWidth={2.5} />
                 Book tickets
-              </Link>
+              </BookTicketsButton>
             </div>
 
             <div className="flex flex-col items-center gap-6 lg:items-end">
@@ -116,7 +124,7 @@ export default async function MovieDetailPage({
                   rel="noreferrer"
                   className="group relative w-full max-w-[220px] overflow-hidden rounded-2xl bg-surface-muted shadow-md"
                 >
-                  <div className="relative aspect-square">
+                  <div className="relative aspect-video">
                     <Image
                       src={featuredVideo.thumbnailUrl}
                       alt={featuredVideo.name}
@@ -147,6 +155,7 @@ export default async function MovieDetailPage({
         title={movie.title}
         bookHref={`/movies/${movie.id}/book`}
         bookLabel="Book tickets"
+        certification={movie.certification}
       />
 
       <section className="bg-bg py-8 md:py-10">

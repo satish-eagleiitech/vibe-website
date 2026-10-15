@@ -17,10 +17,8 @@ import {
   geocodeQuery,
   hasMapsKey,
   loadGoogleMaps,
-  mountPreviewMap,
   resolvePlaceId,
   reverseGeocode,
-  type MapController,
   type PlaceSuggestion,
   type ResolvedPlace,
 } from "@/lib/maps/google";
@@ -50,8 +48,6 @@ export function LocationButton({
   const [searching, setSearching] = useState(false);
 
   const placesAttrRef = useRef<HTMLDivElement>(null);
-  const mapElRef = useRef<HTMLDivElement>(null);
-  const mapCtrlRef = useRef<MapController | null>(null);
   const sessionTokenRef = useRef<google.maps.places.AutocompleteSessionToken | null>(
     null,
   );
@@ -121,38 +117,8 @@ export function LocationButton({
     if (!open) {
       setQuery("");
       setSuggestions([]);
-      mapCtrlRef.current?.destroy();
-      mapCtrlRef.current = null;
-      return;
     }
   }, [open]);
-
-  useEffect(() => {
-    if (!open || !coords || !mapElRef.current || !mapsReady) return;
-    let cancelled = false;
-
-    (async () => {
-      try {
-        if (!mapCtrlRef.current) {
-          mapCtrlRef.current = await mountPreviewMap(
-            mapElRef.current!,
-            coords.lat,
-            coords.lng,
-          );
-        } else {
-          mapCtrlRef.current.setCenter(coords.lat, coords.lng);
-        }
-      } catch {
-        if (!cancelled) {
-          // Map preview is optional
-        }
-      }
-    })();
-
-    return () => {
-      cancelled = true;
-    };
-  }, [open, coords, mapsReady]);
 
   useEffect(() => {
     if (!open) return;
@@ -452,18 +418,8 @@ export function LocationButton({
 
             {!hasMapsKey() ? (
               <p className="mt-2 text-[12px] font-medium text-text-muted">
-                Add NEXT_PUBLIC_GOOGLE_MAPS_API_KEY to enable live maps search.
+                Add NEXT_PUBLIC_GOOGLE_MAPS_API_KEY to enable city search.
               </p>
-            ) : null}
-
-            {coords && mapsReady ? (
-              <div className="mt-5 overflow-hidden rounded-2xl border border-border">
-                <div ref={mapElRef} className="h-[180px] w-full bg-surface-muted" />
-                <p className="bg-surface-muted px-3 py-2 text-[12px] font-semibold text-text-secondary">
-                  Map preview · {city}
-                  {state ? `, ${state}` : ""}
-                </p>
-              </div>
             ) : null}
 
             {!query.trim() ? (
@@ -477,7 +433,8 @@ export function LocationButton({
                       key={item.id}
                       type="button"
                       onClick={() => selectPopular(item)}
-                      className="flex flex-col items-center gap-2 rounded-2xl bg-accent-soft/50 px-2 py-3 text-center transition-colors hover:bg-accent-soft"
+                      className="flex flex-col items-center gap-2 rounded-2xl px-2 py-3 text-center transition-transform hover:scale-[1.03]"
+                      style={{ backgroundColor: item.tone ?? "#FFE4EF" }}
                     >
                       <span className="relative inline-flex size-14 items-center justify-center overflow-hidden rounded-xl">
                         {item.image ? (

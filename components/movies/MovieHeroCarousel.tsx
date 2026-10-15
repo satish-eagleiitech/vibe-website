@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Plus, Ticket } from "lucide-react";
 import { useEffect, useRef, useState, type CSSProperties } from "react";
+import { BookTicketsButton } from "@/components/movies/BookTicketsButton";
 import type { Movie } from "@/types/movie";
 
 type MovieHeroCarouselProps = {
@@ -58,16 +59,17 @@ export function MovieHeroCarousel({ movies }: MovieHeroCarouselProps) {
       aria-roledescription="carousel"
       aria-label="New movies"
     >
-      <div className="relative h-[min(680px,100svh)] min-h-[500px] w-full lg:h-screen lg:min-h-[100dvh]">
+      <div className="relative h-[min(680px,100svh)] min-h-[500px] w-full lg:h-screen lg:min-h-[112dvh]">
         {slides.map((item, i) => (
           <div key={item.id} className={`absolute inset-0 ${layer(i)}`} aria-hidden={i !== index}>
             <div className={`absolute inset-0 overflow-hidden ${i === index && animating ? "exo-wipe" : ""}`}>
+              {/* Taller frame nudged down so faces clear the fixed nav under 112dvh cover crop */}
               <Image
                 src={item.backdropUrl || item.posterUrl}
                 alt={`${item.title} backdrop`}
                 fill
                 priority={i === 0}
-                className={`object-cover object-center ${
+                className={`!inset-x-0 !top-[6%] !h-[118%] !w-full object-cover object-[center_15%] ${
                   i === index && animating ? "exo-settle" : i === prev ? "exo-recede" : ""
                 }`}
                 sizes="100vw"
@@ -102,8 +104,8 @@ export function MovieHeroCarousel({ movies }: MovieHeroCarouselProps) {
           ))}
         </div>
 
-        <div className="relative z-[5] mx-auto flex h-full w-full flex-col justify-end px-5 pt-10 pb-14 sm:px-8 md:px-12 md:pb-24 lg:justify-center lg:px-[7vw] lg:pt-24 lg:pb-24">
-          <div className="grid max-w-[560px] overflow-hidden pb-3 lg:w-[min(38vw,560px)] 3xl:max-w-[720px]">
+        <div className="relative z-[5] mx-auto flex h-full w-full flex-col justify-end px-5 pb-16 pt-[clamp(7rem,22vh,11rem)] sm:px-8 md:px-12 md:pb-28 lg:px-[7vw] lg:pb-[min(22vh,168px)]">
+          <div className="mt-auto grid max-w-[560px] overflow-hidden pb-3 lg:w-[min(38vw,560px)] 3xl:max-w-[720px]">
             {textStack.map((i) => {
               const item = slides[i];
               const active = i === index;
@@ -141,14 +143,14 @@ export function MovieHeroCarousel({ movies }: MovieHeroCarouselProps) {
                   </p>
 
                   <div className="mt-7 flex items-center gap-3">
-                    <Link
+                    <BookTicketsButton
                       href={`/movies/${item.id}/book`}
-                      tabIndex={active ? undefined : -1}
+                      certification={item.certification}
                       className="inline-flex min-w-0 flex-1 items-center justify-center gap-2 rounded-xl bg-accent px-6 py-3.5 text-[15px] font-extrabold text-white shadow-[0_12px_36px_rgba(255,0,91,0.35)] transition-transform hover:scale-[1.02] sm:min-w-[220px] sm:flex-none sm:px-8"
                     >
                       <Ticket className="size-5" />
                       Book Tickets
-                    </Link>
+                    </BookTicketsButton>
                     <Link
                       href={`/movies/${item.id}`}
                       tabIndex={active ? undefined : -1}

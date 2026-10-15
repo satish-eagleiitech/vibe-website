@@ -1,13 +1,12 @@
 import { CategoryGrid } from "@/components/categories/CategoryGrid";
 import { EventsSection } from "@/components/events/EventsSection";
 import { ActivitiesForYouSection } from "@/components/landing/ActivitiesForYouSection";
-import { ArtistsSection } from "@/components/landing/ArtistsSection";
-import { LandingHero } from "@/components/landing/LandingHero";
+// import { LandingHero } from "@/components/landing/LandingHero";
 import { PosterRailSection } from "@/components/landing/PosterRailSection";
 import { VideoRailSection } from "@/components/landing/VideoRailSection";
+import { MovieHeroCarousel } from "@/components/movies/MovieHeroCarousel";
 import { TrendingMovies } from "@/components/movies/TrendingMovies";
 import { PlayEventsSection } from "@/components/play/PlayEventsSection";
-import { getFeaturedArtists } from "@/lib/api/artists";
 import { getUpcomingEvents } from "@/lib/api/events";
 import { getLandingHeroMovies, getNewReleaseMovies } from "@/lib/api/movies";
 import { getPlayEvents } from "@/lib/api/play";
@@ -18,6 +17,8 @@ import {
   landingMusicEvents,
 } from "@/lib/data/landingExtras";
 
+const HERO_SLIDES = 10;
+
 export default async function Home({
   searchParams,
 }: {
@@ -26,22 +27,38 @@ export default async function Home({
   const { language } = await searchParams;
   const movieLanguage = language || "all";
 
-  const [hero, latest, events, artists, playEvents] = await Promise.all([
+  const [hero, latest, events, playEvents] = await Promise.all([
     getLandingHeroMovies(),
     getNewReleaseMovies(movieLanguage),
     getUpcomingEvents(),
-    getFeaturedArtists(),
     getPlayEvents(),
   ]);
 
+  const LANDING_EXCLUDE = new Set(["1787082", "1785244"]); // Poniiy, AAKHRI MULAQAT
+
+  // Fresh regional mix for the cinematic hero; latest-first for Movies cards
+  const heroMovies = hero.items
+    .filter(
+      (movie) =>
+        (movie.backdropUrl || movie.posterUrl) && !LANDING_EXCLUDE.has(movie.id),
+    )
+    .slice(0, HERO_SLIDES);
+  const latestItems = latest.items.filter(
+    (movie) => !LANDING_EXCLUDE.has(movie.id),
+  );
+
   return (
     <div className="flex w-full flex-col">
-      {/* Latest 4 Tollywood + 3 Bollywood + 3 Hollywood, refreshed hourly */}
+      {/* Previous coverflow landing hero — kept for easy restore
       <LandingHero movies={hero.items} />
+      */}
+
+      {/* Movies-category cinematic hero on the homepage */}
+      <MovieHeroCarousel movies={heroMovies} />
 
       {/* 1. Movies — newest across all languages, or the selected one */}
       <TrendingMovies
-        movies={latest.items.slice(0, 15)}
+        movies={latestItems.slice(0, 15)}
         language={movieLanguage}
         totalLabel={`View All${latest.total ? ` (${latest.total})` : ""}`}
       />
@@ -77,8 +94,8 @@ export default async function Home({
       {/* 8. Moments */}
       <VideoRailSection
         title="Moments on VYBE"
-        description="Short clips from game nights and turf matches"
-        href="/play"
+        description="Garba nights, comedy, club scenes and play drops around you"
+        href="/events"
         items={landingMomentsVideos}
       />
 

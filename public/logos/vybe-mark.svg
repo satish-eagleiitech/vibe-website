@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 96" fill="none" role="img" aria-label="VYBE">
+  <defs>
+    <linearGradient id="vybePink" x1="20" y1="8" x2="200" y2="88" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#FF7AB8"/>
+      <stop offset="45%" stop-color="#FF2D7A"/>
+      <stop offset="100%" stop-color="#FF005B"/>
+    </linearGradient>
+    <linearGradient id="vybeSoft" x1="90" y1="20" x2="210" y2="80" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#FFD0E6"/>
+      <stop offset="55%" stop-color="#FF8FBF"/>
+      <stop offset="100%" stop-color="#FF4D94"/>
+    </linearGradient>
+  </defs>
+  <!-- sparkles -->
+  <rect x="18" y="10" width="10" height="18" rx="5" transform="rotate(-28 18 10)" fill="url(#vybePink)"/>
+  <rect x="34" y="6" width="9" height="15" rx="4.5" transform="rotate(-18 34 6)" fill="url(#vybePink)"/>
+  <!-- heart-ish V -->
+  <path
+    fill="url(#vybePink)"
+    d="M52 22c8-14 28-14 36 2 3 6 3 12 1 18L62 86c-2 4-8 4-10 0L28 42c-4-8-2-18 6-24 5-4 12-4 18 4z"
+  />
+  <path
+    fill="url(#vybeSoft)"
+    d="M58 30c5-8 16-8 20 2 2 5 1 10-1 14L60 78c-1 2-4 2-5 0L40 46c-2-5-1-11 4-15 4-3 9-3 14-1z"
+    opacity="0.55"
+  />
+  <!-- ybe wordmark -->
+  <text
+    x="96"
+    y="68"
+    fill="url(#vybeSoft)"
+    font-family="Segoe UI, system-ui, Arial, sans-serif"
+    font-size="54"
+    font-weight="800"
+    letter-spacing="-0.04em"
+  >ybe</text>
+</svg>

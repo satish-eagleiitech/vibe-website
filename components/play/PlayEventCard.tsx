@@ -51,16 +51,6 @@ export function PlayEventCard({ item }: PlayEventCardProps) {
       <h3 className="mt-1 line-clamp-2 text-[15px] font-extrabold text-text">
         {item.title}
       </h3>
-      <p className="mt-1 text-[12px] text-text-secondary">
-        {[item.dateLabel, item.timeLabel].filter(Boolean).join(", ") ||
-          item.schedule}
-      </p>
-      {item.price ? (
-        <p className="mt-1 text-[13px] font-bold text-text">
-          ₹{item.price.toLocaleString("en-IN")}
-          <span className="font-medium text-text-secondary"> {item.priceUnit}</span>
-        </p>
-      ) : null}
     </Link>
   );
 }

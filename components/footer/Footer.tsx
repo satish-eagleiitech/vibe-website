@@ -66,7 +66,16 @@ export function Footer() {
         width={3840}
         height={936}
         sizes="100vw"
-        className="block h-auto w-full select-none"
+        className="block h-auto w-full select-none dark:hidden"
+        aria-hidden
+      />
+      <Image
+        src="/images/footer/skyline-dark.png"
+        alt=""
+        width={3840}
+        height={936}
+        sizes="100vw"
+        className="hidden h-auto w-full select-none dark:block"
         aria-hidden
       />
 

@@ -20,8 +20,8 @@ function cardStart(index: number, count: number) {
 }
 
 /**
- * Scroll-scrubbed "stand up" reveal for the first few `[data-stand-card]` elements,
- * and `[data-stand-word]` heading words fading from accent pink to the text colour.
+ * One-shot stand-up reveal on first enter (load / first scroll into view).
+ * No scrub — after playing once, cards stay in the normal flat pose.
  */
 export function useCardStand(
   sectionRef: RefObject<HTMLElement | null>,
@@ -35,6 +35,7 @@ export function useCardStand(
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
     let ctx: gsap.Context | undefined;
+    let played = false;
 
     const build = () => {
       ctx?.revert();
@@ -46,18 +47,6 @@ export function useCardStand(
 
       ctx = gsap.context(() => {
         const words = section.querySelectorAll("[data-stand-word]");
-        if (words.length) {
-          gsap.fromTo(
-            words,
-            { "--stand-mix": 1 },
-            {
-              "--stand-mix": 0,
-              stagger: 0.2,
-              ease: "none",
-              scrollTrigger: { trigger: section, start: "top 80%", end: "top 30%", scrub: 1 },
-            },
-          );
-        }
 
         cards.forEach((card, i) => {
           gsap.set(card, {
@@ -66,12 +55,34 @@ export function useCardStand(
             transformPerspective: 1560,
           });
         });
-        gsap.to(cards, {
-          rotateX: 0,
-          rotateY: 0,
-          y: 0,
-          ease: "power1.inOut",
-          scrollTrigger: { trigger: cards[0], start: "top 98%", end: "top 55%", scrub: 1 },
+        if (words.length) {
+          gsap.set(words, { "--stand-mix": 1 });
+        }
+
+        ScrollTrigger.create({
+          trigger: section,
+          start: "top 78%",
+          once: true,
+          onEnter: () => {
+            if (played) return;
+            played = true;
+            if (words.length) {
+              gsap.to(words, {
+                "--stand-mix": 0,
+                duration: 0.7,
+                stagger: 0.12,
+                ease: "power2.out",
+              });
+            }
+            gsap.to(cards, {
+              rotateX: 0,
+              rotateY: 0,
+              y: 0,
+              duration: 0.85,
+              stagger: 0.06,
+              ease: "power2.out",
+            });
+          },
         });
       }, section);
       ScrollTrigger.refresh();

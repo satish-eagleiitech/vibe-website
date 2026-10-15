@@ -1,13 +1,14 @@
 "use client";
 
 import Image from "next/image";
-import { Heart, Star } from "lucide-react";
+import { Heart, Play, Star } from "lucide-react";
 import { useEffect, useState } from "react";
 import { isSaved, toggleSaved } from "@/lib/saved/storage";
 import type { MovieDetails } from "@/types/movie";
 
 type MovieDetailPosterActionsProps = {
   movie: MovieDetails;
+  trailerUrl?: string;
 };
 
 function StarRow({ rating }: { rating: number }) {
@@ -28,7 +29,10 @@ function StarRow({ rating }: { rating: number }) {
   );
 }
 
-export function MovieDetailPosterActions({ movie }: MovieDetailPosterActionsProps) {
+export function MovieDetailPosterActions({
+  movie,
+  trailerUrl,
+}: MovieDetailPosterActionsProps) {
   const [saved, setSaved] = useState(false);
 
   useEffect(() => {
@@ -58,6 +62,17 @@ export function MovieDetailPosterActions({ movie }: MovieDetailPosterActionsProp
           sizes="220px"
           priority
         />
+        {trailerUrl ? (
+          <a
+            href={trailerUrl}
+            target="_blank"
+            rel="noreferrer"
+            className="absolute inset-x-0 bottom-3 z-[1] mx-auto flex w-[min(86%,160px)] items-center justify-center gap-2 rounded-full bg-black/70 px-3 py-2 text-[13px] font-bold text-white backdrop-blur-sm transition-colors hover:bg-accent"
+          >
+            <Play className="size-3.5 fill-white" />
+            Trailer
+          </a>
+        ) : null}
       </div>
       <div className="mt-4 flex items-center gap-2">
         <button

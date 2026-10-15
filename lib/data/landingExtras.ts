@@ -28,7 +28,8 @@ export type LandingVideoCard = {
   venue?: string;
   schedule?: string;
   posterUrl: string;
-  videoUrl: string;
+  /** Omit for image-only cards (Moments posters). */
+  videoUrl?: string;
   href: string;
 };
 
@@ -185,112 +186,116 @@ export const landingMusicEvents: LandingPosterCard[] = [
 ];
 
 /**
- * Crowd favourites — video cards with outdoor/tour posters
- * (activity-7..12 so they don't clash with Activities rail if added later)
+ * Crowd favourites — mall adventure, water park, gaming, laser, Wonderla, go-kart
  */
 export const landingCrowdFavourites: LandingVideoCard[] = [
   {
     id: "crowd-1",
-    title: "Ramoji Studio Tour",
-    venue: "Ramoji Film City",
-    schedule: "Fri, 18 Sept – Wed, 7 Oct, 9:30 AM",
-    posterUrl: "/images/activities/activity-7.jpg",
+    title: "Mall Adventure Zone",
+    venue: "Inorbit Mall · Hyderabad",
+    schedule: "Daily, 11:00 AM onwards",
+    posterUrl: "/images/activities/spot-trampoline.jpg",
     videoUrl: "/assets/videos/vybe-4.mp4",
     href: "/activities",
   },
   {
     id: "crowd-2",
-    title: "Wonderla Amusement Park",
-    venue: "Kongara Kalan",
-    schedule: "Daily, 11:00 AM onwards",
-    posterUrl: "/images/activities/activity-8.jpg",
+    title: "Wild Waters",
+    venue: "Water park · Hyderabad",
+    schedule: "Daily, 10:00 AM – 6:00 PM",
+    posterUrl: "/images/activities/spot-waterpark-slides.jpg",
     videoUrl: "/assets/videos/vybe-5.mp4",
     href: "/activities",
   },
   {
     id: "crowd-3",
-    title: "Snow World Hyderabad",
-    venue: "Lower Tank Bund",
-    schedule: "Daily, 11:00 AM – 9:00 PM",
-    posterUrl: "/images/activities/activity-9.jpg",
+    title: "Gaming Arena",
+    venue: "Arcade & console battles",
+    schedule: "Hourly slots · Book anytime",
+    posterUrl: "/images/activities/spot-bowling.jpg",
     videoUrl: "/assets/videos/vybe-6.mp4",
     href: "/activities",
   },
   {
     id: "crowd-4",
-    title: "Adventure Park Day Pass",
-    venue: "Gandipet",
-    schedule: "Weekends, 10:00 AM onwards",
-    posterUrl: "/images/activities/activity-10.jpg",
+    title: "Laser Shooter",
+    venue: "Laser tag arena · Kukatpally",
+    schedule: "Weekday deals · Team raids",
+    posterUrl: "/images/activities/spot-theme-night.jpg",
     videoUrl: "/assets/videos/vybe-7.mp4",
     href: "/activities",
   },
   {
     id: "crowd-5",
-    title: "City Walking Trail",
-    venue: "Charminar Heritage Walk",
-    schedule: "Sat – Sun, 7:00 AM",
-    posterUrl: "/images/activities/activity-11.jpg",
+    title: "Wonderla",
+    venue: "Kongara Kalan · Amusement park",
+    schedule: "Daily, 11:00 AM onwards",
+    posterUrl: "/images/activities/spot-wonderla.jpg",
     videoUrl: "/assets/videos/vybe-11.mp4",
     href: "/activities",
   },
   {
     id: "crowd-6",
-    title: "Lakeside Cycling Loop",
-    venue: "Hussain Sagar",
-    schedule: "Daily sunrise slots",
-    posterUrl: "/images/activities/activity-12.jpg",
-    videoUrl: "/assets/videos/vybe-3.mp4",
+    title: "Go-Karting",
+    venue: "Gachibowli · Race track",
+    schedule: "Fri – Sun evenings",
+    posterUrl: "/images/activities/spot-gokart.jpg",
+    videoUrl: "/assets/videos/gokart.mp4",
     href: "/activities",
   },
 ];
 
-/** Moments — sport and game posters only (no event/activity reuse) */
+/** Moments — event posters; only Music Ni8 plays video */
 export const landingMomentsVideos: LandingVideoCard[] = [
   {
     id: "moment-1",
-    title: "Floodlit box cricket",
-    venue: "Gachibowli",
-    schedule: "Night slots till 12 AM",
-    posterUrl: "/images/play/sport-cricket.jpg",
-    videoUrl: "/assets/videos/vybe-1.mp4",
-    href: "/play/sports/box-cricket",
+    title: "Let's Play Garba",
+    venue: "Traditional steps · Timeless joy",
+    posterUrl: "/images/moments/garba.jpg",
+    href: "/events",
   },
   {
     id: "moment-2",
-    title: "Sunrise badminton",
-    venue: "Kondapur",
-    schedule: "Daily, 6:00 AM",
-    posterUrl: "/images/play/sport-badminton.jpg",
-    videoUrl: "/assets/videos/vybe-2.mp4",
-    href: "/play/sports/badminton",
+    title: "HOTBOX",
+    venue: "Bollywood beats · Veer Batra",
+    posterUrl: "/images/moments/hotbox.jpg",
+    href: "/events",
   },
   {
     id: "moment-3",
-    title: "Bowling league night",
-    venue: "Inorbit Mall",
-    schedule: "Daily, 11:00 AM",
-    posterUrl: "/images/play/play-8.jpg",
-    videoUrl: "/assets/videos/vybe-8.mp4",
-    href: "/play",
+    title: "Still Alive",
+    venue: "Stand-up comedy special",
+    posterUrl: "/images/moments/still-alive.jpg",
+    href: "/events",
   },
   {
     id: "moment-4",
-    title: "Arcade rush hour",
-    venue: "Gachibowli",
-    schedule: "Book anytime",
-    posterUrl: "/images/play/play-9.jpg",
-    videoUrl: "/assets/videos/vybe-9.mp4",
-    href: "/play",
+    title: "Music Ni8",
+    venue: "Dreamy night vibes",
+    posterUrl: "/images/moments/club-night.jpg",
+    videoUrl: "/assets/videos/music-ni8.mp4",
+    href: "/events",
   },
   {
     id: "moment-5",
-    title: "VR battle rooms",
-    venue: "Madhapur",
-    schedule: "Hourly slots",
-    posterUrl: "/images/play/play-10.jpg",
-    videoUrl: "/assets/videos/vybe-10.mp4",
+    title: "BGMI",
+    venue: "Ninjas Assemble · Naruto mode",
+    posterUrl: "/images/moments/bgmi.jpg",
     href: "/play",
+  },
+  {
+    id: "moment-6",
+    title: "Club Night",
+    venue: "With DJ Ken Adams",
+    posterUrl: "/images/moments/club-night.jpg",
+    href: "/events",
+  },
+  {
+    id: "moment-7",
+    title: "Expressions",
+    venue: "Gallery walkthrough",
+    posterUrl: "/images/moments/art-exhibit.jpg",
+    href: "/events",
   },
 ];
 

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Archivo_Black, Plus_Jakarta_Sans } from "next/font/google";
 import { Footer } from "@/components/footer/Footer";
+import { VybeIntro } from "@/components/intro/VybeIntro";
 import { Navbar } from "@/components/navbar/Navbar";
 import { ThemeProvider } from "@/components/theme/ThemeProvider";
 import { siteConfig } from "@/config/site";
@@ -55,6 +56,7 @@ export default function RootLayout({
         suppressHydrationWarning
       >
         <ThemeProvider>
+          <VybeIntro />
           <Navbar />
           <main className="w-full bg-bg pt-0">{children}</main>
           <Footer />

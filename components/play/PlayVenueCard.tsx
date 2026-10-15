@@ -8,7 +8,7 @@ import type { PlayItem } from "@/types/play";
 
 type PlayVenueCardProps = {
   item: PlayItem;
-  /** Portrait image + details below (Play browse grid) */
+  /** Portrait poster + title/meta below (matches All Events cards) */
   variant?: "browse" | "classic";
 };
 
@@ -26,47 +26,34 @@ export function PlayVenueCard({ item, variant = "browse" }: PlayVenueCardProps) 
   if (variant === "browse") {
     const distance = item.distanceKm != null ? `${item.distanceKm} km` : null;
     const place = item.locality || item.venue;
-    const meta = [distance, place].filter(Boolean).join(" • ");
+    const meta = [item.sport, distance, place].filter(Boolean).join(" · ");
 
     return (
       <Link
         href={`/play/${item.id}`}
         onClick={onTrack}
-        className="flex w-full flex-col overflow-hidden rounded-2xl border border-[#E8E8E8] bg-white"
+        className="group flex w-full flex-col"
       >
-        <div className="relative aspect-[16/10] w-full bg-[#F4F4F5]">
+        <div className="relative aspect-[2/3] overflow-hidden rounded-md bg-surface-muted">
           <Image
             src={item.imageUrl}
             alt={item.title}
             fill
-            className="object-cover object-center"
-            sizes="(max-width: 640px) 50vw, 280px"
+            className="object-cover transition-transform duration-300 group-hover:scale-[1.04]"
+            sizes="(max-width: 640px) 46vw, (max-width: 1024px) 25vw, 20vw"
           />
         </div>
-
-        <div className="flex flex-col px-3 pt-3 pb-3">
-          <h3 className="line-clamp-1 text-[15px] leading-5 font-bold text-[#111111]">
-            {item.title}
-          </h3>
-          {meta ? (
-            <p className="mt-0.5 line-clamp-1 text-[12px] leading-4 font-normal text-[#9A9A9A]">
-              {meta}
-            </p>
-          ) : null}
-          {item.sport ? (
-            <div className="mt-2.5 flex flex-wrap gap-1.5">
-              <span className="inline-flex items-center rounded-full border border-[#E6E6E6] bg-white px-2.5 py-1 text-[12px] leading-none font-medium text-[#3A3A3A]">
-                {item.sport}
-              </span>
-            </div>
-          ) : null}
-        </div>
+        <h3 className="mt-2 line-clamp-1 text-[13px] font-semibold text-text sm:text-[14px]">
+          {item.title}
+        </h3>
+        <p className="mt-0.5 line-clamp-1 text-[12px] text-text-secondary">
+          {meta || item.sport || "Play near you"}
+        </p>
       </Link>
     );
   }
 
-  const distance =
-    item.distanceKm != null ? `${item.distanceKm} km` : null;
+  const distance = item.distanceKm != null ? `${item.distanceKm} km` : null;
 
   return (
     <Link

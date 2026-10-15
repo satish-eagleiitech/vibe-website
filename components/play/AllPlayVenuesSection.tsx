@@ -46,59 +46,71 @@ export function AllPlayVenuesSection({
     return qs ? `/play?${qs}#all-venues` : "/play#all-venues";
   }
 
+  function chipClass(selected: boolean) {
+    return `shrink-0 rounded-full border px-3 py-1.5 text-[12px] font-bold ${
+      selected
+        ? "border-accent bg-accent-soft text-accent"
+        : "border-border bg-surface text-text hover:border-accent/40"
+    }`;
+  }
+
   return (
-    <section id="all-venues" className="scroll-mt-[var(--vybe-header-h)] w-full py-8 md:py-10">
+    <section
+      id="all-venues"
+      className="scroll-mt-[var(--vybe-header-h)] w-full overflow-x-clip pt-8 md:pt-10"
+    >
       <Container>
-        <h2 className="text-[26px] font-extrabold tracking-tight text-text md:text-[30px]">
-          All Sports Venues
-        </h2>
+        <div className="mb-5 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between md:mb-6">
+          <div>
+            <h2 className="text-[20px] font-extrabold tracking-tight text-text md:text-[24px]">
+              All Sports Venues
+            </h2>
+            <p className="mt-0.5 text-[13px] text-text-secondary">
+              Courts, turf and game time near you
+            </p>
+          </div>
+          <p className="text-[14px] font-semibold text-text-muted">
+            {filtered.length} {filtered.length === 1 ? "venue" : "venues"}
+          </p>
+        </div>
       </Container>
 
-      <StickyFilterBar className="mt-4">
-          <span className="inline-flex shrink-0 items-center gap-1.5 rounded-full border border-border bg-surface px-3.5 py-2 text-[13px] font-bold text-text">
-            <SlidersHorizontal className="size-3.5" />
-            Filters
-            <ChevronDown className="size-3.5 text-text-muted" />
-          </span>
+      <StickyFilterBar>
+        <span className="inline-flex shrink-0 items-center gap-1 rounded-full border border-border bg-surface px-2.5 py-1.5 text-[12px] font-bold text-text">
+          <SlidersHorizontal className="size-3" />
+          Filters
+          <ChevronDown className="size-3 text-text-muted" />
+        </span>
 
-          <Link
-            href={hrefFor({ near: near === "5km" ? "" : "5km" })}
-            scroll={false}
-            className={`shrink-0 rounded-full border px-4 py-2 text-[13px] font-bold ${
-              near === "5km"
-                ? "border-accent bg-accent-soft text-accent"
-                : "border-border bg-surface text-text hover:border-accent/40"
-            }`}
-          >
-            Under 5 km
-          </Link>
+        <Link
+          href={hrefFor({ near: near === "5km" ? "" : "5km" })}
+          scroll={false}
+          className={chipClass(near === "5km")}
+        >
+          Under 5 km
+        </Link>
 
-          {QUICK_SPORTS.map((id) => {
-            const label =
-              playSports.find((item) => item.id === id)?.label ?? id;
-            const selected = sport === id;
-            return (
-              <Link
-                key={id}
-                href={hrefFor({ sport: selected ? "" : id })}
-                scroll={false}
-                className={`shrink-0 rounded-full border px-4 py-2 text-[13px] font-bold ${
-                  selected
-                    ? "border-accent bg-accent-soft text-accent"
-                    : "border-border bg-surface text-text hover:border-accent/40"
-                }`}
-              >
-                {label}
-              </Link>
-            );
-          })}
+        {QUICK_SPORTS.map((id) => {
+          const label = playSports.find((item) => item.id === id)?.label ?? id;
+          const selected = sport === id;
+          return (
+            <Link
+              key={id}
+              href={hrefFor({ sport: selected ? "" : id })}
+              scroll={false}
+              className={chipClass(selected)}
+            >
+              {label}
+            </Link>
+          );
+        })}
       </StickyFilterBar>
 
-      <Container className="mt-7">
+      <Container className="pt-6 pb-10 md:pt-8 md:pb-12">
         {filtered.length === 0 ? (
           <EmptyState title="No venues for this filter" />
         ) : (
-          <div className="grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4">
+          <div className="grid grid-cols-2 gap-x-3 gap-y-6 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 lg:gap-x-4 lg:gap-y-7 3xl:grid-cols-6 4xl:grid-cols-7">
             {filtered.map((item) => (
               <PlayVenueCard key={item.id} item={item} variant="browse" />
             ))}

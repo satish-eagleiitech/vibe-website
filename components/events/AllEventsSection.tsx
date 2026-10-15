@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useMemo } from "react";
-import { SlidersHorizontal, ChevronDown } from "lucide-react";
+import { ChevronDown, SlidersHorizontal } from "lucide-react";
 import { Container } from "@/components/common/Container";
 import { EmptyState } from "@/components/common/EmptyState";
 import { StickyFilterBar } from "@/components/common/StickyFilterBar";
@@ -64,66 +64,76 @@ export function AllEventsSection({
     return qs ? `/events?${qs}#all-events` : "/events#all-events";
   }
 
+  function chipClass(selected: boolean) {
+    return `shrink-0 rounded-full border px-3 py-1.5 text-[12px] font-bold transition-colors ${
+      selected
+        ? "border-accent bg-accent-soft text-accent"
+        : "border-border bg-surface text-text hover:border-accent/40"
+    }`;
+  }
+
   return (
-    <section id="all-events" className="scroll-mt-[var(--vybe-header-h)] w-full py-8 md:py-10">
+    <section
+      id="all-events"
+      className="scroll-mt-[var(--vybe-header-h)] w-full overflow-x-clip pt-8 md:pt-10"
+    >
       <Container>
-        <h2 className="text-[26px] font-extrabold tracking-tight text-text md:text-[30px]">
-          All Events
-        </h2>
+        <div className="mb-5 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between md:mb-6">
+          <div>
+            <h2 className="text-[20px] font-extrabold tracking-tight text-text md:text-[24px]">
+              All Events
+            </h2>
+            <p className="mt-0.5 text-[13px] text-text-secondary">
+              Live nights worth going out for
+            </p>
+          </div>
+          <p className="text-[14px] font-semibold text-text-muted">
+            {filtered.length} {filtered.length === 1 ? "event" : "events"}
+          </p>
+        </div>
       </Container>
 
-      <StickyFilterBar className="mt-4">
-          <span className="inline-flex shrink-0 items-center gap-1.5 rounded-full border border-border bg-surface px-3.5 py-2 text-[13px] font-bold text-text">
-            <SlidersHorizontal className="size-3.5" />
-            Filters
-            <ChevronDown className="size-3.5 text-text-muted" />
-          </span>
+      <StickyFilterBar>
+        <span className="inline-flex shrink-0 items-center gap-1 rounded-full border border-border bg-surface px-2.5 py-1.5 text-[12px] font-bold text-text">
+          <SlidersHorizontal className="size-3" />
+          Filters
+          <ChevronDown className="size-3 text-text-muted" />
+        </span>
 
-          {WHEN_FILTERS.map((item) => {
-            const selected = when === item.id;
-            return (
-              <Link
-                key={item.id}
-                href={hrefFor({ when: selected ? "" : item.id })}
-                scroll={false}
-                className={`shrink-0 rounded-full border px-4 py-2 text-[13px] font-bold transition-colors ${
-                  selected
-                    ? "border-accent bg-accent-soft text-accent"
-                    : "border-border bg-surface text-text hover:border-accent/40"
-                }`}
-              >
-                {item.label}
-              </Link>
-            );
-          })}
+        {WHEN_FILTERS.map((item) => {
+          const selected = when === item.id;
+          return (
+            <Link
+              key={item.id}
+              href={hrefFor({ when: selected ? "" : item.id })}
+              scroll={false}
+              className={chipClass(selected)}
+            >
+              {item.label}
+            </Link>
+          );
+        })}
 
-          <span className="shrink-0 rounded-full border border-border bg-surface px-4 py-2 text-[13px] font-semibold text-text-secondary">
-            Under 10 km
-          </span>
+        <span className="shrink-0 rounded-full border border-border bg-surface px-3 py-1.5 text-[12px] font-semibold text-text-secondary">
+          Under 10 km
+        </span>
 
-          {QUICK_CATEGORIES.map((label) => {
-            const selected =
-              (category || "").toLowerCase() === label.toLowerCase();
-            return (
-              <Link
-                key={label}
-                href={hrefFor({
-                  category: selected ? "" : label,
-                })}
-                scroll={false}
-                className={`shrink-0 rounded-full border px-4 py-2 text-[13px] font-bold transition-colors ${
-                  selected
-                    ? "border-accent bg-accent-soft text-accent"
-                    : "border-border bg-surface text-text hover:border-accent/40"
-                }`}
-              >
-                {label}
-              </Link>
-            );
-          })}
+        {QUICK_CATEGORIES.map((label) => {
+          const selected = (category || "").toLowerCase() === label.toLowerCase();
+          return (
+            <Link
+              key={label}
+              href={hrefFor({ category: selected ? "" : label })}
+              scroll={false}
+              className={chipClass(selected)}
+            >
+              {label}
+            </Link>
+          );
+        })}
       </StickyFilterBar>
 
-      <Container className="mt-7">
+      <Container className="pt-6 pb-10 md:pt-8 md:pb-12">
         {filtered.length === 0 ? (
           <EmptyState title="No events for this filter" />
         ) : (

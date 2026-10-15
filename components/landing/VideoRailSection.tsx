@@ -32,8 +32,10 @@ function VideoCard({ item }: { item: LandingVideoCard }) {
   const [inView, setInView] = useState(false);
   const [ready, setReady] = useState(false);
   const [muted, setMuted] = useState(true);
+  const hasVideo = Boolean(item.videoUrl);
 
   useEffect(() => {
+    if (!hasVideo) return;
     const node = cardRef.current;
     if (!node) return;
 
@@ -44,9 +46,10 @@ function VideoCard({ item }: { item: LandingVideoCard }) {
 
     observer.observe(node);
     return () => observer.disconnect();
-  }, []);
+  }, [hasVideo]);
 
   useEffect(() => {
+    if (!hasVideo) return;
     const video = videoRef.current;
     if (!video) return;
 
@@ -55,7 +58,7 @@ function VideoCard({ item }: { item: LandingVideoCard }) {
     } else {
       video.pause();
     }
-  }, [inView]);
+  }, [hasVideo, inView]);
 
   useEffect(() => {
     if (videoRef.current) videoRef.current.muted = muted;
@@ -85,39 +88,43 @@ function VideoCard({ item }: { item: LandingVideoCard }) {
           alt=""
           fill
           className={`object-cover transition-opacity duration-500 ${
-            ready && inView ? "opacity-0" : "opacity-100"
+            hasVideo && ready && inView ? "opacity-0" : "opacity-100"
           }`}
           sizes="(max-width: 640px) 46vw, (max-width: 1024px) 25vw, 20vw"
         />
-        <video
-          ref={videoRef}
-          className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-500 ${
-            ready && inView ? "opacity-100" : "opacity-0"
-          }`}
-          src={item.videoUrl}
-          muted={muted}
-          loop
-          playsInline
-          autoPlay
-          preload="auto"
-          onLoadedData={() => setReady(true)}
-        />
-        <button
-          type="button"
-          aria-label={muted ? "Unmute" : "Mute"}
-          onClick={(event) => {
-            event.preventDefault();
-            event.stopPropagation();
-            setMuted((value) => !value);
-          }}
-          className="absolute right-2 bottom-2 inline-flex size-8 items-center justify-center rounded-full bg-black/55 text-white backdrop-blur-md"
-        >
-          {muted ? (
-            <VolumeX className="size-3.5" />
-          ) : (
-            <Volume2 className="size-3.5" />
-          )}
-        </button>
+        {hasVideo ? (
+          <>
+            <video
+              ref={videoRef}
+              className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-500 ${
+                ready && inView ? "opacity-100" : "opacity-0"
+              }`}
+              src={item.videoUrl}
+              muted={muted}
+              loop
+              playsInline
+              autoPlay
+              preload="auto"
+              onLoadedData={() => setReady(true)}
+            />
+            <button
+              type="button"
+              aria-label={muted ? "Unmute" : "Mute"}
+              onClick={(event) => {
+                event.preventDefault();
+                event.stopPropagation();
+                setMuted((value) => !value);
+              }}
+              className="absolute right-2 bottom-2 inline-flex size-8 items-center justify-center rounded-full bg-black/55 text-white backdrop-blur-md"
+            >
+              {muted ? (
+                <VolumeX className="size-3.5" />
+              ) : (
+                <Volume2 className="size-3.5" />
+              )}
+            </button>
+          </>
+        ) : null}
       </div>
       <h3 className="mt-2 line-clamp-1 text-[13px] font-semibold text-text sm:text-[14px]">
         {item.title}

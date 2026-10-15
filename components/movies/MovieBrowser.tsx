@@ -201,16 +201,13 @@ export function MovieBrowser({ latest, catalogs }: MovieBrowserProps) {
 
   function scrollToGrid() {
     requestAnimationFrame(() => {
-      const grid = gridRef.current;
+      const grid = cardsRef.current;
       if (!grid) return;
       const header =
         parseFloat(
           getComputedStyle(document.documentElement).getPropertyValue("--vybe-header-h"),
-        ) || 0;
-      const bar = (browseRef.current?.firstElementChild as HTMLElement | null)?.offsetHeight ?? 0;
-      const padding = parseFloat(getComputedStyle(grid).paddingTop) || 0;
-      const top =
-        grid.getBoundingClientRect().top + window.scrollY - header - bar + padding - 20;
+        ) || 72;
+      const top = grid.getBoundingClientRect().top + window.scrollY - header - 72;
       window.scrollTo({ top, behavior: "smooth" });
     });
   }
@@ -220,91 +217,77 @@ export function MovieBrowser({ latest, catalogs }: MovieBrowserProps) {
     scrollToGrid();
   }
 
-  return (
-    <div id="browse" ref={browseRef} className="scroll-mt-[var(--vybe-header-h)]">
-      <StickyFilterBar containerClassName="gap-3">
-          <button
-            type="button"
-            onClick={() => setFilterOpen(true)}
-            className={`inline-flex shrink-0 items-center gap-1.5 rounded-full border px-3.5 py-2 text-[13px] font-bold transition-colors ${
-              filterActive
-                ? "border-accent bg-accent-soft text-accent"
-                : "border-border bg-surface text-text hover:border-accent/50"
-            }`}
-          >
-            <SlidersHorizontal className="size-4" />
-            Filters
-            <ChevronDown className="size-4 opacity-70" />
-          </button>
+  const filterControls = (
+    <>
+      <button
+        type="button"
+        onClick={() => setFilterOpen(true)}
+        className={`inline-flex shrink-0 items-center gap-1 rounded-full border px-2.5 py-1.5 text-[12px] font-bold transition-colors ${
+          filterActive
+            ? "border-accent bg-accent-soft text-accent"
+            : "border-border bg-surface text-text hover:border-accent/50"
+        }`}
+      >
+        <SlidersHorizontal className="size-3.5" />
+        Filters
+        <ChevronDown className="size-3.5 opacity-70" />
+      </button>
 
-          <div
-            role="tablist"
-            aria-label="Movie categories"
-            className="hide-scrollbar flex min-w-0 flex-1 items-center gap-6 overflow-x-auto md:gap-8"
-          >
-            {LANGUAGE_TABS.map((item) => {
-              const active = quickTab === item.id;
-              return (
-                <button
-                  key={item.id}
-                  type="button"
-                  role="tab"
-                  aria-selected={active}
-                  onClick={() => selectQuickTab(item.id)}
-                  className={tabClass(active)}
-                >
-                  {item.label}
-                  {underline(active)}
-                </button>
-              );
-            })}
-
+      <div
+        role="tablist"
+        aria-label="Movie categories"
+        className="hide-scrollbar flex min-w-0 flex-1 items-center gap-6 overflow-x-auto md:gap-8"
+      >
+        {LANGUAGE_TABS.map((item) => {
+          const active = quickTab === item.id;
+          return (
             <button
+              key={item.id}
               type="button"
               role="tab"
-              aria-selected={quickTab === "rating"}
-              onClick={() => selectQuickTab("rating")}
-              className={tabClass(quickTab === "rating")}
+              aria-selected={active}
+              onClick={() => selectQuickTab(item.id)}
+              className={tabClass(active)}
             >
-              Top rated
-              {underline(quickTab === "rating")}
+              {item.label}
+              {underline(active)}
             </button>
+          );
+        })}
 
-            {GENRE_TABS.map((genre) => {
-              const active = quickTab === genre;
-              return (
-                <button
-                  key={genre}
-                  type="button"
-                  role="tab"
-                  aria-selected={active}
-                  onClick={() => selectQuickTab(genre)}
-                  className={tabClass(active)}
-                >
-                  {genre}
-                  {underline(active)}
-                </button>
-              );
-            })}
-          </div>
-      </StickyFilterBar>
+        <button
+          type="button"
+          role="tab"
+          aria-selected={quickTab === "rating"}
+          onClick={() => selectQuickTab("rating")}
+          className={tabClass(quickTab === "rating")}
+        >
+          Top rated
+          {underline(quickTab === "rating")}
+        </button>
 
-      <MovieFilterModal
-        open={filterOpen}
-        initial={modalFilters}
-        genreOptions={GENRE_TABS}
-        formatOptions={FORMAT_OPTIONS}
-        onClose={() => setFilterOpen(false)}
-        onApply={(values) => {
-          setModalFilters(values);
-          scrollToGrid();
-        }}
-        onClear={() => {
-          setModalFilters(EMPTY_FILTERS);
-          setQuickTab("all");
-        }}
-      />
+        {GENRE_TABS.map((genre) => {
+          const active = quickTab === genre;
+          return (
+            <button
+              key={genre}
+              type="button"
+              role="tab"
+              aria-selected={active}
+              onClick={() => selectQuickTab(genre)}
+              className={tabClass(active)}
+            >
+              {genre}
+              {underline(active)}
+            </button>
+          );
+        })}
+      </div>
+    </>
+  );
 
+  return (
+    <div id="browse" ref={browseRef} className="scroll-mt-[var(--vybe-header-h)]">
       {latest.length > 0 ? (
         <section className="border-b border-border bg-surface py-8 md:py-10 dark:bg-surface/60">
           <Container>
@@ -347,9 +330,25 @@ export function MovieBrowser({ latest, catalogs }: MovieBrowserProps) {
         </section>
       ) : null}
 
-      <section ref={gridRef} className="overflow-x-clip py-10 md:py-12">
+      <MovieFilterModal
+        open={filterOpen}
+        initial={modalFilters}
+        genreOptions={GENRE_TABS}
+        formatOptions={FORMAT_OPTIONS}
+        onClose={() => setFilterOpen(false)}
+        onApply={(values) => {
+          setModalFilters(values);
+          scrollToGrid();
+        }}
+        onClear={() => {
+          setModalFilters(EMPTY_FILTERS);
+          setQuickTab("all");
+        }}
+      />
+
+      <section ref={gridRef} className="overflow-x-clip pt-10 md:pt-12">
         <Container>
-          <div className="mb-8 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between md:mb-10">
+          <div className="mb-5 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between md:mb-6">
             <div className="flex flex-col gap-3">
               <h2 className="text-[clamp(2.25rem,4vw,3.75rem)] leading-[0.92] font-semibold tracking-[-0.04em] capitalize">
                 {gridHeading.split(" ").map((word, i) => (
@@ -367,6 +366,12 @@ export function MovieBrowser({ latest, catalogs }: MovieBrowserProps) {
               {visible.length} {visible.length === 1 ? "title" : "titles"}
             </p>
           </div>
+        </Container>
+
+        {/* Filters sit under Movies heading; stick below nav while scrolling cards */}
+        <StickyFilterBar containerClassName="gap-3">{filterControls}</StickyFilterBar>
+
+        <Container className="pt-6 pb-10 md:pt-8 md:pb-12">
           {genreLoading && isGenreTab(quickTab) ? (
             <p className="text-[14px] font-medium text-text-secondary">Loading movies…</p>
           ) : visible.length === 0 ? (

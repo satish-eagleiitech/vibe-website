@@ -174,7 +174,7 @@ export function PlaySportListing({ sport, venues, city = "Hyderabad" }: PlaySpor
             }
           />
         ) : (
-          <div className="grid grid-cols-2 gap-x-3 gap-y-7 sm:grid-cols-3 sm:gap-x-4 lg:grid-cols-4 xl:grid-cols-5">
+          <div className="grid grid-cols-2 gap-x-3 gap-y-6 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 lg:gap-x-4 lg:gap-y-7 3xl:grid-cols-6 4xl:grid-cols-7">
             {visible.map((venue) => (
               <PlayVenueCard key={venue.id} item={venue} variant="browse" />
             ))}
