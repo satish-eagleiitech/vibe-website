@@ -103,13 +103,13 @@ export function NotificationsView() {
       </div>
 
       {!items ? (
-        <div className="mt-5 space-y-3">
+        <div className="space-y-3">
           {[0, 1, 2].map((i) => (
             <div key={i} className="h-20 animate-pulse rounded-[20px] bg-surface" />
           ))}
         </div>
       ) : groups.length === 0 ? (
-        <div className="mt-5 rounded-[24px] border border-border bg-surface px-6 py-12 text-center">
+        <div className="rounded-[24px] border border-border bg-surface px-6 py-12 text-center">
           <span className="mx-auto inline-flex size-14 items-center justify-center rounded-full bg-accent-soft text-accent">
             <BellOff className="size-6" />
           </span>

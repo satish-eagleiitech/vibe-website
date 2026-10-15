@@ -58,13 +58,13 @@ export function SavedView() {
       </div>
 
       {!data ? (
-        <div className="mt-5 grid grid-cols-2 gap-4 sm:grid-cols-3 xl:grid-cols-4">
+        <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 xl:grid-cols-4">
           {[0, 1, 2, 3].map((i) => (
             <div key={i} className="aspect-[3/4] animate-pulse rounded-[20px] bg-surface" />
           ))}
         </div>
       ) : filtered.length === 0 ? (
-        <div className="mt-5 rounded-[24px] border border-border bg-surface px-6 py-12 text-center">
+        <div className="rounded-[24px] border border-border bg-surface px-6 py-12 text-center">
           <span className="mx-auto inline-flex size-14 items-center justify-center rounded-full bg-accent-soft text-accent">
             <Bookmark className="size-6" />
           </span>
@@ -88,7 +88,7 @@ export function SavedView() {
           </div>
         </div>
       ) : (
-        <div className="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 xl:grid-cols-4 3xl:grid-cols-5">
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 xl:grid-cols-4 3xl:grid-cols-5">
           {filtered.map((item) => (
             <article
               key={item.id}

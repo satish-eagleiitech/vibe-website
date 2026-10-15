@@ -16,8 +16,8 @@ export type VybeProfile = {
 const STORAGE_KEY = "vybe-profile";
 
 export const DEFAULT_PROFILE: VybeProfile = {
-  name: "Vamshi",
-  email: "vamshi@vybe.app",
+  name: "Bhai",
+  email: "bharath@vybe.app",
   phone: "+91 9347190965",
   gender: "Male",
   city: "Hyderabad",

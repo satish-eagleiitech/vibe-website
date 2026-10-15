@@ -93,7 +93,7 @@ export default function HelpPage() {
         })}
       </div>
 
-      <div className="mt-5 grid grid-cols-1 gap-5 xl:grid-cols-[minmax(0,1fr)_320px]">
+      <div className="grid grid-cols-1 gap-5 xl:grid-cols-[minmax(0,1fr)_320px]">
         <section className="rounded-[24px] border border-border bg-surface p-5">
           <h2 className="flex items-center gap-2 text-[16px] font-extrabold text-text">
             <FileText className="size-4 text-accent" />
