@@ -77,7 +77,7 @@ export default async function Home({
 
       {/* 6. Crowd favourites */}
       <VideoRailSection
-        title="Crowd favourite activities"
+        title="Crowd Activities"
         description="Tours, parks, and plans everyone is booking"
         href="/activities"
         items={landingCrowdFavourites}
@@ -85,7 +85,7 @@ export default async function Home({
 
       {/* 7. Music events */}
       <PosterRailSection
-        title="Explore music events near you"
+        title="Music Events"
         description="Gigs, live bands, and nights worth booking"
         href="/events"
         items={landingMusicEvents}
@@ -94,7 +94,7 @@ export default async function Home({
       {/* 8. Moments */}
       <VideoRailSection
         title="Moments on VYBE"
-        description="Garba nights, comedy, club scenes and play drops around you"
+        description="comedy, club scenes and play drops around you"
         href="/events"
         items={landingMomentsVideos}
       />

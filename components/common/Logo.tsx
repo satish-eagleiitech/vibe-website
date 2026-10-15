@@ -9,7 +9,7 @@ type LogoProps = {
 };
 
 const imgClass =
-  "h-9 w-auto bg-transparent object-contain object-left md:h-10";
+  "h-8 w-auto max-w-[96px] bg-transparent object-contain object-left sm:h-9 sm:max-w-none md:h-10";
 
 export function Logo({
   className = "",

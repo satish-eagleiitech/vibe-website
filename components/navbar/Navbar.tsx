@@ -7,7 +7,6 @@ import { Logo } from "@/components/common/Logo";
 import { LocationButton } from "@/components/navbar/LocationButton";
 import { MobileCategoryTabs } from "@/components/navbar/MobileCategoryTabs";
 import { NavLinks } from "@/components/navbar/NavLinks";
-import { NotificationButton } from "@/components/navbar/NotificationButton";
 import { ProfileLink } from "@/components/navbar/ProfileLink";
 import { SearchBar } from "@/components/navbar/SearchBar";
 import { ThemeToggle } from "@/components/navbar/ThemeToggle";
@@ -41,27 +40,23 @@ export function Navbar() {
 
   return (
     <>
-      {/* Mobile brand row */}
-      <div className="bg-surface lg:hidden">
-        <Container className="flex h-14 items-center justify-between gap-3">
-          <div className="flex min-w-0 items-center gap-3 sm:gap-5">
-            <Logo priority />
-            <LocationButton variant="stacked" />
+      {/* Mobile / tablet — full-bleed sticky bar (edge to edge) */}
+      <header className="sticky top-0 z-50 w-full min-w-0 overflow-x-clip bg-surface lg:hidden">
+        <Container
+          fullWidth
+          className="flex h-14 max-w-none items-center justify-between gap-1.5 px-3 sm:gap-3 sm:px-4"
+        >
+          <div className="flex min-w-0 flex-1 items-center gap-1.5 sm:gap-3">
+            <Logo priority className="shrink-0 [&_img]:h-8 sm:[&_img]:h-9" />
+            <LocationButton variant="stacked" className="min-w-0" />
           </div>
-          <div className="flex shrink-0 items-center gap-0.5 sm:gap-1">
+          <div className="flex shrink-0 items-center">
+            <Suspense fallback={null}>
+              <SearchBar variant="mobile" />
+            </Suspense>
             <ThemeToggle />
-            <NotificationButton />
             <ProfileLink />
           </div>
-        </Container>
-      </div>
-
-      {/* Mobile sticky search + tabs */}
-      <header className="sticky top-0 z-50 w-full border-b border-border/60 bg-surface lg:hidden">
-        <Container className="flex h-[60px] items-center">
-          <Suspense fallback={null}>
-            <SearchBar variant="mobile" />
-          </Suspense>
         </Container>
         <MobileCategoryTabs />
       </header>
@@ -92,7 +87,6 @@ export function Navbar() {
               <SearchBar overlay={overlay} />
             </Suspense>
             <ThemeToggle overlay={overlay} />
-            <NotificationButton overlay={overlay} />
             <ProfileLink overlay={overlay} />
           </div>
         </div>

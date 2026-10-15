@@ -300,13 +300,13 @@ export function LocationButton({
           className={`inline-flex min-w-0 items-center gap-1.5 text-left ${className}`}
           aria-label={`Current location ${city}. Open location picker.`}
         >
-          <MapPin className="size-[18px] shrink-0 text-accent" strokeWidth={2.25} aria-hidden="true" />
-          <span className="min-w-0 leading-tight">
+          <MapPin className="size-4 shrink-0 text-accent sm:size-[18px]" strokeWidth={2.25} aria-hidden="true" />
+          <span className="min-w-0 max-w-[7.5rem] leading-tight min-[360px]:max-w-[9rem] sm:max-w-[11rem]">
             <span className="flex items-center gap-0.5">
-              <span className="truncate text-[14px] font-extrabold text-text">{city}</span>
+              <span className="truncate text-[13px] font-extrabold text-text sm:text-[14px]">{city}</span>
               <ChevronDown className="size-3.5 shrink-0 text-text" strokeWidth={2.5} aria-hidden="true" />
             </span>
-            <span className="block truncate text-[11px] font-medium text-text-secondary">
+            <span className="hidden truncate text-[11px] font-medium text-text-secondary min-[360px]:block">
               {state}
             </span>
           </span>

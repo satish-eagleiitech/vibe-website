@@ -34,7 +34,7 @@ export function CategoryCard({ category }: CategoryCardProps) {
           <h3 className="max-w-[10ch] text-[22px] leading-[1.05] font-extrabold tracking-[-0.03em] md:text-[26px] lg:text-[30px]">
             {category.title}
           </h3>
-          <p className="mt-1.5 max-w-[22ch] text-[12px] leading-snug font-medium text-white/75 md:text-[18px]">
+          <p className="mt-1.5 max-w-[22ch] text-[12px] leading-snug font-medium text-white/75 md:text-[13px] lg:text-[14px]">
             {category.subtitle}
           </p>
         </div>

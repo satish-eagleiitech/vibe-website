@@ -54,22 +54,27 @@ export function MovieHeroCarousel({ movies }: MovieHeroCarouselProps) {
 
   return (
     <section
-      className="relative w-full overflow-hidden bg-black lg:-mt-[var(--vybe-header-h)]"
+      className="relative hidden w-full overflow-hidden bg-black min-[426px]:block lg:-mt-[var(--vybe-header-h)]"
       style={{ "--exo-dir": dir } as CSSProperties}
       aria-roledescription="carousel"
       aria-label="New movies"
     >
-      <div className="relative h-[min(680px,100svh)] min-h-[500px] w-full lg:h-screen lg:min-h-[112dvh]">
+      {/* Tablet: fit remaining viewport under sticky nav so Book Tickets stays on screen */}
+      <div className="relative h-[calc(100svh-var(--vybe-header-h))] min-h-[420px] w-full lg:h-screen lg:min-h-[112dvh]">
         {slides.map((item, i) => (
-          <div key={item.id} className={`absolute inset-0 ${layer(i)}`} aria-hidden={i !== index}>
+          <div
+            key={item.id}
+            className={`absolute inset-0 bg-black ${layer(i)}`}
+            aria-hidden={i !== index}
+          >
             <div className={`absolute inset-0 overflow-hidden ${i === index && animating ? "exo-wipe" : ""}`}>
-              {/* Taller frame nudged down so faces clear the fixed nav under 112dvh cover crop */}
+              {/* Full-bleed cover only — object-position shifts faces under nav without leaving a top gap (which leaked the previous slide on 4K) */}
               <Image
                 src={item.backdropUrl || item.posterUrl}
                 alt={`${item.title} backdrop`}
                 fill
                 priority={i === 0}
-                className={`!inset-x-0 !top-[6%] !h-[118%] !w-full object-cover object-[center_15%] ${
+                className={`object-cover object-[center_22%] lg:object-[center_28%] ${
                   i === index && animating ? "exo-settle" : i === prev ? "exo-recede" : ""
                 }`}
                 sizes="100vw"
@@ -104,8 +109,8 @@ export function MovieHeroCarousel({ movies }: MovieHeroCarouselProps) {
           ))}
         </div>
 
-        <div className="relative z-[5] mx-auto flex h-full w-full flex-col justify-end px-5 pb-16 pt-[clamp(7rem,22vh,11rem)] sm:px-8 md:px-12 md:pb-28 lg:px-[7vw] lg:pb-[min(22vh,168px)]">
-          <div className="mt-auto grid max-w-[560px] overflow-hidden pb-3 lg:w-[min(38vw,560px)] 3xl:max-w-[720px]">
+        <div className="relative z-[5] mx-auto flex h-full w-full flex-col justify-end px-5 pb-6 pt-8 sm:px-8 sm:pb-8 md:px-10 md:pb-10 lg:px-[7vw] lg:pb-[min(22vh,168px)] lg:pt-[clamp(7rem,22vh,11rem)]">
+          <div className="mt-auto grid max-w-[560px] overflow-hidden pb-1 lg:w-[min(38vw,560px)] lg:pb-3 3xl:max-w-[720px]">
             {textStack.map((i) => {
               const item = slides[i];
               const active = i === index;
@@ -126,38 +131,38 @@ export function MovieHeroCarousel({ movies }: MovieHeroCarouselProps) {
                   }`}
                 >
                   {item.genres.length ? (
-                    <p className="text-[11px] font-semibold tracking-[0.16em] text-white/70 uppercase md:text-[12px]">
+                    <p className="text-[10px] font-semibold tracking-[0.16em] text-white/70 uppercase sm:text-[11px] lg:text-[12px]">
                       {item.genres.slice(0, 3).join(" · ")}
                     </p>
                   ) : null}
-                  <h1 className="mt-3 text-[34px] leading-[0.98] font-semibold tracking-[-0.03em] break-words text-white sm:text-[44px] lg:text-[clamp(2.4rem,4vw,4.2rem)]">
+                  <h1 className="mt-2 text-[28px] leading-[0.98] font-semibold tracking-[-0.03em] break-words text-white sm:mt-2.5 sm:text-[36px] lg:mt-3 lg:text-[clamp(2.4rem,4vw,4.2rem)]">
                     {item.title}
                   </h1>
-                  <p className="mt-4 flex flex-wrap items-center gap-x-2 text-[13px] tracking-[0.04em] text-white/85">
+                  <p className="mt-2 flex flex-wrap items-center gap-x-1.5 text-[11px] tracking-[0.04em] text-white/85 sm:mt-2.5 sm:text-[12px] lg:mt-4 lg:text-[13px]">
                     <span className="font-bold text-accent">{item.formatBadge || "New Release"}</span>
                     {meta ? <span aria-hidden>·</span> : null}
                     {meta}
                   </p>
-                  <p className="mt-4 line-clamp-3 max-w-[40ch] text-[14px] leading-6 font-light text-white/90 md:text-[15px]">
+                  <p className="mt-2 line-clamp-2 max-w-[40ch] text-[12px] leading-5 font-light text-white/90 sm:mt-2.5 sm:text-[13px] lg:mt-4 lg:line-clamp-3 lg:text-[15px] lg:leading-6">
                     {item.description || "Discover this title in theatres near you on VYBE."}
                   </p>
 
-                  <div className="mt-7 flex items-center gap-3">
+                  <div className="mt-4 flex items-center gap-2.5 sm:mt-5 lg:mt-7 lg:gap-3">
                     <BookTicketsButton
                       href={`/movies/${item.id}/book`}
                       certification={item.certification}
-                      className="inline-flex min-w-0 flex-1 items-center justify-center gap-2 rounded-xl bg-accent px-6 py-3.5 text-[15px] font-extrabold text-white shadow-[0_12px_36px_rgba(255,0,91,0.35)] transition-transform hover:scale-[1.02] sm:min-w-[220px] sm:flex-none sm:px-8"
+                      className="inline-flex min-w-0 flex-1 items-center justify-center gap-2 rounded-xl bg-accent px-5 py-3 text-[14px] font-extrabold text-white shadow-[0_12px_36px_rgba(255,0,91,0.35)] transition-transform hover:scale-[1.02] sm:min-w-[200px] sm:flex-none sm:px-7 lg:min-w-[220px] lg:px-8 lg:py-3.5 lg:text-[15px]"
                     >
-                      <Ticket className="size-5" />
+                      <Ticket className="size-4 lg:size-5" />
                       Book Tickets
                     </BookTicketsButton>
                     <Link
                       href={`/movies/${item.id}`}
                       tabIndex={active ? undefined : -1}
-                      className="inline-flex size-12 items-center justify-center rounded-xl bg-white/15 text-white backdrop-blur-md transition-colors hover:bg-white/25"
+                      className="inline-flex size-10 items-center justify-center rounded-xl bg-white/15 text-white backdrop-blur-md transition-colors hover:bg-white/25 lg:size-12"
                       aria-label={`Details for ${item.title}`}
                     >
-                      <Plus className="size-6" strokeWidth={2.5} />
+                      <Plus className="size-5 lg:size-6" strokeWidth={2.5} />
                     </Link>
                   </div>
                 </div>

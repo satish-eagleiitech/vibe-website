@@ -35,14 +35,14 @@
   --breakpoint-4xl: 160rem;
 }
 
-/* Height of the pinned part of the navbar (search + category tabs below lg) */
+/* Height of the sticky mobile/tablet nav (top row + category tabs); desktop fixed bar */
 :root {
-  --vybe-header-h: 120px;
+  --vybe-header-h: 104px;
 }
 
 @media (min-width: 40rem) {
   :root {
-    --vybe-header-h: 108px;
+    --vybe-header-h: 98px;
   }
 }
 
