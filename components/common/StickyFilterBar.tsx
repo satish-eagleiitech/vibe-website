@@ -15,10 +15,10 @@ export function StickyFilterBar({
 }: StickyFilterBarProps) {
   return (
     <div
-      className={`sticky top-(--vybe-header-h) z-30 bg-bg/95 backdrop-blur-xl ${className ?? ""}`}
+      className={`sticky top-(--vybe-header-h) z-30 -mt-px border-0 bg-bg/95 backdrop-blur-xl ${className ?? ""}`}
     >
       <Container
-        className={`hide-scrollbar flex items-center gap-1.5 overflow-x-auto py-1.5 ${containerClassName ?? ""}`}
+        className={`hide-scrollbar flex items-center gap-1.5 overflow-x-auto py-2 ${containerClassName ?? ""}`}
       >
         {children}
       </Container>

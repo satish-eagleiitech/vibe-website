@@ -1,6 +1,6 @@
 "use client";
 
-import { Suspense, useEffect, useState } from "react";
+import { Suspense, useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
 import { Container } from "@/components/common/Container";
 import { Logo } from "@/components/common/Logo";
@@ -13,6 +13,7 @@ import { ThemeToggle } from "@/components/navbar/ThemeToggle";
 
 export function Navbar() {
   const pathname = usePathname();
+  const mobileHeaderRef = useRef<HTMLElement>(null);
   /** Landing cinematic hero sits under the nav (movies browse starts without hero) */
   const darkHeroPage = pathname === "/";
   const [onLight, setOnLight] = useState(!darkHeroPage);
@@ -35,13 +36,40 @@ export function Navbar() {
     };
   }, [darkHeroPage]);
 
+  // Keep --vybe-header-h in sync with the real sticky mobile/tablet bar (avoids gap above filters)
+  useEffect(() => {
+    const el = mobileHeaderRef.current;
+    if (!el) return;
+
+    const sync = () => {
+      if (window.matchMedia("(min-width: 64rem)").matches) {
+        document.documentElement.style.setProperty("--vybe-header-h", "78px");
+        return;
+      }
+      const h = Math.ceil(el.getBoundingClientRect().height);
+      document.documentElement.style.setProperty("--vybe-header-h", `${h}px`);
+    };
+
+    sync();
+    const ro = new ResizeObserver(sync);
+    ro.observe(el);
+    window.addEventListener("resize", sync);
+    return () => {
+      ro.disconnect();
+      window.removeEventListener("resize", sync);
+    };
+  }, []);
+
   const overlay = darkHeroPage && !onLight;
   const floating = onLight;
 
   return (
     <>
       {/* Mobile / tablet — full-bleed sticky bar (edge to edge) */}
-      <header className="sticky top-0 z-50 w-full min-w-0 overflow-x-clip bg-surface lg:hidden">
+      <header
+        ref={mobileHeaderRef}
+        className="sticky top-0 z-50 w-full min-w-0 overflow-x-clip bg-surface lg:hidden"
+      >
         <Container
           fullWidth
           className="flex h-14 max-w-none items-center justify-between gap-1.5 px-3 sm:gap-3 sm:px-4"

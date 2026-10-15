@@ -57,7 +57,7 @@ export function AllPlayVenuesSection({
   return (
     <section
       id="all-venues"
-      className="scroll-mt-[var(--vybe-header-h)] w-full overflow-x-clip pt-8 md:pt-10"
+      className="scroll-mt-[var(--vybe-header-h)] w-full overflow-x-clip pt-3 md:pt-6 lg:pt-10"
     >
       <Container>
         <div className="mb-5 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between md:mb-6">

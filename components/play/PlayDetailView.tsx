@@ -193,7 +193,7 @@ export function PlayDetailView({ item, related }: PlayDetailViewProps) {
       />
 
       <section id="play-detail-hero" className="bg-bg">
-        <Container className="pt-5 pb-2 md:pt-8 md:pb-3">
+        <Container className="pt-2 pb-2 md:pt-5 md:pb-3 lg:pt-8">
           <h1 className="text-[28px] font-extrabold tracking-tight text-text md:text-[36px] lg:text-[40px]">
             {item.title}
           </h1>

@@ -139,7 +139,7 @@ export function ActivityDetailView({ activity, related }: ActivityDetailViewProp
         category="activities"
       />
 
-      <Container className="pt-5 md:pt-7">
+      <Container className="pt-2 md:pt-5 lg:pt-7">
         <DetailPhotoGrid title={activity.title} images={gallery} />
       </Container>
 
@@ -186,7 +186,7 @@ export function ActivityDetailView({ activity, related }: ActivityDetailViewProp
         </div>
       ) : null}
 
-      <Container className="grid gap-8 pt-6 pb-4 lg:grid-cols-[minmax(0,1fr)_340px] lg:items-start lg:gap-12">
+      <Container className="grid gap-8 pt-3 pb-4 md:pt-5 lg:grid-cols-[minmax(0,1fr)_340px] lg:items-start lg:gap-12 lg:pt-6">
         <div>
           <div id="activity-hero-meta">
             <span id="activity-hero-sentinel" className="block h-px w-full" />
