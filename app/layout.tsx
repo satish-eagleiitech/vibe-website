@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
-import { Archivo_Black, Plus_Jakarta_Sans } from "next/font/google";
+import { Archivo_Black, Fraunces, Plus_Jakarta_Sans } from "next/font/google";
 import { Footer } from "@/components/footer/Footer";
 import { VybeIntro } from "@/components/intro/VybeIntro";
+import { HideOnAccount } from "@/components/layout/SiteChrome";
 import { Navbar } from "@/components/navbar/Navbar";
 import { ThemeProvider } from "@/components/theme/ThemeProvider";
 import { siteConfig } from "@/config/site";
@@ -11,6 +12,14 @@ const plusJakarta = Plus_Jakarta_Sans({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700", "800"],
   variable: "--font-plus-jakarta",
+  display: "swap",
+});
+
+/** Soft serif for account dashboard greetings */
+const fraunces = Fraunces({
+  subsets: ["latin"],
+  weight: ["500", "600", "700"],
+  variable: "--font-fraunces",
   display: "swap",
 });
 
@@ -47,7 +56,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${plusJakarta.variable} ${druk.variable} h-full`}
+      className={`${plusJakarta.variable} ${fraunces.variable} ${druk.variable} h-full`}
       style={{ colorScheme: "light" }}
       suppressHydrationWarning
     >
@@ -57,9 +66,13 @@ export default function RootLayout({
       >
         <ThemeProvider>
           <VybeIntro />
-          <Navbar />
-          <main className="w-full bg-bg pt-0">{children}</main>
-          <Footer />
+          <HideOnAccount>
+            <Navbar />
+          </HideOnAccount>
+          <main className="w-full min-w-0 bg-bg pt-0">{children}</main>
+          <HideOnAccount>
+            <Footer />
+          </HideOnAccount>
         </ThemeProvider>
       </body>
     </html>
