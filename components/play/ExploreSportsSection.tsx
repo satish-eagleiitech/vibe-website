@@ -12,15 +12,17 @@ const sceneSports = new Set([
 export function ExploreSportsSection() {
   return (
     <ExploreCategoryRail
+      tone="charcoal"
       title="Explore Sports"
       items={playSports.map((sport) => ({
         id: sport.id,
         label: sport.label,
         href: sport.href,
         imageUrl: sport.imageUrl,
+        flushImage: sceneSports.has(sport.id),
         imageClassName: sceneSports.has(sport.id)
           ? "object-cover object-[center_68%]"
-          : "origin-center object-contain object-center scale-[1.12]",
+          : "object-contain object-center",
       }))}
     />
   );

@@ -1,5 +1,21 @@
 import type { PlayItem, PlaySport } from "@/types/play";
 
+/** Studio shots with the white backdrop removed so they sit on dark cards. */
+const onDark = new Set([
+  "badminton",
+  "swimming",
+  "pickleball",
+  "table-tennis",
+  "padel",
+  "tennis",
+  "basketball",
+  "snooker",
+  "pool",
+  "volleyball",
+  "squash",
+  "cricket",
+]);
+
 function sport(
   id: string,
   label: string,
@@ -10,7 +26,9 @@ function sport(
     label,
     listingTitle,
     href: `/play/sports/${id}`,
-    imageUrl: `/images/explore/play/${id}.jpg`,
+    imageUrl: onDark.has(id)
+      ? `/images/explore/play/on-dark/${id}.png`
+      : `/images/explore/play/${id}.jpg`,
   };
 }
 
