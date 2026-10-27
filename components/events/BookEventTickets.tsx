@@ -1,12 +1,10 @@
 "use client";
 
-import Image from "next/image";
-import Link from "next/link";
+import { useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
-import { MapPin, Minus, Plus } from "lucide-react";
-import { useEffect, useMemo, useState } from "react";
-import { Container } from "@/components/common/Container";
-import { getBookingDates } from "@/lib/data/booking";
+import { PhoneLoginDialog } from "@/components/auth/PhoneLoginDialog";
+import { isSignedIn } from "@/lib/auth/session";
+import { eventSections } from "@/lib/events/sections";
 import { formatInr } from "@/lib/format";
 import type { LiveEvent } from "@/types/event";
 
@@ -14,221 +12,187 @@ type BookEventTicketsProps = {
   event: LiveEvent;
 };
 
-type TicketTier = {
-  id: string;
-  name: string;
-  description: string;
-  price: number;
-};
-
-function buildTiers(base: number): TicketTier[] {
-  return [
-    {
-      id: "general",
-      name: "General admission",
-      description: "Standing / standard seating",
-      price: base,
-    },
-    {
-      id: "premium",
-      name: "Premium",
-      description: "Reserved zone · faster entry",
-      price: Math.round(base * 1.6),
-    },
-    {
-      id: "vip",
-      name: "VIP",
-      description: "Front access · lounge perk",
-      price: Math.round(base * 2.4),
-    },
-  ];
-}
-
 export function BookEventTickets({ event }: BookEventTicketsProps) {
   const router = useRouter();
-  const [dates, setDates] = useState<ReturnType<typeof getBookingDates>>([]);
-  const tiers = useMemo(
-    () => buildTiers(event.startingPrice),
-    [event.startingPrice],
-  );
-  const [dateIso, setDateIso] = useState("");
-  const [tierId, setTierId] = useState(tiers[0]?.id ?? "general");
-  const [qty, setQty] = useState(1);
+  const sections = useMemo(() => eventSections(event.startingPrice), [event.startingPrice]);
+  const [sectionId, setSectionId] = useState("");
+  const [qty, setQty] = useState(2);
+  const [sort, setSort] = useState<"low" | "high">("low");
+  const [loginOpen, setLoginOpen] = useState(false);
 
-  useEffect(() => {
-    const next = getBookingDates(5);
-    setDates(next);
-    setDateIso((current) => current || next[0]?.iso || "");
-  }, []);
+  const listed = [...sections].sort((a, b) => (sort === "low" ? a.price - b.price : b.price - a.price));
+  const active = sections.find((section) => section.id === sectionId);
 
-  const activeTier = tiers.find((tier) => tier.id === tierId) ?? tiers[0];
-  const total = (activeTier?.price ?? 0) * qty;
-  const place = [event.venue, event.city].filter(Boolean).join(", ");
-  const monthLabel = dates[0]?.month ?? "";
-
-  function proceed() {
+  function go() {
     const params = new URLSearchParams({
-      date: dateIso,
-      tier: tierId,
+      date: `${event.month} ${event.day}`,
+      time: "6:00 – 10:00 PM",
+      tier: sectionId,
       qty: String(qty),
     });
     router.push(`/events/${event.id}/checkout?${params.toString()}`);
   }
 
-  return (
-    <div className="w-full pb-20">
-      <section className="border-b border-border bg-surface">
-        <Container className="flex items-center gap-4 py-5 md:gap-5 md:py-6">
-          <div className="relative aspect-[2/3] w-[72px] shrink-0 overflow-hidden rounded-xl bg-surface-muted md:w-[88px]">
-            <Image
-              src={event.imageUrl}
-              alt=""
-              fill
-              className="object-cover"
-              sizes="88px"
-            />
-          </div>
-          <div className="min-w-0">
-            <h1 className="truncate text-[22px] font-extrabold text-text md:text-[28px]">
-              {event.title}
-            </h1>
-            <p className="mt-1 inline-flex items-center gap-1 text-[13px] text-text-secondary md:text-[14px]">
-              <MapPin className="size-3.5 shrink-0" />
-              {place || "Venue TBA"}
-            </p>
-            <p className="mt-1 text-[13px] text-text-muted">{event.category}</p>
-          </div>
-        </Container>
-      </section>
+  function proceed() {
+    if (!sectionId) return;
+    if (!isSignedIn()) {
+      setLoginOpen(true);
+      return;
+    }
+    go();
+  }
 
-      <div className="sticky top-(--vybe-header-h) z-40 border-b border-border bg-surface/95 backdrop-blur-xl">
-        <Container className="py-3">
-          <div className="flex items-stretch gap-3 overflow-x-auto hide-scrollbar">
-            <div className="flex w-10 shrink-0 items-center justify-center text-[12px] font-extrabold tracking-widest text-text-secondary [writing-mode:vertical-rl] rotate-180">
-              {monthLabel}
-            </div>
-            {dates.map((date) => {
-              const active = date.iso === dateIso;
+  return (
+    <div className="w-full">
+      <div className="bg-[#e7f8ef] px-4 py-2.5 text-center text-[13px] font-semibold text-[#1c7a45]">
+        Pay only 50% to reserve your booking
+      </div>
+      <div className="mx-auto grid w-full max-w-6xl gap-8 px-4 py-6 lg:grid-cols-[minmax(0,1fr)_360px] lg:px-8">
+        <SeatMap sections={sections} activeId={sectionId} onPick={setSectionId} />
+        <aside>
+          <h1 className="text-[28px] font-extrabold tracking-tight text-text">Choose your section</h1>
+          <div className="mt-4 flex gap-2">
+            <select
+              aria-label="Tickets"
+              value={qty}
+              onChange={(event) => setQty(Number(event.target.value))}
+              className="h-10 rounded-full bg-text px-4 text-[13px] font-extrabold text-bg"
+            >
+              {[1, 2, 3, 4, 5, 6].map((count) => (
+                <option key={count} value={count}>
+                  {count} ticket{count > 1 ? "s" : ""}
+                </option>
+              ))}
+            </select>
+            <select
+              aria-label="Sort by price"
+              value={sort}
+              onChange={(event) => setSort(event.target.value as "low" | "high")}
+              className="h-10 rounded-full border border-border bg-surface px-4 text-[13px] font-extrabold text-text"
+            >
+              <option value="low">₹ Price · Low to high</option>
+              <option value="high">₹ Price · High to low</option>
+            </select>
+          </div>
+          <p className="mt-6 text-[12px] font-extrabold tracking-[0.14em] text-text-muted">
+            {sections.length} SECTIONS LIVE
+          </p>
+          <div className="mt-2 divide-y divide-border">
+            {listed.map((section) => {
+              const activeRow = section.id === sectionId;
               return (
                 <button
-                  key={date.iso}
+                  key={section.id}
                   type="button"
-                  onClick={() => setDateIso(date.iso)}
-                  className={`flex h-[64px] w-[58px] shrink-0 flex-col items-center justify-center rounded-xl border text-center transition-colors ${
-                    active
-                      ? "border-accent bg-accent text-white"
-                      : "border-border bg-surface text-text hover:border-accent/40"
-                  }`}
+                  onClick={() => setSectionId(section.id)}
+                  className={`flex w-full items-center justify-between py-4 text-left ${activeRow ? "text-accent" : "text-text"}`}
                 >
-                  <span className="text-[18px] font-extrabold leading-none">
-                    {date.day}
-                  </span>
-                  <span className="mt-1 text-[11px] font-semibold">
-                    {date.weekday}
-                  </span>
+                  <span className="text-[16px] font-semibold">{section.name}</span>
+                  <span className="text-[16px] font-semibold">{formatInr(section.price)}</span>
                 </button>
               );
             })}
           </div>
-        </Container>
+          <button
+            type="button"
+            disabled={!active}
+            onClick={proceed}
+            className="mt-6 flex h-12 w-full items-center justify-center rounded-full bg-text text-[15px] font-extrabold text-bg disabled:opacity-40"
+          >
+            {active ? `Continue with ${active.name}` : "Select a section"}
+          </button>
+        </aside>
       </div>
+      <PhoneLoginDialog open={loginOpen} onClose={() => setLoginOpen(false)} onDone={go} />
+    </div>
+  );
+}
 
-      <Container className="pt-6">
-        <div className="mb-5 rounded-xl bg-accent-soft px-4 py-3 text-[13px] font-semibold text-accent">
-          Pick a date and ticket type. Instant confirmation on VYBE.
-        </div>
+function SeatMap({
+  sections,
+  activeId,
+  onPick,
+}: {
+  sections: ReturnType<typeof eventSections>;
+  activeId: string;
+  onPick: (id: string) => void;
+}) {
+  const tone = (id: string) => sections.find((section) => section.id === id)?.tone ?? "#eee";
+  const ring = (id: string) => (id === activeId ? "ring-2 ring-text ring-offset-2" : "");
 
-        <h2 className="text-[18px] font-extrabold text-text md:text-[20px]">
-          Select tickets
-        </h2>
-        <div className="mt-4 space-y-3">
-          {tiers.map((tier) => {
-            const active = tier.id === tierId;
-            return (
-              <button
-                key={tier.id}
-                type="button"
-                onClick={() => setTierId(tier.id)}
-                className={`flex w-full items-center justify-between gap-4 rounded-2xl border px-4 py-4 text-left transition-colors ${
-                  active
-                    ? "border-accent bg-accent-soft"
-                    : "border-border bg-surface hover:border-accent/40"
-                }`}
-              >
-                <div>
-                  <p className="text-[15px] font-extrabold text-text">
-                    {tier.name}
-                  </p>
-                  <p className="mt-0.5 text-[13px] text-text-secondary">
-                    {tier.description}
-                  </p>
-                </div>
-                <p className="shrink-0 text-[15px] font-extrabold text-text">
-                  {formatInr(tier.price)}
-                </p>
-              </button>
-            );
-          })}
-        </div>
-
-        <div className="mt-6 flex items-center justify-between rounded-2xl border border-border bg-surface px-4 py-4">
-          <div>
-            <p className="text-[15px] font-extrabold text-text">Quantity</p>
-            <p className="text-[13px] text-text-secondary">Max 8 tickets</p>
-          </div>
-          <div className="flex items-center gap-3">
-            <button
-              type="button"
-              aria-label="Decrease quantity"
-              disabled={qty <= 1}
-              onClick={() => setQty((n) => Math.max(1, n - 1))}
-              className="inline-flex size-10 items-center justify-center rounded-full border border-border bg-bg text-text disabled:opacity-40"
-            >
-              <Minus className="size-4" />
-            </button>
-            <span className="w-6 text-center text-[16px] font-extrabold text-text">
-              {qty}
-            </span>
-            <button
-              type="button"
-              aria-label="Increase quantity"
-              disabled={qty >= 8}
-              onClick={() => setQty((n) => Math.min(8, n + 1))}
-              className="inline-flex size-10 items-center justify-center rounded-full border border-border bg-bg text-text disabled:opacity-40"
-            >
-              <Plus className="size-4" />
-            </button>
-          </div>
-        </div>
-      </Container>
-
-      <div className="fixed inset-x-0 bottom-0 z-40 border-t border-border bg-surface/95 backdrop-blur-xl">
-        <Container className="flex h-16 items-center justify-between gap-4 md:h-[72px]">
-          <div>
-            <p className="text-[12px] text-text-secondary">
-              {qty} × {activeTier?.name}
-            </p>
-            <p className="text-[18px] font-extrabold text-text">
-              {formatInr(total)}
-            </p>
-          </div>
-          <div className="flex items-center gap-2">
-            <Link
-              href={`/events/${event.id}`}
-              className="hidden rounded-xl border border-border px-4 py-2.5 text-sm font-semibold text-text sm:inline-flex"
-            >
-              Back
-            </Link>
-            <button
-              type="button"
-              onClick={proceed}
-              className="rounded-xl bg-accent px-6 py-3 text-sm font-bold text-white transition-transform hover:scale-[1.02]"
-            >
-              Proceed
-            </button>
-          </div>
-        </Container>
+  return (
+    <div className="mx-auto w-full max-w-[560px] py-4">
+      <div className="mx-auto w-28 rounded-t-xl bg-surface-muted py-2 text-center text-[11px] font-extrabold tracking-wide text-text-secondary">
+        STAGE
+      </div>
+      <div className="mt-4 flex items-start justify-between gap-8 px-6">
+        <Block id="fanpit" label="FANPIT" tone={tone("fanpit")} ring={ring("fanpit")} onPick={onPick} className="h-16 w-24" />
+        <Block id="fanpit" label="FANPIT" tone={tone("fanpit")} ring={ring("fanpit")} onPick={onPick} className="h-16 w-24" />
+      </div>
+      <Block
+        id="solitaire"
+        label="SOLITAIRE"
+        tone={tone("solitaire")}
+        ring={ring("solitaire")}
+        onPick={onPick}
+        className="mx-auto mt-3 h-14 w-40"
+      />
+      <Block
+        id="platinum"
+        label="PLATINUM"
+        tone={tone("platinum")}
+        ring={ring("platinum")}
+        onPick={onPick}
+        className="mx-auto mt-3 h-16 w-[78%]"
+      />
+      <Block id="gold" label="GOLD" tone={tone("gold")} ring={ring("gold")} onPick={onPick} className="mx-auto mt-3 h-16 w-[86%]" />
+      <button
+        type="button"
+        onClick={() => onPick("silver")}
+        className={`relative mx-auto mt-3 block h-28 w-full overflow-hidden ${ring("silver")}`}
+        style={{
+          background: tone("silver"),
+          borderRadius: "0 0 220px 220px",
+          clipPath: "polygon(0 0, 100% 0, 92% 100%, 8% 100%)",
+        }}
+      >
+        <span className="absolute inset-x-0 top-3 text-center text-[12px] font-extrabold tracking-wide text-text">SILVER</span>
+      </button>
+      <div className="mt-6 flex justify-center gap-6 text-[12px] text-text-secondary">
+        <span className="inline-flex items-center gap-2">
+          <span className="size-3 rounded-full bg-[#7aa2ff]" /> Available
+        </span>
+        <span className="inline-flex items-center gap-2">
+          <span className="size-3 rounded-full bg-surface-muted" /> Sold out
+        </span>
       </div>
     </div>
+  );
+}
+
+function Block({
+  id,
+  label,
+  tone,
+  ring,
+  onPick,
+  className,
+}: {
+  id: string;
+  label: string;
+  tone: string;
+  ring: string;
+  onPick: (id: string) => void;
+  className: string;
+}) {
+  return (
+    <button
+      type="button"
+      onClick={() => onPick(id)}
+      className={`rounded-xl text-[11px] font-extrabold tracking-wide text-text ${className} ${ring}`}
+      style={{ background: tone }}
+    >
+      {label}
+    </button>
   );
 }

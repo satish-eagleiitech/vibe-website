@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Archivo_Black, Fraunces, Plus_Jakarta_Sans } from "next/font/google";
 import { Footer } from "@/components/footer/Footer";
+import { LocationGate } from "@/components/location/LocationGate";
 import { VybeIntro } from "@/components/intro/VybeIntro";
 import { HideOnAccount } from "@/components/layout/SiteChrome";
 import { Navbar } from "@/components/navbar/Navbar";
@@ -66,6 +67,7 @@ export default function RootLayout({
       >
         <ThemeProvider>
           <VybeIntro />
+          <LocationGate />
           <HideOnAccount>
             <Navbar />
           </HideOnAccount>

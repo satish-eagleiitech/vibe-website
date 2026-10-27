@@ -7,16 +7,18 @@ import { siteConfig } from "@/config/site";
 const CITIES = ["Hyderabad", "Bengaluru", "Mumbai", "Delhi", "Chennai", "Pune"];
 
 const TERMS_LINKS = [
+  { href: "/privacy-policy", label: "Privacy policy" },
   { href: "/terms-of-service", label: "Booking policy" },
   { href: "/refund-policy", label: "Cancellations" },
-  { href: "/refund-policy", label: "Refunds" },
-  { href: "/privacy-policy", label: "Privacy policy" },
 ];
 
 const INFO_LINKS = [
-  { href: "/about-us", label: `About ${siteConfig.name}` },
-  { href: "/help-center", label: "FAQs" },
   ...siteConfig.nav,
+];
+
+const QUICK_LINKS = [
+  { href: "/list-your-events", label: "List your events" },
+  { href: "/list-your-venue", label: "List your venue" },
 ];
 
 const year = new Date().getFullYear();
@@ -80,7 +82,7 @@ export function Footer() {
       />
 
       <div className="-mt-px bg-[#2b064b]">
-        <div className="mx-auto grid max-w-[1080px] gap-10 px-[6vw] pt-10 pb-9 sm:grid-cols-2 md:grid-cols-[1.15fr_1fr_1.15fr] md:gap-[4vw] lg:px-12">
+        <div className="mx-auto grid max-w-[1180px] gap-10 px-[6vw] pt-10 pb-9 sm:grid-cols-2 lg:grid-cols-4 lg:gap-8 lg:px-12">
           <div>
             <h2 className="mb-4 text-[15.5px] font-bold">Terms and conditions</h2>
             {TERMS_LINKS.map((link) => (
@@ -109,6 +111,15 @@ export function Footer() {
                 <InstagramIcon />
               </a>
             </div>
+          </div>
+
+          <div>
+            <h2 className="mb-4 text-[15.5px] font-bold">Quick links</h2>
+            {QUICK_LINKS.map((link) => (
+              <Link key={link.href} href={link.href} className={linkClass}>
+                {link.label}
+              </Link>
+            ))}
           </div>
 
           <div>

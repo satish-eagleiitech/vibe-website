@@ -268,13 +268,12 @@ export function AccountShell({ children }: { children: ReactNode }) {
                   href="/profile"
                   className="flex max-w-[180px] items-center gap-2 py-1 pr-1 pl-0.5 transition-opacity hover:opacity-80 sm:max-w-none"
                 >
-                  <AccountAvatar profile={profile} size={34} />
                   <span className="hidden min-w-0 sm:block">
                     <span className="block truncate text-[13px] font-bold text-text">
                       {profile?.name ?? "Account"}
                     </span>
                   </span>
-                  <User className="hidden size-3.5 text-text-muted sm:block" />
+                  <AccountAvatar profile={profile} size={34} />
                 </Link>
               </div>
             </div>

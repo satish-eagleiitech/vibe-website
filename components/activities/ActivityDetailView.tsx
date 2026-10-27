@@ -10,7 +10,8 @@ import {
   Share2,
   Ticket,
 } from "lucide-react";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
+import { ActivityBookFlow } from "@/components/activities/ActivityBookFlow";
 import { BookingConfirmed } from "@/components/bookings/BookingConfirmed";
 import { ActivityCarousel } from "@/components/activities/ActivityCard";
 import { Container } from "@/components/common/Container";
@@ -25,9 +26,6 @@ import {
 import { useSectionSpy } from "@/components/detail/useSectionSpy";
 import { RecordRecentView } from "@/components/recent/RecordRecentView";
 import {
-  createBookingCode,
-  createBookingId,
-  saveBooking,
   type VybeBooking,
 } from "@/lib/bookings/storage";
 import { formatInr } from "@/lib/format";
@@ -54,7 +52,7 @@ export function ActivityDetailView({ activity, related }: ActivityDetailViewProp
     TAB_IDS,
   );
   const [compact, setCompact] = useState(false);
-  const [guests, setGuests] = useState(2);
+  const [bookingOpen, setBookingOpen] = useState(false);
   const [booking, setBooking] = useState<VybeBooking | null>(null);
 
   const venue = activity.venue ?? activity.category;
@@ -67,24 +65,6 @@ export function ActivityDetailView({ activity, related }: ActivityDetailViewProp
     "https://www.google.com/maps?q=" +
     encodeURIComponent(place) +
     "&z=15&output=embed";
-
-  const dateOptions = useMemo(() => {
-    const today = new Date();
-    return Array.from({ length: 7 }, (_, index) => {
-      const date = new Date(today);
-      date.setDate(today.getDate() + index);
-      return {
-        iso: date.toISOString().slice(0, 10),
-        label: date.toLocaleDateString("en-IN", {
-          weekday: "short",
-          day: "2-digit",
-          month: "short",
-        }),
-      };
-    });
-  }, []);
-
-  const [dateIso, setDateIso] = useState(() => dateOptions[0]?.iso ?? "");
 
   useEffect(() => {
     const sentinel = document.getElementById("activity-hero-sentinel");
@@ -100,32 +80,6 @@ export function ActivityDetailView({ activity, related }: ActivityDetailViewProp
 
   if (booking) {
     return <BookingConfirmed booking={booking} />;
-  }
-
-  function bookActivity() {
-    const date = dateOptions.find((item) => item.iso === dateIso);
-    const total = activity.price * guests;
-    const next: VybeBooking = {
-      id: createBookingId(),
-      bookingCode: createBookingCode(),
-      category: "activities",
-      title: activity.title,
-      posterUrl: activity.imageUrl,
-      meta: `${guests} guest${guests > 1 ? "s" : ""}`,
-      dateLabel: date?.label ?? dateIso,
-      timeLabel: activity.schedule?.split(",")[0] ?? "Morning slot",
-      venue: place,
-      seats: [`G-${String(guests).padStart(2, "0")}`],
-      seatClass: activity.category,
-      theatreName: venue,
-      ticketPrice: activity.price,
-      convenienceFee: Math.round(total * 0.05),
-      paymentMethod: "UPI",
-      total: total + Math.round(total * 0.05),
-      createdAt: new Date().toISOString(),
-    };
-    saveBooking(next);
-    setBooking(next);
   }
 
   return (
@@ -278,7 +232,7 @@ export function ActivityDetailView({ activity, related }: ActivityDetailViewProp
                 {activity.schedule ?? "Multiple daily slots"}
               </p>
               <p className="mt-2 text-[13px] text-text-secondary">
-                Pick a date and guest count on the right to reserve your slot.
+                Pick a visit date, then choose your tickets.
               </p>
             </div>
           </DetailSection>
@@ -308,53 +262,18 @@ export function ActivityDetailView({ activity, related }: ActivityDetailViewProp
 
         <aside className="h-fit lg:sticky lg:top-28">
           <div className="rounded-2xl border border-border bg-surface p-5">
-            <h2 className="text-[18px] font-extrabold text-text">Book slot</h2>
-            <div className="mt-4 grid grid-cols-2 gap-3">
-              <label className="block">
-                <span className="text-[12px] font-bold text-text-secondary">Date</span>
-                <select
-                  value={dateIso}
-                  onChange={(event) => setDateIso(event.target.value)}
-                  className="mt-1.5 w-full rounded-xl border border-border bg-bg px-3 py-2.5 text-[13px] font-semibold text-text outline-none"
-                >
-                  {dateOptions.map((item) => (
-                    <option key={item.iso} value={item.iso}>
-                      {item.label}
-                    </option>
-                  ))}
-                </select>
-              </label>
-              <label className="block">
-                <span className="text-[12px] font-bold text-text-secondary">Guests</span>
-                <select
-                  value={guests}
-                  onChange={(event) =>
-                    setGuests(Number.parseInt(event.target.value, 10))
-                  }
-                  className="mt-1.5 w-full rounded-xl border border-border bg-bg px-3 py-2.5 text-[13px] font-semibold text-text outline-none"
-                >
-                  {[1, 2, 3, 4, 5, 6, 8, 10].map((count) => (
-                    <option key={count} value={count}>
-                      {count} guest{count > 1 ? "s" : ""}
-                    </option>
-                  ))}
-                </select>
-              </label>
-            </div>
-            <p className="mt-4 text-[20px] font-extrabold text-text">
-              {formatInr(activity.price * guests)}
-              <span className="text-[13px] font-semibold text-text-secondary">
-                {" "}
-                estimated
-              </span>
+            <h2 className="text-[18px] font-extrabold text-text">Book tickets</h2>
+            <p className="mt-2 text-[13px] text-text-secondary">
+              From {formatInr(activity.price)}
+              {activity.priceUnit}
             </p>
             <button
               type="button"
-              onClick={bookActivity}
+              onClick={() => setBookingOpen(true)}
               className="mt-4 flex w-full items-center justify-center gap-2 rounded-xl bg-text px-5 py-3.5 text-sm font-bold text-bg dark:bg-white dark:text-black"
             >
               <Ticket className="size-4" />
-              Book now
+              Book tickets
             </button>
             <p className="mt-3 text-center text-[12px] text-text-muted">
               Instant confirmation on VYBE
@@ -372,6 +291,17 @@ export function ActivityDetailView({ activity, related }: ActivityDetailViewProp
             <ActivityCarousel activities={related} />
           </Container>
         </section>
+      ) : null}
+
+      {bookingOpen ? (
+        <ActivityBookFlow
+          activity={activity}
+          onClose={() => setBookingOpen(false)}
+          onConfirmed={(next) => {
+            setBookingOpen(false);
+            setBooking(next);
+          }}
+        />
       ) : null}
     </div>
   );

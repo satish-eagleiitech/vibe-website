@@ -18,9 +18,13 @@ export function isAccountRoute(pathname: string) {
   );
 }
 
+export function isBareRoute(pathname: string) {
+  return isAccountRoute(pathname) || pathname === "/login" || pathname.startsWith("/login/");
+}
+
 /** Hides site chrome (nav/footer) on account dashboard routes. */
 export function HideOnAccount({ children }: { children: ReactNode }) {
   const pathname = usePathname();
-  if (isAccountRoute(pathname)) return null;
+  if (isBareRoute(pathname)) return null;
   return children;
 }

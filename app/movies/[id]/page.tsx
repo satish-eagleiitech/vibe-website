@@ -6,10 +6,11 @@ import { Container } from "@/components/common/Container";
 import { BookTicketsButton } from "@/components/movies/BookTicketsButton";
 import { MovieDetailPhotosGrid } from "@/components/movies/MovieDetailPhotosGrid";
 import { MovieDetailPosterActions } from "@/components/movies/MovieDetailPosterActions";
+import { MovieTrailersRail } from "@/components/movies/MovieTrailersRail";
 import { StickyBookBar } from "@/components/movies/StickyBookBar";
 import { RecordRecentView } from "@/components/recent/RecordRecentView";
 import { getMovieById } from "@/lib/api/movies";
-import type { MoviePerson, MovieVideo } from "@/types/movie";
+import type { MoviePerson } from "@/types/movie";
 
 export async function generateMetadata({
   params,
@@ -183,11 +184,17 @@ export default async function MovieDetailPage({
           ) : null}
 
           {videos.length > 0 ? (
-            <DetailScroller title="Trailers & Videos">
-              {videos.map((video) => (
-                <VideoCard key={video.id} video={video} />
-              ))}
-            </DetailScroller>
+            <MovieTrailersRail
+              videos={videos}
+              metaLine={
+                [
+                  ...cast.slice(0, 2).map((person) => person.name),
+                  director,
+                ]
+                  .filter(Boolean)
+                  .join(" | ") || undefined
+              }
+            />
           ) : null}
         </Container>
       </section>
@@ -257,34 +264,3 @@ function PersonCard({ person }: { person: MoviePerson }) {
   );
 }
 
-function VideoCard({ video }: { video: MovieVideo }) {
-  return (
-    <a
-      href={video.watchUrl}
-      target="_blank"
-      rel="noreferrer"
-      className="group w-[240px] shrink-0 md:w-[280px]"
-    >
-      <div className="relative aspect-video overflow-hidden rounded-2xl bg-surface-muted">
-        <Image
-          src={video.thumbnailUrl}
-          alt={video.name}
-          fill
-          className="object-cover transition-transform duration-300 group-hover:scale-105"
-          sizes="280px"
-        />
-        <span className="absolute inset-0 flex items-center justify-center bg-black/25">
-          <span className="inline-flex size-12 items-center justify-center rounded-full bg-accent text-white shadow-lg">
-            <Play className="size-5 fill-white" />
-          </span>
-        </span>
-        <span className="absolute right-2 bottom-2 rounded bg-black/70 px-1.5 py-0.5 text-[10px] font-bold text-white">
-          {video.type}
-        </span>
-      </div>
-      <p className="mt-2 line-clamp-2 text-[13px] font-bold text-text">
-        {video.name}
-      </p>
-    </a>
-  );
-}

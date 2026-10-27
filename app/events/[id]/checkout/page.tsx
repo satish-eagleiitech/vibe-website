@@ -19,6 +19,7 @@ export default async function EventCheckoutPage({
   params: Promise<{ id: string }>;
   searchParams: Promise<{
     date?: string;
+    time?: string;
     tier?: string;
     qty?: string;
   }>;
@@ -34,7 +35,8 @@ export default async function EventCheckoutPage({
     <EventCheckoutPanel
       event={event}
       dateIso={query.date ?? ""}
-      tierId={query.tier ?? "general"}
+      timeLabel={query.time ?? "6:00 – 10:00 PM"}
+      tierId={query.tier ?? "silver"}
       qty={Number.isFinite(qty) ? qty : 1}
     />
   );

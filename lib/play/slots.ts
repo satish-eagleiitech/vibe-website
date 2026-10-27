@@ -76,10 +76,10 @@ export function courtsFor(item: PlayItem): { unit: string; courts: PlayCourt[] }
   }
   if (/box cricket/.test(sport)) {
     return {
-      unit: "Box",
+      unit: "Turf",
       courts: [
-        { id: "box-1", name: "Box 1", detail: "8 per side · Netted" },
-        { id: "box-2", name: "Box 2", detail: "6 per side · Netted" },
+        { id: "box-1", name: "Turf 1", detail: "Outdoor · Artificial grass · 6 vs 6" },
+        { id: "box-2", name: "Turf 2", detail: "Outdoor · Artificial grass · 8 vs 8" },
       ],
     };
   }

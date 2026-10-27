@@ -29,6 +29,8 @@ type LocationButtonProps = {
   variant?: "inline" | "stacked";
 };
 
+let locationPickerOwner = false;
+
 export function LocationButton({
   className = "",
   overlay = false,
@@ -82,6 +84,27 @@ export function LocationButton({
     applySaved();
     window.addEventListener("vybe-city-change", applySaved);
     return () => window.removeEventListener("vybe-city-change", applySaved);
+  }, []);
+
+  useEffect(() => {
+    if (locationPickerOwner) return;
+    locationPickerOwner = true;
+    function openPicker() {
+      setOpen(true);
+    }
+    try {
+      if (sessionStorage.getItem("vybe-open-location") === "1") {
+        sessionStorage.removeItem("vybe-open-location");
+        setOpen(true);
+      }
+    } catch {
+      /* ignore */
+    }
+    window.addEventListener("vybe-open-location", openPicker);
+    return () => {
+      locationPickerOwner = false;
+      window.removeEventListener("vybe-open-location", openPicker);
+    };
   }, []);
 
   useEffect(() => {
@@ -299,6 +322,7 @@ export function LocationButton({
           onClick={() => setOpen(true)}
           className={`inline-flex min-w-0 items-center gap-1.5 text-left ${className}`}
           aria-label={`Current location ${city}. Open location picker.`}
+          data-vybe-location=""
         >
           <MapPin className="size-4 shrink-0 text-accent sm:size-[18px]" strokeWidth={2.25} aria-hidden="true" />
           <span className="min-w-0 max-w-[7.5rem] leading-tight min-[360px]:max-w-[9rem] sm:max-w-[11rem]">
@@ -319,6 +343,7 @@ export function LocationButton({
             overlay ? "text-white" : "text-text"
           } ${className}`}
           aria-label={`Current location ${city}. Open location picker.`}
+          data-vybe-location=""
         >
           <MapPin
             className={`size-[18px] shrink-0 ${overlay ? "text-white" : "text-accent"}`}
@@ -335,7 +360,7 @@ export function LocationButton({
       )}
 
       {open ? (
-        <div className="fixed inset-0 z-[80] flex items-start justify-center bg-black/45 px-4 py-10 backdrop-blur-[2px] md:py-16">
+        <div data-location-dialog="" className="fixed inset-0 z-[80] flex items-start justify-center bg-black/45 px-4 py-10 backdrop-blur-[2px] md:py-16">
           <div
             role="dialog"
             aria-modal="true"

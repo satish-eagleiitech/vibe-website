@@ -129,35 +129,61 @@ export function ProfileView() {
 
   return (
     <div className="mx-auto w-full min-w-0 max-w-[1200px] space-y-5 sm:space-y-6">
-      {/* Greeting banner — larger Pitch-style row */}
-      <section className="flex min-w-0 flex-row items-center justify-between gap-4 sm:gap-6">
-        <div className="min-w-0 flex-1">
-          <h2 className="font-display text-[32px] leading-[1.05] font-semibold tracking-[-0.02em] text-text sm:text-[40px] lg:text-[48px]">
-            Hi, {firstName}
-          </h2>
-          <p className="mt-2 max-w-lg text-[14px] leading-snug text-text-secondary sm:text-[15px] lg:text-[16px]">
-            Ready to plan your next movie, event, activity or play session?
-          </p>
-          <button
-            type="button"
-            onClick={() => setEditing(true)}
-            className="mt-4 inline-flex items-center gap-2 rounded-full bg-accent px-5 py-2.5 text-[13px] font-bold text-white shadow-[0_10px_24px_rgba(255,0,91,0.28)] transition-opacity hover:opacity-90 sm:mt-5 sm:px-6 sm:py-3 sm:text-[14px]"
-          >
-            <Pencil className="size-4" />
-            Edit profile
-          </button>
-        </div>
+      {/* Greeting banner — Pitch-style; illustration fills card height */}
+      <section className="relative overflow-hidden rounded-[24px] bg-[color-mix(in_srgb,var(--color-accent)_12%,white)] sm:rounded-[28px] lg:rounded-[32px] dark:bg-[color-mix(in_srgb,var(--color-accent)_22%,#16161C)]">
+        <div className="relative z-10 flex min-h-[180px] flex-row items-stretch justify-between gap-3 px-5 py-5 sm:min-h-[210px] sm:gap-4 sm:px-8 sm:py-6 lg:min-h-[236px] lg:px-10 lg:py-7">
+          <div className="relative z-10 min-w-0 flex-1 self-center py-1 pr-2 sm:pr-4">
+            <h2 className="font-display text-[34px] leading-[1.05] font-semibold tracking-[-0.02em] text-text sm:text-[42px] lg:text-[48px]">
+              Hi, {firstName}
+            </h2>
+            <p className="mt-2 max-w-md text-[14px] leading-snug text-text-secondary sm:mt-2.5 sm:text-[15px] lg:text-[16px]">
+              Ready to plan your next movie, event, activity or play session?
+            </p>
+            <button
+              type="button"
+              onClick={() => setEditing(true)}
+              className="mt-4 inline-flex items-center gap-2 rounded-full bg-accent px-5 py-2.5 text-[13px] font-bold text-white shadow-[0_10px_24px_rgba(255,0,91,0.28)] transition-opacity hover:opacity-90 sm:mt-5 sm:px-6 sm:py-3 sm:text-[14px]"
+            >
+              <Pencil className="size-4" />
+              Edit profile
+            </button>
+          </div>
 
-        <div className="relative h-[140px] w-[160px] shrink-0 sm:h-[180px] sm:w-[220px] lg:h-[210px] lg:w-[260px]">
-          <Image
-            src="/images/profile/welcome-illustration.png?v=3"
-            alt=""
-            fill
-            className="object-contain object-right-bottom"
-            sizes="(max-width: 640px) 160px, (max-width: 1024px) 220px, 260px"
-            priority
-            unoptimized
-          />
+          <div className="relative -my-5 -mr-5 w-[46%] max-w-[320px] shrink-0 sm:-my-6 sm:-mr-8 sm:w-[42%] lg:-my-7 lg:-mr-10 lg:max-w-[380px]">
+            <Image
+              src="/images/profile/welcome-illustration.png?v=3"
+              alt=""
+              fill
+              className="object-contain object-right-bottom scale-110 origin-bottom-right sm:scale-125"
+              sizes="(max-width: 640px) 46vw, 380px"
+              priority
+              unoptimized
+            />
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h3 className="text-[16px] font-extrabold tracking-tight text-text sm:text-[17px]">Host</h3>
+        <div className="mt-3 grid w-full max-w-[680px] grid-cols-1 gap-2.5 sm:grid-cols-2">
+          <Link href="/list-your-events" className="block overflow-hidden rounded-[16px]">
+            <Image
+              src="/images/profile/host-events.jpg"
+              alt="List your events. Host gigs and nights on VYBE."
+              width={960}
+              height={540}
+              className="h-auto w-full"
+            />
+          </Link>
+          <Link href="/list-your-venue" className="block overflow-hidden rounded-[16px]">
+            <Image
+              src="/images/profile/host-venue-start.jpg"
+              alt="List your venue. Get your courts on VYBE."
+              width={960}
+              height={540}
+              className="h-auto w-full"
+            />
+          </Link>
         </div>
       </section>
 

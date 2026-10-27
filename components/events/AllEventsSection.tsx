@@ -7,6 +7,8 @@ import { Container } from "@/components/common/Container";
 import { EmptyState } from "@/components/common/EmptyState";
 import { StickyFilterBar } from "@/components/common/StickyFilterBar";
 import { EventListingCard } from "@/components/events/EventListingCard";
+import { EventSubcategoryGrid } from "@/components/events/EventSubcategoryGrid";
+import { allEventSubcategories, findEventCategory, matchesEventCategory } from "@/lib/data/eventCategories";
 import type { LiveEvent } from "@/types/event";
 
 type EventFiltersBarProps = {
@@ -23,36 +25,16 @@ const WHEN_FILTERS = [
 
 const QUICK_CATEGORIES = ["Music", "Nightlife", "Comedy"] as const;
 
-function matchesCategory(event: LiveEvent, category?: string) {
-  if (!category) return true;
-  const needle = category.toLowerCase();
-  const hay = `${event.category} ${event.title}`.toLowerCase();
-  if (needle === "music") return /music|concert|live|indie|rock|jazz|folk|dj/.test(hay);
-  if (needle === "nightlife") return /night|club|dj|skyline/.test(hay);
-  if (needle === "comedy") return /comedy|standup|comic/.test(hay);
-  if (needle === "food") return /food|taste|dining|brunch/.test(hay);
-  if (needle === "sports") return /sport|arena|match/.test(hay);
-  if (needle === "performances") return /theatre|performance|play|black box/.test(hay);
-  if (needle === "social") return /social|mixer|jam/.test(hay);
-  if (needle === "screenings") return /screen|film|cinema|score/.test(hay);
-  if (needle === "fitness") return /fitness|yoga|run/.test(hay);
-  if (needle === "expos") return /expo|exhibition|hitex|convention/.test(hay);
-  if (needle === "art") return /art|gallery|poetry|exhibition/.test(hay);
-  if (needle === "fests") return /fest|fair|carnival|yard/.test(hay);
-  if (needle === "romantic") return /romantic|candle|date|palace/.test(hay);
-  if (needle === "chill") return /chill|lounge|jazz|acoustic|candle/.test(hay);
-  if (needle === "family") return /family|kids|fair|festival/.test(hay);
-  return hay.includes(needle);
-}
-
 export function AllEventsSection({
   events,
   category,
   when,
 }: EventFiltersBarProps) {
   const filtered = useMemo(() => {
-    return events.filter((event) => matchesCategory(event, category));
+    return events.filter((event) => matchesEventCategory(event, category));
   }, [events, category]);
+  const parent = findEventCategory(category ?? "");
+  const subcategories = parent ? parent.subcategories : allEventSubcategories();
 
   function hrefFor(next: { category?: string; when?: string }) {
     const params = new URLSearchParams();
@@ -134,6 +116,11 @@ export function AllEventsSection({
       </StickyFilterBar>
 
       <Container className="pt-6 pb-10 md:pt-8 md:pb-12">
+        <EventSubcategoryGrid
+          items={subcategories}
+          title={parent ? `${parent.label} types` : "Subcategories"}
+        />
+        <div className="mt-8">
         {filtered.length === 0 ? (
           <EmptyState title="No events for this filter" />
         ) : (
@@ -143,6 +130,7 @@ export function AllEventsSection({
             ))}
           </div>
         )}
+        </div>
       </Container>
     </section>
   );

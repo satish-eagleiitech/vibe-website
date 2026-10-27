@@ -10,9 +10,7 @@ const onDark = new Set([
   "tennis",
   "basketball",
   "snooker",
-  "pool",
   "volleyball",
-  "squash",
   "cricket",
 ]);
 
@@ -44,10 +42,8 @@ export const playSports: PlaySport[] = [
   sport("tennis", "Tennis", "Tennis Courts"),
   sport("basketball", "Basketball", "Basketball Courts"),
   sport("snooker", "Snooker", "Snooker Parlours"),
-  sport("pool", "Pool", "Pool Tables"),
   sport("volleyball", "Volleyball", "Volleyball Courts"),
   sport("football", "Football", "Football Grounds"),
-  sport("squash", "Squash", "Squash Courts"),
   sport("cricket", "Cricket", "Cricket Grounds"),
 ];
 
