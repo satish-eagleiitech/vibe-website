@@ -21,11 +21,7 @@ export function CategoryCard({ category }: CategoryCardProps) {
         alt=""
         fill
         unoptimized
-        className={
-          category.id === "activities"
-            ? "object-cover object-right"
-            : "object-cover object-center"
-        }
+        className="object-cover object-right"
         sizes="(max-width: 768px) 92vw, 48vw"
       />
 

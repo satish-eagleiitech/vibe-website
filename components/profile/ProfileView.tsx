@@ -129,37 +129,24 @@ export function ProfileView() {
 
   return (
     <div className="mx-auto w-full min-w-0 max-w-[1200px] space-y-5 sm:space-y-6">
-      {/* Greeting banner — Pitch-style; illustration fills card height */}
-      <section className="relative overflow-hidden rounded-[24px] bg-[color-mix(in_srgb,var(--color-accent)_12%,white)] sm:rounded-[28px] lg:rounded-[32px] dark:bg-[color-mix(in_srgb,var(--color-accent)_22%,#16161C)]">
-        <div className="relative z-10 flex min-h-[180px] flex-row items-stretch justify-between gap-3 px-5 py-5 sm:min-h-[210px] sm:gap-4 sm:px-8 sm:py-6 lg:min-h-[236px] lg:px-10 lg:py-7">
-          <div className="relative z-10 min-w-0 flex-1 self-center py-1 pr-2 sm:pr-4">
+      <section className="rounded-[24px] border border-border px-5 py-5 sm:rounded-[28px] sm:px-8 sm:py-6">
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+          <div className="min-w-0">
             <h2 className="font-display text-[34px] leading-[1.05] font-semibold tracking-[-0.02em] text-text sm:text-[42px] lg:text-[48px]">
               Hi, {firstName}
             </h2>
-            <p className="mt-2 max-w-md text-[14px] leading-snug text-text-secondary sm:mt-2.5 sm:text-[15px] lg:text-[16px]">
+            <p className="mt-2 max-w-md text-[14px] leading-snug text-text-secondary sm:text-[15px] lg:text-[16px]">
               Ready to plan your next movie, event, activity or play session?
             </p>
-            <button
-              type="button"
-              onClick={() => setEditing(true)}
-              className="mt-4 inline-flex items-center gap-2 rounded-full bg-accent px-5 py-2.5 text-[13px] font-bold text-white shadow-[0_10px_24px_rgba(255,0,91,0.28)] transition-opacity hover:opacity-90 sm:mt-5 sm:px-6 sm:py-3 sm:text-[14px]"
-            >
-              <Pencil className="size-4" />
-              Edit profile
-            </button>
           </div>
-
-          <div className="relative -my-5 -mr-5 w-[46%] max-w-[320px] shrink-0 sm:-my-6 sm:-mr-8 sm:w-[42%] lg:-my-7 lg:-mr-10 lg:max-w-[380px]">
-            <Image
-              src="/images/profile/welcome-illustration.png?v=3"
-              alt=""
-              fill
-              className="object-contain object-right-bottom scale-110 origin-bottom-right sm:scale-125"
-              sizes="(max-width: 640px) 46vw, 380px"
-              priority
-              unoptimized
-            />
-          </div>
+          <button
+            type="button"
+            onClick={() => setEditing(true)}
+            className="inline-flex w-fit shrink-0 items-center gap-2 self-start rounded-full bg-accent px-5 py-2.5 text-[13px] font-bold text-white shadow-[0_10px_24px_rgba(255,0,91,0.28)] transition-opacity hover:opacity-90 sm:self-center sm:px-6 sm:py-3 sm:text-[14px]"
+          >
+            <Pencil className="size-4" />
+            Edit profile
+          </button>
         </div>
       </section>
 

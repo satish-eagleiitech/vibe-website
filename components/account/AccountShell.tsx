@@ -4,15 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useMemo, useState, type ReactNode } from "react";
 import { usePathname, useRouter } from "next/navigation";
-import {
-  Bell,
-  Gift,
-  LogOut,
-  Menu,
-  Plus,
-  User,
-  X,
-} from "lucide-react";
+import { Gift, LogOut, Menu, X } from "lucide-react";
 import { Logo } from "@/components/common/Logo";
 import { ThemeToggle } from "@/components/navbar/ThemeToggle";
 import { resetProfile, type VybeProfile } from "@/lib/profile/storage";
@@ -254,16 +246,6 @@ export function AccountShell({ children }: { children: ReactNode }) {
                 <span className="inline-flex size-10 items-center justify-center rounded-2xl border border-border bg-surface">
                   <ThemeToggle />
                 </span>
-                <Link
-                  href="/notifications"
-                  aria-label="Notifications"
-                  className="relative inline-flex size-10 items-center justify-center rounded-2xl border border-border bg-surface text-text transition-colors hover:border-accent/40 hover:text-accent"
-                >
-                  <Bell className="size-4" />
-                  {(data?.unread ?? 0) > 0 ? (
-                    <span className="absolute top-2 right-2 size-1.5 rounded-full bg-accent" />
-                  ) : null}
-                </Link>
                 <Link
                   href="/profile"
                   className="flex max-w-[180px] items-center gap-2 py-1 pr-1 pl-0.5 transition-opacity hover:opacity-80 sm:max-w-none"
