@@ -3,14 +3,13 @@
 import Image from "next/image";
 import { CalendarDays, Minus, Plus, X } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
-import { PhoneLoginDialog } from "@/components/auth/PhoneLoginDialog";
-import { isSignedIn } from "@/lib/auth/session";
 import {
   createBookingCode,
   createBookingId,
   saveBooking,
   type VybeBooking,
 } from "@/lib/bookings/storage";
+import { useLoginGate } from "@/components/auth/useLoginGate";
 import { formatInr } from "@/lib/format";
 import { DEFAULT_PROFILE, readProfile, type VybeProfile } from "@/lib/profile/storage";
 import type { Activity } from "@/types/activity";
@@ -112,9 +111,9 @@ export function ActivityBookFlow({ activity, onClose, onConfirmed }: ActivityBoo
   const [dateIso, setDateIso] = useState("");
   const [slot, setSlot] = useState("");
   const [qty, setQty] = useState<Record<string, number>>({ [options[0].id]: 1 });
-  const [loginOpen, setLoginOpen] = useState(false);
   const [left, setLeft] = useState(9 * 60);
   const [profile, setProfile] = useState<VybeProfile>(DEFAULT_PROFILE);
+  const { gate, modal } = useLoginGate();
   const venue = activity.venue ?? activity.category;
   const slots = kart
     ? ["11:00 AM – 4:00 PM", "4:00 PM – 11:00 PM"]
@@ -146,11 +145,7 @@ export function ActivityBookFlow({ activity, onClose, onConfirmed }: ActivityBoo
 
   function goReview() {
     if (ticketCount < 1) return;
-    if (!isSignedIn()) {
-      setLoginOpen(true);
-      return;
-    }
-    setStage("review");
+    gate(() => setStage("review"));
   }
 
   function pay() {
@@ -179,6 +174,7 @@ export function ActivityBookFlow({ activity, onClose, onConfirmed }: ActivityBoo
 
   return (
     <>
+      {modal}
       {stage === "pick" ? (
         <VisitDialog
           activity={activity}
@@ -195,8 +191,10 @@ export function ActivityBookFlow({ activity, onClose, onConfirmed }: ActivityBoo
             else onClose();
           }}
           onProceed={() => {
-            if (!slot && !kart) setSlot(slots[0]);
-            setStage("tickets");
+            gate(() => {
+              if (!slot && !kart) setSlot(slots[0]);
+              setStage("tickets");
+            });
           }}
         />
       ) : null}
@@ -304,15 +302,6 @@ export function ActivityBookFlow({ activity, onClose, onConfirmed }: ActivityBoo
         </div>
       ) : null}
 
-      <PhoneLoginDialog
-        open={loginOpen}
-        onClose={() => setLoginOpen(false)}
-        onDone={() => {
-          setLoginOpen(false);
-          setProfile(readProfile());
-          setStage("review");
-        }}
-      />
     </>
   );
 }

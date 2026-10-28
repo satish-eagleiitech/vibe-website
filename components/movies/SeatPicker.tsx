@@ -10,6 +10,7 @@ import {
   RefreshCw,
   Ticket,
 } from "lucide-react";
+import { useLoginGate } from "@/components/auth/useLoginGate";
 import { Container } from "@/components/common/Container";
 import {
   buildSeatMap,
@@ -45,6 +46,7 @@ export function SeatPicker({
   dateIso,
 }: SeatPickerProps) {
   const router = useRouter();
+  const { gate, modal } = useLoginGate();
   const { theatre, show } = findShowtime(
     movie.id,
     theatreId,
@@ -94,7 +96,7 @@ export function SeatPicker({
       date: dateIso,
       seats: selected.join(","),
     });
-    router.push(`/movies/${movie.id}/checkout?${params.toString()}`);
+    gate(() => router.push(`/movies/${movie.id}/checkout?${params.toString()}`));
   }
 
   const mm = String(Math.floor(secondsLeft / 60)).padStart(2, "0");
@@ -102,6 +104,7 @@ export function SeatPicker({
 
   return (
     <div className="w-full bg-bg pb-28 md:pb-10">
+      {modal}
       {/* Progress */}
       <div className="border-b border-border bg-surface">
         <Container className="flex items-center justify-between gap-3 py-3 md:py-4">

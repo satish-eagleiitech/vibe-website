@@ -1,6 +1,5 @@
 "use client";
 
-import { Share2 } from "lucide-react";
 import { useEffect, useState, type ReactNode } from "react";
 import { AddressPicker } from "@/components/list-events/AddressPicker";
 import { AgreementReview } from "@/components/list-events/AgreementReview";
@@ -221,6 +220,15 @@ export function OrganiserForm() {
       </ol>
 
       <div>
+      {step > 1 && step < 6 ? (
+        <button
+          type="button"
+          onClick={() => setStep((value) => value - 1)}
+          className="mb-4 text-[13px] font-bold text-text-secondary"
+        >
+          Back
+        </button>
+      ) : null}
 
       {step === 1 ? (
         <div className="space-y-5">
@@ -414,18 +422,6 @@ export function OrganiserForm() {
         <div className="mt-8 flex items-center gap-3">
           <button
             type="button"
-            aria-label="Share"
-            onClick={() => {
-              const url = window.location.href;
-              if (navigator.share) void navigator.share({ title: "List on VYBE", url });
-              else void navigator.clipboard.writeText(url);
-            }}
-            className="inline-flex size-12 items-center justify-center rounded-full border border-border text-text"
-          >
-            <Share2 className="size-4" />
-          </button>
-          <button
-            type="button"
             onClick={next}
             className="h-12 flex-1 rounded-full bg-[#111827] text-[15px] font-extrabold text-white"
           >
@@ -438,11 +434,6 @@ export function OrganiserForm() {
         </p>
       )}
 
-      {step > 1 && step < 6 ? (
-        <button type="button" onClick={() => setStep((value) => value - 1)} className="mt-3 text-[13px] font-bold text-text-secondary">
-          Back
-        </button>
-      ) : null}
       </div>
 
       {agreementOpen ? (

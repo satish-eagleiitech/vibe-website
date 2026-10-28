@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { Play, Ticket } from "lucide-react";
+import { Ticket } from "lucide-react";
 import { notFound } from "next/navigation";
 import type { ReactNode } from "react";
 import { Container } from "@/components/common/Container";
@@ -75,7 +75,7 @@ export default async function MovieDetailPage({
         className="relative z-10 border-b border-border bg-bg py-8 md:py-10"
       >
         <Container>
-          <div className="grid gap-10 lg:grid-cols-[220px_minmax(0,1fr)_240px] lg:items-start lg:gap-12">
+          <div className="grid gap-10 lg:grid-cols-[220px_minmax(0,1fr)] lg:items-start lg:gap-12">
             <MovieDetailPosterActions movie={movie} trailerUrl={trailerUrl} />
 
             <div className="min-w-0 space-y-5 text-[14px] md:text-[15px]">
@@ -115,38 +115,6 @@ export default async function MovieDetailPage({
                 <Ticket className="size-5" strokeWidth={2.5} />
                 Book tickets
               </BookTicketsButton>
-            </div>
-
-            <div className="flex flex-col items-center gap-6 lg:items-end">
-              {featuredVideo ? (
-                <a
-                  href={featuredVideo.watchUrl}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="group relative w-full max-w-[220px] overflow-hidden rounded-2xl bg-surface-muted shadow-md"
-                >
-                  <div className="relative aspect-video">
-                    <Image
-                      src={featuredVideo.thumbnailUrl}
-                      alt={featuredVideo.name}
-                      fill
-                      className="object-cover transition-transform duration-300 group-hover:scale-105"
-                      sizes="220px"
-                    />
-                    <span className="absolute inset-0 flex items-center justify-center bg-black/30">
-                      <span className="inline-flex size-11 items-center justify-center rounded-full bg-accent text-white">
-                        <Play className="size-5 fill-white" />
-                      </span>
-                    </span>
-                  </div>
-                  <p className="line-clamp-2 px-3 py-2.5 text-[12px] font-bold text-text">
-                    {featuredVideo.type === "Trailer" ||
-                    featuredVideo.type === "Teaser"
-                      ? featuredVideo.type
-                      : featuredVideo.name}
-                  </p>
-                </a>
-              ) : null}
             </div>
           </div>
         </Container>

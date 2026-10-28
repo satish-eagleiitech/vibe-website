@@ -1,5 +1,5 @@
-import Link from "next/link";
 import { Sparkles } from "lucide-react";
+import { ProfileGateLink } from "@/components/navbar/ProfileLink";
 import { Container } from "@/components/common/Container";
 import { RecommendationCard } from "@/components/recommendations/RecommendationCard";
 import type { Recommendation } from "@/types/recommendation";
@@ -32,12 +32,9 @@ export function RecommendationsSection({
                 </p>
               </div>
             </div>
-            <Link
-              href="/profile"
-              className="self-start rounded-full bg-surface px-6 py-2 text-xs font-semibold text-text shadow-sm transition-colors hover:bg-[#F0F0F0] md:self-auto"
-            >
+            <ProfileGateLink className="self-start rounded-full bg-surface px-6 py-2 text-xs font-semibold text-text shadow-sm transition-colors hover:bg-[#F0F0F0] md:self-auto">
               Manage Preferences
-            </Link>
+            </ProfileGateLink>
           </div>
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
             {items.map((item) => (

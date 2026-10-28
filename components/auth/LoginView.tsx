@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
+import { ChevronDown } from "lucide-react";
 import { Logo } from "@/components/common/Logo";
 import { useEffect, useState } from "react";
 import { markSignedIn } from "@/lib/auth/session";
@@ -40,18 +41,33 @@ const SLIDES = [
   },
 ] as const;
 
+const COUNTRIES = [
+  { id: "IN", name: "India", dial: "+91", digits: 10 },
+  { id: "US", name: "America", dial: "+1", digits: 10 },
+  { id: "CA", name: "Canada", dial: "+1", digits: 10 },
+  { id: "UK", name: "UK", dial: "+44", digits: 10 },
+] as const;
+
+type CountryId = (typeof COUNTRIES)[number]["id"];
+
 function nextPath(value: string | null) {
   if (value && value.startsWith("/") && !value.startsWith("//")) return value;
   return "/profile";
 }
 
-export function LoginView() {
+type LoginViewProps = {
+  onDone?: () => void;
+};
+
+export function LoginView({ onDone }: LoginViewProps) {
   const router = useRouter();
   const search = useSearchParams();
   const [index, setIndex] = useState(0);
   const [channel, setChannel] = useState<"email" | "phone">("email");
   const [email, setEmail] = useState("");
+  const [countryId, setCountryId] = useState<CountryId>("IN");
   const [phone, setPhone] = useState("");
+  const country = COUNTRIES.find((item) => item.id === countryId) ?? COUNTRIES[0];
   const [otp, setOtp] = useState(["", "", "", "", "", ""]);
   const [sent, setSent] = useState(false);
   const [error, setError] = useState("");
@@ -72,6 +88,10 @@ export function LoginView() {
       phone: identity.phone || current.phone,
     });
     markSignedIn();
+    if (onDone) {
+      onDone();
+      return;
+    }
     router.push(nextPath(search.get("next")));
   }
 
@@ -81,8 +101,8 @@ export function LoginView() {
         setError("Enter a valid email address");
         return;
       }
-    } else if (!/^\d{10}$/.test(phone)) {
-      setError("Enter a 10-digit mobile number");
+    } else if (phone.length !== country.digits) {
+      setError(`Enter a ${country.digits}-digit mobile number`);
       return;
     }
     setError("");
@@ -97,7 +117,7 @@ export function LoginView() {
     const name = channel === "email" ? email.split("@")[0] : "VYBE host";
     finish({
       email: channel === "email" ? email.trim() : undefined,
-      phone: channel === "phone" ? `+91 ${phone}` : undefined,
+      phone: channel === "phone" ? `${country.dial} ${phone}` : undefined,
       name,
     });
   }
@@ -209,12 +229,32 @@ export function LoginView() {
                 </label>
               ) : (
                 <label className="mt-8 flex h-12 overflow-hidden rounded-xl border border-border bg-surface focus-within:border-accent">
-                  <span className="flex items-center border-r border-border px-4 text-[14px] font-semibold text-text">+91</span>
+                  <span className="relative flex items-center border-r border-border">
+                    <select
+                      aria-label="Country"
+                      value={countryId}
+                      onChange={(event) => {
+                        const next = event.target.value as CountryId;
+                        const picked = COUNTRIES.find((item) => item.id === next) ?? COUNTRIES[0];
+                        setCountryId(next);
+                        setPhone((value) => value.slice(0, picked.digits));
+                        setError("");
+                      }}
+                      className="h-12 appearance-none bg-transparent pr-7 pl-3 text-[14px] font-semibold text-text outline-none"
+                    >
+                      {COUNTRIES.map((item) => (
+                        <option key={item.id} value={item.id}>
+                          {item.name} {item.dial}
+                        </option>
+                      ))}
+                    </select>
+                    <ChevronDown className="pointer-events-none absolute top-1/2 right-1.5 size-4 -translate-y-1/2 text-text-muted" />
+                  </span>
                   <input
                     inputMode="numeric"
-                    maxLength={10}
+                    maxLength={country.digits}
                     value={phone}
-                    onChange={(event) => setPhone(event.target.value.replace(/\D/g, "").slice(0, 10))}
+                    onChange={(event) => setPhone(event.target.value.replace(/\D/g, "").slice(0, country.digits))}
                     placeholder="Mobile number"
                     className="min-w-0 flex-1 bg-transparent px-4 text-[14px] text-text outline-none"
                   />

@@ -2,8 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
-import { PhoneLoginDialog } from "@/components/auth/PhoneLoginDialog";
-import { isSignedIn } from "@/lib/auth/session";
+import { useLoginGate } from "@/components/auth/useLoginGate";
 import { eventSections } from "@/lib/events/sections";
 import { formatInr } from "@/lib/format";
 import type { LiveEvent } from "@/types/event";
@@ -14,12 +13,11 @@ type BookEventTicketsProps = {
 
 export function BookEventTickets({ event }: BookEventTicketsProps) {
   const router = useRouter();
+  const { gate, modal } = useLoginGate();
   const sections = useMemo(() => eventSections(event.startingPrice), [event.startingPrice]);
   const [sectionId, setSectionId] = useState("");
   const [qty, setQty] = useState(2);
   const [sort, setSort] = useState<"low" | "high">("low");
-  const [loginOpen, setLoginOpen] = useState(false);
-
   const listed = [...sections].sort((a, b) => (sort === "low" ? a.price - b.price : b.price - a.price));
   const active = sections.find((section) => section.id === sectionId);
 
@@ -30,20 +28,17 @@ export function BookEventTickets({ event }: BookEventTicketsProps) {
       tier: sectionId,
       qty: String(qty),
     });
-    router.push(`/events/${event.id}/checkout?${params.toString()}`);
+    gate(() => router.push(`/events/${event.id}/checkout?${params.toString()}`));
   }
 
   function proceed() {
     if (!sectionId) return;
-    if (!isSignedIn()) {
-      setLoginOpen(true);
-      return;
-    }
     go();
   }
 
   return (
     <div className="w-full">
+      {modal}
       <div className="bg-[#e7f8ef] px-4 py-2.5 text-center text-[13px] font-semibold text-[#1c7a45]">
         Pay only 50% to reserve your booking
       </div>
@@ -103,7 +98,6 @@ export function BookEventTickets({ event }: BookEventTicketsProps) {
           </button>
         </aside>
       </div>
-      <PhoneLoginDialog open={loginOpen} onClose={() => setLoginOpen(false)} onDone={go} />
     </div>
   );
 }

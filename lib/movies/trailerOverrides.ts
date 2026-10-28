@@ -6,6 +6,8 @@ const TRAILER_OVERRIDES: Record<string, Array<{ key: string; name: string }>> = 
   "1234139": [{ key: "FW_PPcr1sPE", name: "Official Trailer" }],
   // Mayookha
   "1620668": [{ key: "pYB9ImQYNjY", name: "Official Trailer" }],
+  // Aadarsha Kutumbam House No: 47 - AK47
+  "1496785": [{ key: "R_nEckALsuI", name: "Official Trailer" }],
 };
 
 /** Certifications missing from TMDB release_dates */

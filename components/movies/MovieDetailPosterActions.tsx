@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { Heart, Play, Star } from "lucide-react";
 import { useEffect, useState } from "react";
+import { useLoginGate } from "@/components/auth/useLoginGate";
 import { isSaved, toggleSaved } from "@/lib/saved/storage";
 import type { MovieDetails } from "@/types/movie";
 
@@ -34,12 +35,13 @@ export function MovieDetailPosterActions({
   trailerUrl,
 }: MovieDetailPosterActionsProps) {
   const [saved, setSaved] = useState(false);
+  const { gate, modal } = useLoginGate();
 
   useEffect(() => {
     setSaved(isSaved(movie.id));
   }, [movie.id]);
 
-  function onToggleFavorite() {
+  function saveFavorite() {
     const next = toggleSaved({
       id: movie.id,
       title: movie.title,
@@ -53,6 +55,7 @@ export function MovieDetailPosterActions({
 
   return (
     <div className="mx-auto w-[200px] shrink-0 lg:mx-0 lg:w-[220px]">
+      {modal}
       <div className="relative aspect-[2/3] overflow-hidden rounded-2xl bg-surface-muted shadow-[0_16px_40px_rgba(0,0,0,0.35)]">
         <Image
           src={movie.posterUrl}
@@ -77,14 +80,14 @@ export function MovieDetailPosterActions({
       <div className="mt-4 flex items-center gap-2">
         <button
           type="button"
-          onClick={onToggleFavorite}
+          onClick={() => gate(saveFavorite, true)}
           className="flex-1 rounded-full border border-border bg-surface px-3 py-2.5 text-[12px] font-bold text-text"
         >
           {saved ? "Saved" : "Add to favorites"}
         </button>
         <button
           type="button"
-          onClick={onToggleFavorite}
+          onClick={() => gate(saveFavorite, true)}
           aria-label={saved ? "Remove from favorites" : "Add to favorites"}
           className={`inline-flex size-10 shrink-0 items-center justify-center rounded-full border ${
             saved

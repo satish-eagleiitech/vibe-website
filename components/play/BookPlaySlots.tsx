@@ -4,9 +4,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { Check, ChevronDown, MapPin, Minus, Plus } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
-import { PhoneLoginDialog } from "@/components/auth/PhoneLoginDialog";
+import { useLoginGate } from "@/components/auth/useLoginGate";
 import { BookingConfirmed } from "@/components/bookings/BookingConfirmed";
-import { isSignedIn } from "@/lib/auth/session";
 import {
   createBookingCode,
   createBookingId,
@@ -76,10 +75,10 @@ export function BookPlaySlots({ item, initialDate }: BookPlaySlotsProps) {
   const [period, setPeriod] = useState<"Morning" | "Evening">("Morning");
   const [qty, setQty] = useState(1);
   const [stage, setStage] = useState<"pick" | "review">("pick");
-  const [loginOpen, setLoginOpen] = useState(false);
   const [policyOpen, setPolicyOpen] = useState(false);
   const [left, setLeft] = useState(5 * 60);
   const [booking, setBooking] = useState<VybeBooking | null>(null);
+  const { gate, modal } = useLoginGate();
 
   const dateIso =
     pickedDate ||
@@ -149,12 +148,10 @@ export function BookPlaySlots({ item, initialDate }: BookPlaySlotsProps) {
 
   function goReview() {
     if (!canProceed) return;
-    if (!isSignedIn()) {
-      setLoginOpen(true);
-      return;
-    }
-    setLeft(5 * 60);
-    setStage("review");
+    gate(() => {
+      setLeft(5 * 60);
+      setStage("review");
+    });
   }
 
   function confirm() {
@@ -276,6 +273,7 @@ export function BookPlaySlots({ item, initialDate }: BookPlaySlotsProps) {
 
   return (
     <div className="mx-auto w-full max-w-5xl px-4 py-6 md:px-8 md:py-8">
+      {modal}
       <header className="text-center">
         <h1 className="text-[26px] font-extrabold tracking-tight text-text md:text-[32px]">{heading}</h1>
         <p className="mt-1 text-[14px] text-text-secondary">{item.venue}</p>
@@ -467,15 +465,6 @@ export function BookPlaySlots({ item, initialDate }: BookPlaySlotsProps) {
         </button>
       </div>
 
-      <PhoneLoginDialog
-        open={loginOpen}
-        onClose={() => setLoginOpen(false)}
-        onDone={() => {
-          setLoginOpen(false);
-          setLeft(5 * 60);
-          setStage("review");
-        }}
-      />
     </div>
   );
 }

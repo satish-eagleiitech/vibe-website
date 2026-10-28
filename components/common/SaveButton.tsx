@@ -2,6 +2,7 @@
 
 import { Bookmark, Flame } from "lucide-react";
 import { useEffect, useState } from "react";
+import { useLoginGate } from "@/components/auth/useLoginGate";
 import {
   isSaved,
   toggleSaved,
@@ -32,6 +33,7 @@ export function SaveButton({
   className = "",
 }: SaveButtonProps) {
   const [saved, setSaved] = useState(false);
+  const { gate, modal } = useLoginGate();
 
   useEffect(() => {
     setSaved(isSaved(itemId));
@@ -39,7 +41,21 @@ export function SaveButton({
 
   const Icon = variant === "flame" ? Flame : Bookmark;
 
+  function save() {
+    const next = toggleSaved({
+      id: itemId,
+      title,
+      href,
+      imageUrl,
+      meta,
+      category,
+    });
+    setSaved(next);
+  }
+
   return (
+    <>
+    {modal}
     <button
       type="button"
       aria-label={label}
@@ -47,19 +63,12 @@ export function SaveButton({
       onClick={(event) => {
         event.preventDefault();
         event.stopPropagation();
-        const next = toggleSaved({
-          id: itemId,
-          title,
-          href,
-          imageUrl,
-          meta,
-          category,
-        });
-        setSaved(next);
+        gate(save, true);
       }}
       className={`inline-flex size-9 items-center justify-center rounded-full bg-white/20 text-white backdrop-blur-md transition-colors hover:bg-white/35 ${className}`}
     >
       <Icon className={`size-[18px] ${saved ? "fill-current" : ""}`} />
     </button>
+    </>
   );
 }
