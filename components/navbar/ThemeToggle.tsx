@@ -18,7 +18,7 @@ export function ThemeToggle({ overlay = false }: ThemeToggleProps) {
       onClick={() => setAppearance(isDark ? "light" : "dark")}
       className={`inline-flex size-9 items-center justify-center rounded-full transition-colors ${
         overlay
-          ? "text-white hover:bg-white/15"
+          ? "text-rail-ink hover:bg-black/8 dark:hover:bg-white/10"
           : "text-text hover:bg-black/[0.06] dark:hover:bg-white/10"
       }`}
     >

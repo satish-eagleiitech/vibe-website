@@ -10,6 +10,7 @@ const ACCOUNT_PREFIXES = [
   "/notifications",
   "/rewards",
   "/help-center",
+  "/settings",
 ] as const;
 
 export function isAccountRoute(pathname: string) {

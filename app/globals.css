@@ -29,6 +29,10 @@
   --color-segment-active: var(--vybe-segment-active);
   --color-sidebar: var(--vybe-sidebar);
   --color-dash: var(--vybe-dash);
+  --color-rail: var(--vybe-rail);
+  --color-rail-ink: var(--vybe-rail-ink);
+  --color-rail-active: var(--vybe-rail-active);
+  --color-rail-on: var(--vybe-rail-on);
 }
 
 @theme {
@@ -78,6 +82,10 @@
   --vybe-segment-active: #ffffff;
   --vybe-sidebar: #14141b;
   --vybe-dash: #eeeef2;
+  --vybe-rail: #111111;
+  --vybe-rail-ink: #ffffff;
+  --vybe-rail-active: #ffffff;
+  --vybe-rail-on: #111111;
 }
 
 html.dark {
@@ -105,6 +113,10 @@ html.dark {
   --vybe-segment-active: #2a2a33;
   --vybe-sidebar: #16161c;
   --vybe-dash: #0f0f14;
+  --vybe-rail: #ffffff;
+  --vybe-rail-ink: #111111;
+  --vybe-rail-active: #111111;
+  --vybe-rail-on: #ffffff;
 }
 
 html,
@@ -119,6 +131,52 @@ body {
 body {
   font-family: var(--font-plus-jakarta), "Plus Jakarta Sans", sans-serif;
   overscroll-behavior: none;
+}
+
+/* Room for the concave corners only while the rail is open. Collapsed icons stay tight. */
+.group\/rail:hover .account-rail-nav,
+.group\/rail:focus-within .account-rail-nav {
+  gap: 1.5rem;
+}
+
+/* Account rail: active item opens into the page with the reference concave curve. */
+.group\/rail:hover .account-rail-curve,
+.group\/rail:focus-within .account-rail-curve {
+  z-index: 20;
+  margin-right: -14px;
+  padding-right: 1.5rem;
+  border-radius: 9999px 0 0 9999px;
+  background-color: var(--vybe-rail-active);
+  color: var(--vybe-rail-on);
+  box-shadow: none;
+}
+
+.group\/rail:hover .account-rail-curve::before,
+.group\/rail:focus-within .account-rail-curve::before,
+.group\/rail:hover .account-rail-curve::after,
+.group\/rail:focus-within .account-rail-curve::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  width: 26px;
+  height: 26px;
+  background: var(--vybe-rail-active);
+  pointer-events: none;
+}
+
+/* Page color fills only the outer corner, so the green rail bends around the active item. */
+.group\/rail:hover .account-rail-curve::before,
+.group\/rail:focus-within .account-rail-curve::before {
+  top: -26px;
+  -webkit-mask-image: radial-gradient(circle at 0 0, transparent 26px, #000 26.5px);
+  mask-image: radial-gradient(circle at 0 0, transparent 26px, #000 26.5px);
+}
+
+.group\/rail:hover .account-rail-curve::after,
+.group\/rail:focus-within .account-rail-curve::after {
+  bottom: -26px;
+  -webkit-mask-image: radial-gradient(circle at 0 100%, transparent 26px, #000 26.5px);
+  mask-image: radial-gradient(circle at 0 100%, transparent 26px, #000 26.5px);
 }
 
 a:focus-visible,

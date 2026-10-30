@@ -105,7 +105,7 @@ export function ProfileView() {
 
   if (!data) {
     return (
-      <div className="mx-auto w-full max-w-[1200px] space-y-5">
+      <div className="w-full max-w-[1200px] space-y-5">
         <div className="h-28 animate-pulse rounded-2xl bg-surface-muted" />
         <div className="h-40 animate-pulse rounded-[24px] bg-surface" />
         <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
@@ -128,7 +128,7 @@ export function ProfileView() {
   }
 
   return (
-    <div className="mx-auto w-full min-w-0 max-w-[1200px] space-y-5 sm:space-y-6">
+    <div className="w-full min-w-0 max-w-[1200px] space-y-5 sm:space-y-6">
       <section className="rounded-[24px] border border-border px-5 py-5 sm:rounded-[28px] sm:px-8 sm:py-6">
         <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <div className="min-w-0">
