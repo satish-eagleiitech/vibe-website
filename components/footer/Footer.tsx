@@ -72,7 +72,7 @@ export function Footer() {
         aria-hidden
       />
       <Image
-        src="/images/footer/skyline-dark.png"
+        src="/images/footer/skyline-night.png"
         alt=""
         width={3840}
         height={936}
@@ -81,7 +81,7 @@ export function Footer() {
         aria-hidden
       />
 
-      <div className="-mt-px bg-[#2b064b]">
+      <div className="-mt-px bg-[#2b064b] dark:bg-[#5b2a9a]">
         <div className="mx-auto grid max-w-[1180px] gap-10 px-[6vw] pt-10 pb-9 sm:grid-cols-2 lg:grid-cols-4 lg:gap-8 lg:px-12">
           <div>
             <h2 className="mb-4 text-[15.5px] font-bold">Terms and conditions</h2>

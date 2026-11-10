@@ -5,6 +5,7 @@
 @theme inline {
   --font-sans: var(--font-plus-jakarta), "Plus Jakarta Sans", sans-serif;
   --font-display: var(--font-fraunces), "Fraunces", Georgia, serif;
+  --font-heading: var(--font-oswald), "Oswald", sans-serif;
 
   --color-bg: var(--vybe-bg);
   --color-surface: var(--vybe-surface);
@@ -40,21 +41,9 @@
   --breakpoint-4xl: 160rem;
 }
 
-/* Height of the sticky mobile/tablet nav (top row + category tabs); desktop fixed bar */
+/* Height of the top dock; Navbar measures the real bar and overwrites this */
 :root {
-  --vybe-header-h: 104px;
-}
-
-@media (min-width: 40rem) {
-  :root {
-    --vybe-header-h: 98px;
-  }
-}
-
-@media (min-width: 64rem) {
-  :root {
-    --vybe-header-h: 78px;
-  }
+  --vybe-header-h: 88px;
 }
 
 :root {
@@ -82,10 +71,7 @@
   --vybe-segment-active: #ffffff;
   --vybe-sidebar: #14141b;
   --vybe-dash: #eeeef2;
-  --vybe-rail: #111111;
-  --vybe-rail-ink: #ffffff;
-  --vybe-rail-active: #ffffff;
-  --vybe-rail-on: #111111;
+  --vybe-nav: #ffffff;
 }
 
 html.dark {
@@ -113,10 +99,7 @@ html.dark {
   --vybe-segment-active: #2a2a33;
   --vybe-sidebar: #16161c;
   --vybe-dash: #0f0f14;
-  --vybe-rail: #ffffff;
-  --vybe-rail-ink: #111111;
-  --vybe-rail-active: #111111;
-  --vybe-rail-on: #ffffff;
+  --vybe-nav: #16161c;
 }
 
 html,
@@ -133,50 +116,20 @@ body {
   overscroll-behavior: none;
 }
 
-/* Room for the concave corners only while the rail is open. Collapsed icons stay tight. */
-.group\/rail:hover .account-rail-nav,
-.group\/rail:focus-within .account-rail-nav {
-  gap: 1.5rem;
-}
-
-/* Account rail: active item opens into the page with the reference concave curve. */
-.group\/rail:hover .account-rail-curve,
-.group\/rail:focus-within .account-rail-curve {
-  z-index: 20;
-  margin-right: -14px;
-  padding-right: 1.5rem;
-  border-radius: 9999px 0 0 9999px;
-  background-color: var(--vybe-rail-active);
-  color: var(--vybe-rail-on);
-  box-shadow: none;
-}
-
-.group\/rail:hover .account-rail-curve::before,
-.group\/rail:focus-within .account-rail-curve::before,
-.group\/rail:hover .account-rail-curve::after,
-.group\/rail:focus-within .account-rail-curve::after {
-  content: "";
-  position: absolute;
-  right: 0;
-  width: 26px;
-  height: 26px;
-  background: var(--vybe-rail-active);
+html.vybe-nav-hidden .vybe-site-header {
+  visibility: hidden;
   pointer-events: none;
 }
 
-/* Page color fills only the outer corner, so the green rail bends around the active item. */
-.group\/rail:hover .account-rail-curve::before,
-.group\/rail:focus-within .account-rail-curve::before {
-  top: -26px;
-  -webkit-mask-image: radial-gradient(circle at 0 0, transparent 26px, #000 26.5px);
-  mask-image: radial-gradient(circle at 0 0, transparent 26px, #000 26.5px);
-}
-
-.group\/rail:hover .account-rail-curve::after,
-.group\/rail:focus-within .account-rail-curve::after {
-  bottom: -26px;
-  -webkit-mask-image: radial-gradient(circle at 0 100%, transparent 26px, #000 26.5px);
-  mask-image: radial-gradient(circle at 0 100%, transparent 26px, #000 26.5px);
+@layer base {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-oswald), "Oswald", sans-serif;
+  }
 }
 
 a:focus-visible,
@@ -487,8 +440,25 @@ textarea:focus-visible {
   font-weight: 700;
 }
 
+@keyframes vybe-login-drift {
+  0%,
+  100% {
+    transform: scale(1.05);
+  }
+  50% {
+    transform: scale(1.12);
+  }
+}
+
+.vybe-login-strip {
+  animation: vybe-login-drift 18s ease-in-out infinite;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .vybe-intro {
     display: none;
+  }
+  .vybe-login-strip {
+    animation: none;
   }
 }

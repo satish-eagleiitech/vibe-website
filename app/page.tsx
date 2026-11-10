@@ -17,7 +17,7 @@ import {
   landingMusicEvents,
 } from "@/lib/data/landingExtras";
 
-const HERO_SLIDES = 10;
+const HERO_SLIDES = 3;
 
 export default async function Home({
   searchParams,
@@ -60,7 +60,7 @@ export default async function Home({
       <TrendingMovies
         movies={latestItems.slice(0, 15)}
         language={movieLanguage}
-        totalLabel={`View All${latest.total ? ` (${latest.total})` : ""}`}
+        totalLabel="View All"
       />
 
       {/* 2. Categories */}

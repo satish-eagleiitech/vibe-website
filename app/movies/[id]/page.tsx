@@ -1,16 +1,12 @@
 import Image from "next/image";
-import { Ticket } from "lucide-react";
 import { notFound } from "next/navigation";
-import type { ReactNode } from "react";
 import { Container } from "@/components/common/Container";
 import { BookTicketsButton } from "@/components/movies/BookTicketsButton";
 import { MovieDetailPhotosGrid } from "@/components/movies/MovieDetailPhotosGrid";
-import { MovieDetailPosterActions } from "@/components/movies/MovieDetailPosterActions";
+import { MoviePeopleRail } from "@/components/movies/MoviePeopleRail";
 import { MovieTrailersRail } from "@/components/movies/MovieTrailersRail";
-import { StickyBookBar } from "@/components/movies/StickyBookBar";
 import { RecordRecentView } from "@/components/recent/RecordRecentView";
 import { getMovieById } from "@/lib/api/movies";
-import type { MoviePerson } from "@/types/movie";
 
 export async function generateMetadata({
   params,
@@ -37,13 +33,6 @@ export default async function MovieDetailPage({
   const director =
     crew.find((person) => /director/i.test(person.role ?? ""))?.name ??
     crew[0]?.name;
-  const castLine =
-    cast.length > 0
-      ? cast
-          .slice(0, 6)
-          .map((person) => person.name)
-          .join(", ")
-      : (movie.cast ?? []).slice(0, 6).join(", ");
 
   const wallpapers =
     movie.images?.filter((image) => image.type === "backdrop") ??
@@ -53,11 +42,12 @@ export default async function MovieDetailPage({
   const posters =
     movie.images?.filter((image) => image.type === "poster") ?? [];
   const galleryImages = [...wallpapers, ...posters];
-  const featuredVideo =
-    videos.find((video) => video.type === "Trailer") ??
-    videos.find((video) => video.type === "Teaser") ??
-    videos[0];
-  const trailerUrl = movie.trailerUrl || featuredVideo?.watchUrl;
+  const art = movie.backdropUrl || movie.posterUrl;
+  const language = movie.languages[0]
+    ? movie.languages[0].charAt(0).toUpperCase() + movie.languages[0].slice(1)
+    : "";
+  const facts = [movie.certification, language, movie.duration].filter(Boolean);
+  const releaseLabel = formatRelease(movie.releaseDate);
 
   return (
     <div className="w-full bg-bg pb-16">
@@ -70,86 +60,76 @@ export default async function MovieDetailPage({
         category="movies"
       />
 
-      <section
-        id="movie-detail-hero"
-        className="relative z-10 border-b border-border bg-bg py-8 md:py-10"
-      >
-        <Container>
-          <div className="grid gap-10 lg:grid-cols-[220px_minmax(0,1fr)] lg:items-start lg:gap-12">
-            <MovieDetailPosterActions movie={movie} trailerUrl={trailerUrl} />
-
-            <div className="min-w-0 space-y-5 text-[14px] md:text-[15px]">
-              <MetaRow label="Title" value={movie.title} />
-              {movie.certification ? (
-                <MetaRow label="Rating" value={movie.certification} />
-              ) : null}
-              {castLine ? <MetaRow label="Casts" value={castLine} /> : null}
-              {director ? <MetaRow label="Creator" value={director} /> : null}
-              {movie.genres.length > 0 ? (
-                <div>
-                  <p className="text-[13px] font-extrabold tracking-wide text-text uppercase">
-                    Genre
-                  </p>
-                  <div className="mt-2 flex flex-wrap gap-2">
-                    {movie.genres.map((genre) => (
-                      <span
-                        key={genre}
-                        className="rounded-full border border-border px-4 py-1.5 text-[13px] font-semibold text-text"
-                      >
-                        {genre}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              ) : null}
-              {movie.description ? (
-                <p className="max-w-2xl pt-2 text-[14px] leading-7 text-text-secondary">
-                  {movie.description}
-                </p>
-              ) : null}
-              <BookTicketsButton
-                href={`/movies/${movie.id}/book`}
-                certification={movie.certification}
-                className="inline-flex items-center gap-2.5 rounded-full bg-accent px-7 py-3 text-[15px] font-extrabold text-white transition-transform hover:scale-[1.02]"
-              >
-                <Ticket className="size-5" strokeWidth={2.5} />
-                Book tickets
-              </BookTicketsButton>
+      <section id="movie-detail-hero" className="relative isolate min-h-[calc(480px+var(--vybe-header-h))] overflow-hidden bg-black text-white md:min-h-[calc(560px+var(--vybe-header-h))]">
+        {art ? (
+          <Image
+            src={art}
+            alt=""
+            fill
+            priority
+            className="object-cover object-[78%_center]"
+            sizes="100vw"
+          />
+        ) : null}
+        <div className="absolute inset-0 bg-gradient-to-r from-black via-black/80 to-black/15" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-transparent to-black/25" />
+        <Container className="relative flex min-h-[calc(480px+var(--vybe-header-h))] items-center justify-between gap-6 pt-[calc(var(--vybe-header-h)+2.5rem)] pb-10 md:min-h-[calc(560px+var(--vybe-header-h))] md:gap-10 md:pb-14">
+          <div className="min-w-0 max-w-[640px] flex-1">
+            <h1 className="text-[40px] leading-none font-extrabold tracking-[-0.03em] text-white md:text-[56px]">
+              {movie.title}
+            </h1>
+            {facts.length > 0 ? (
+              <p className="mt-4 text-[15px] font-medium text-white/90 md:text-[16px]">
+                {facts.join(" | ")}
+              </p>
+            ) : null}
+            {movie.description ? (
+              <p className="mt-4 line-clamp-5 max-w-[560px] text-[14px] leading-7 text-white/85 md:text-[15px]">
+                {movie.description}
+              </p>
+            ) : null}
+            {movie.genres.length > 0 ? (
+              <div className="mt-5 flex flex-wrap gap-2">
+                {movie.genres.slice(0, 4).map((genre) => (
+                  <span
+                    key={genre}
+                    className="rounded-full bg-white/15 px-4 py-1.5 text-[13px] font-medium text-white"
+                  >
+                    {genre}
+                  </span>
+                ))}
+              </div>
+            ) : null}
+            {releaseLabel ? (
+              <p className="mt-4 text-[14px] text-white/85">Releasing {releaseLabel}</p>
+            ) : null}
+            <BookTicketsButton
+              href={`/movies/${movie.id}/book`}
+              certification={movie.certification}
+              className="mt-6 inline-flex items-center justify-center rounded-full bg-white px-8 py-3 text-[16px] font-bold text-black transition-transform hover:scale-[1.02]"
+            >
+              Book Tickets
+            </BookTicketsButton>
+          </div>
+          <div className="relative w-[132px] shrink-0 overflow-hidden rounded-2xl shadow-[0_18px_40px_rgba(0,0,0,0.45)] ring-1 ring-white/20 sm:w-[180px] md:w-[220px] lg:w-[250px]">
+            <div className="relative aspect-[2/3] bg-black/40">
+              <Image
+                src={movie.posterUrl}
+                alt=""
+                fill
+                priority
+                className="object-cover"
+                sizes="250px"
+              />
             </div>
           </div>
         </Container>
       </section>
 
-      <StickyBookBar
-        title={movie.title}
-        bookHref={`/movies/${movie.id}/book`}
-        bookLabel="Book tickets"
-        certification={movie.certification}
-      />
-
       <section className="bg-bg py-8 md:py-10">
         <Container className="space-y-10">
-          {cast.length > 0 ? (
-            <DetailScroller title="Cast">
-              {cast.map((person) => (
-                <PersonCard
-                  key={`cast-${person.id}-${person.role}`}
-                  person={person}
-                />
-              ))}
-            </DetailScroller>
-          ) : null}
-
-          {crew.length > 0 ? (
-            <DetailScroller title="Crew">
-              {crew.map((person) => (
-                <PersonCard
-                  key={`crew-${person.id}-${person.role}`}
-                  person={person}
-                />
-              ))}
-            </DetailScroller>
-          ) : null}
+          <MoviePeopleRail title="Cast" people={cast} kind="cast" />
+          <MoviePeopleRail title="Crew" people={crew} kind="crew" />
 
           {videos.length > 0 ? (
             <MovieTrailersRail
@@ -174,61 +154,15 @@ export default async function MovieDetailPage({
   );
 }
 
-function MetaRow({ label, value }: { label: string; value: string }) {
-  return (
-    <div>
-      <p className="text-[13px] font-extrabold tracking-wide text-text uppercase">
-        {label}:
-      </p>
-      <p className="mt-1 font-medium text-text-secondary">{value}</p>
-    </div>
-  );
+function formatRelease(iso?: string) {
+  if (!iso) return null;
+  const date = new Date(`${iso}T00:00:00`);
+  if (Number.isNaN(date.getTime())) return null;
+  return new Intl.DateTimeFormat("en-GB", {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  }).format(date);
 }
 
-function DetailScroller({
-  title,
-  children,
-}: {
-  title: string;
-  children: ReactNode;
-}) {
-  return (
-    <div>
-      <h2 className="mb-4 text-[22px] font-extrabold tracking-tight text-text md:text-[26px]">
-        {title}
-      </h2>
-      <div className="hide-scrollbar flex gap-4 overflow-x-auto pb-1">
-        {children}
-      </div>
-    </div>
-  );
-}
-
-function PersonCard({ person }: { person: MoviePerson }) {
-  return (
-    <div className="w-[100px] shrink-0 text-center md:w-[112px]">
-      <div className="relative mx-auto size-[84px] overflow-hidden rounded-full border-2 border-white bg-surface-muted shadow-[0_0_0_1px_rgba(0,0,0,0.06)] md:size-[96px]">
-        {person.imageUrl ? (
-          <Image
-            src={person.imageUrl}
-            alt={person.name}
-            fill
-            className="object-cover object-top"
-            sizes="96px"
-          />
-        ) : (
-          <span className="flex size-full items-center justify-center text-lg font-bold text-text-muted">
-            {person.name.slice(0, 1)}
-          </span>
-        )}
-      </div>
-      <p className="mt-2 truncate text-[13px] font-bold text-text">
-        {person.name}
-      </p>
-      {person.role ? (
-        <p className="truncate text-[11px] text-text-secondary">{person.role}</p>
-      ) : null}
-    </div>
-  );
-}
 

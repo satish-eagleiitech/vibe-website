@@ -1,9 +1,7 @@
 import { AllEventsSection } from "@/components/events/AllEventsSection";
-import { EventArtistsRow } from "@/components/events/EventArtistsRow";
 // import { EventsHero } from "@/components/events/EventsHero";
 import { ExploreEventsSection } from "@/components/events/ExploreEventsSection";
 import { FeaturedEventsSection } from "@/components/events/FeaturedEventsSection";
-import { getFeaturedArtists } from "@/lib/api/artists";
 import { getUpcomingEvents } from "@/lib/api/events";
 
 export const metadata = {
@@ -17,11 +15,7 @@ export default async function EventsPage({
 }) {
   const { category, when } = await searchParams;
 
-  const [eventsResult, artists] = await Promise.all([
-    getUpcomingEvents(),
-    getFeaturedArtists(),
-  ]);
-
+  const eventsResult = await getUpcomingEvents();
   const events = eventsResult.items;
 
   return (
@@ -29,7 +23,6 @@ export default async function EventsPage({
       {/* <EventsHero events={events} /> */}
       <ExploreEventsSection />
       <FeaturedEventsSection events={events.slice(0, 10)} />
-      <EventArtistsRow artists={artists} />
       <AllEventsSection
         events={events}
         category={category}

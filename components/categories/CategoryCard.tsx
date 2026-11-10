@@ -7,37 +7,42 @@ type CategoryCardProps = {
   category: CategoryCardData;
 };
 
+const CARD_RADIUS = "32px";
+
 export function CategoryCard({ category }: CategoryCardProps) {
   return (
     <Link
       href={category.href}
-      className="relative aspect-[2.15/1] min-h-[148px] overflow-hidden rounded-[28px] text-white md:min-h-[168px] md:rounded-[32px]"
-      style={{
-        background: `linear-gradient(180deg, ${category.gradientFrom}, ${category.gradientTo})`,
-      }}
+      className="relative block h-[188px] min-w-0 flex-1 overflow-hidden rounded-[32px] md:h-[214px]"
     >
+      <div
+        aria-hidden
+        className="absolute inset-0 shadow-[0_18px_34px_rgba(15,23,42,0.14)]"
+        style={{
+          borderRadius: CARD_RADIUS,
+          background: `linear-gradient(165deg, ${category.gradientFrom} 0%, ${category.gradientTo} 100%)`,
+        }}
+      />
       <Image
         src={category.imageUrl}
         alt=""
-        fill
+        width={720}
+        height={720}
         unoptimized
-        className="object-cover object-right"
-        sizes="(max-width: 768px) 92vw, 48vw"
+        className="pointer-events-none absolute right-0 bottom-0 z-[1] w-auto max-w-none select-none"
+        style={{ height: "92%", width: "auto", transform: "translate(10%, 10%)" }}
       />
-
-      <div className="relative z-10 flex h-full flex-col justify-between p-5 md:p-6 lg:p-7">
-        <div>
-          <h3 className="max-w-[10ch] text-[22px] leading-[1.05] font-extrabold tracking-[-0.03em] md:text-[26px] lg:text-[30px]">
-            {category.title}
-          </h3>
-          <p className="mt-1.5 max-w-[22ch] text-[12px] leading-snug font-medium text-white/75 md:text-[13px] lg:text-[14px]">
-            {category.subtitle}
-          </p>
-        </div>
-        <div className="inline-flex items-center gap-1.5 text-[10px] font-extrabold tracking-[0.14em] text-white/90 uppercase md:text-[11px]">
+      <div className="relative z-[2] flex h-full max-w-[46%] flex-col justify-end p-4 md:p-5">
+        <h3 className="text-[20px] font-extrabold leading-none tracking-[-0.03em] text-white md:text-[24px]">
+          {category.title}
+        </h3>
+        <p className="mt-1.5 text-[12px] leading-snug font-medium text-white/80 md:text-[13px]">
+          {category.subtitle}
+        </p>
+        <span className="mt-3 inline-flex items-center gap-1 text-[10px] font-extrabold tracking-[0.14em] text-white/90 uppercase">
           <ArrowUpRight className="size-3.5" strokeWidth={2.5} />
-          Explore more
-        </div>
+          Explore
+        </span>
       </div>
     </Link>
   );

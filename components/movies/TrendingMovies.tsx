@@ -1,6 +1,6 @@
-import Link from "next/link";
 import { Container } from "@/components/common/Container";
 import { EmptyState } from "@/components/common/EmptyState";
+import { LanguageMenu } from "@/components/movies/LanguageMenu";
 import { LanguagePills } from "@/components/movies/LanguagePills";
 import { MovieCard } from "@/components/movies/MovieCard";
 import type { Movie } from "@/types/movie";
@@ -19,7 +19,7 @@ export function TrendingMovies({
   return (
     <section className="w-full pt-5 pb-8 md:pt-6 md:pb-10">
       <Container>
-        <div className="mb-6 flex flex-col justify-between gap-4 md:mb-7 md:flex-row md:items-end">
+        <div className="relative z-20 mb-6 flex flex-col justify-between gap-4 md:mb-7 md:flex-row md:items-end">
           <div>
             <h2 className="text-[28px] font-extrabold tracking-tight text-text md:text-[34px]">
               Movies
@@ -30,12 +30,7 @@ export function TrendingMovies({
           </div>
           <div className="flex flex-wrap items-center gap-3">
             <LanguagePills active={language} />
-            <Link
-              href="/movies"
-              className="text-xs font-bold text-accent hover:underline"
-            >
-              {totalLabel}
-            </Link>
+            <LanguageMenu active={language} label={totalLabel} />
           </div>
         </div>
 

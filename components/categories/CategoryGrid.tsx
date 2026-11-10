@@ -16,10 +16,12 @@ export function CategoryGrid({ categories }: CategoryGridProps) {
           title="Explore by Experience"
           href="/play"
         />
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-4 md:gap-5">
-          {categories.map((category) => (
-            <CategoryCard key={category.id} category={category} />
-          ))}
+        <div className="overflow-x-auto pb-2 md:overflow-visible">
+          <div className="flex w-full min-w-[680px] items-end gap-3 md:min-w-0 md:gap-4">
+            {categories.map((category) => (
+              <CategoryCard key={category.id} category={category} />
+            ))}
+          </div>
         </div>
       </Container>
     </section>

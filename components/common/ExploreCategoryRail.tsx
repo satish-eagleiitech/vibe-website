@@ -20,17 +20,51 @@ type ExploreCategoryRailProps = {
    * matching the Profile payments group (near-black page, gray surface).
    */
   tone?: "default" | "charcoal";
+  /** Cutout on a light gray rounded card. */
+  bare?: boolean;
 };
 
 function CategoryCard({
   item,
   compact,
   charcoal,
+  bare,
 }: {
   item: ExploreCategoryItem;
   compact?: boolean;
   charcoal?: boolean;
+  bare?: boolean;
 }) {
+  if (bare) {
+    return (
+      <Link
+        href={item.href}
+        className="group flex h-full w-full flex-col overflow-hidden rounded-lg border border-[#E4E4E7] bg-[#F2F2F4] text-[#1C1C1C] dark:border-[#2C2F32] dark:bg-[#1C1C20] dark:text-[#F5F5F5]"
+      >
+        <div className="relative min-h-0 w-full flex-1">
+          <div className={`absolute ${compact ? "inset-3.5" : "inset-4"}`}>
+            <Image
+              src={item.imageUrl}
+              alt=""
+              fill
+              unoptimized
+              className="object-contain object-center transition-transform duration-200 group-hover:scale-105"
+              sizes={compact ? "96px" : "140px"}
+            />
+          </div>
+        </div>
+        <span
+          className={`shrink-0 text-center font-bold leading-none tracking-tight text-[#8A8A90] uppercase dark:text-[#A3A3A8] ${
+            compact ? "px-1 pb-2.5 text-[12px]" : "px-1.5 pb-3 text-[14px]"
+          }`}
+          style={{ fontFamily: "var(--font-oswald), Oswald, sans-serif" }}
+        >
+          {item.label}
+        </span>
+      </Link>
+    );
+  }
+
   return (
     <Link
       href={item.href}
@@ -85,6 +119,7 @@ export function ExploreCategoryRail({
   items,
   sectionId,
   tone = "default",
+  bare = false,
 }: ExploreCategoryRailProps) {
   const charcoal = tone === "charcoal";
   return (
@@ -99,10 +134,16 @@ export function ExploreCategoryRail({
 
         {/* Phone → laptop (~1050): 2 rows, swipe sideways */}
         <div className="mt-3 hide-scrollbar overflow-x-auto px-4 pb-1 md:mt-4 md:px-0 xl:hidden">
-          <div className="grid auto-cols-[108px] grid-flow-col grid-rows-2 gap-2.5 sm:auto-cols-[116px] sm:gap-3 md:auto-cols-[122px] lg:auto-cols-[128px]">
+          <div
+            className={`grid grid-flow-col grid-rows-2 ${
+              bare
+                ? "auto-cols-[112px] gap-2.5 sm:auto-cols-[120px] sm:gap-3 md:auto-cols-[128px]"
+                : "auto-cols-[108px] gap-2.5 sm:auto-cols-[116px] sm:gap-3 md:auto-cols-[122px] lg:auto-cols-[128px]"
+            }`}
+          >
             {items.map((item) => (
               <div key={item.id} className="aspect-[5/6] w-full">
-                <CategoryCard item={item} compact charcoal={charcoal} />
+                <CategoryCard item={item} compact charcoal={charcoal} bare={bare} />
               </div>
             ))}
           </div>
@@ -112,7 +153,7 @@ export function ExploreCategoryRail({
         <div className="mt-5 hidden grid-cols-6 gap-3 xl:grid 2xl:grid-cols-8">
           {items.map((item) => (
             <div key={item.id} className="aspect-[5/6]">
-              <CategoryCard item={item} charcoal={charcoal} />
+              <CategoryCard item={item} charcoal={charcoal} bare={bare} />
             </div>
           ))}
         </div>

@@ -75,7 +75,7 @@ export function AllPlayVenuesSection({
         </div>
       </Container>
 
-      <StickyFilterBar>
+      <StickyFilterBar pinToViewport>
         <span className="inline-flex shrink-0 items-center gap-1 rounded-full border border-border bg-surface px-2.5 py-1.5 text-[12px] font-bold text-text">
           <SlidersHorizontal className="size-3" />
           Filters

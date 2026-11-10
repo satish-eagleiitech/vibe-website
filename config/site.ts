@@ -52,4 +52,12 @@ export const siteConfig = {
     { id: "english", label: "English" },
     { id: "tamil", label: "Tamil" },
   ] as const,
+  moreLanguages: [
+    { id: "malayalam", label: "Malayalam" },
+    { id: "kannada", label: "Kannada" },
+    { id: "bengali", label: "Bengali" },
+    { id: "marathi", label: "Marathi" },
+    { id: "punjabi", label: "Punjabi" },
+    { id: "gujarati", label: "Gujarati" },
+  ] as const,
 } as const;

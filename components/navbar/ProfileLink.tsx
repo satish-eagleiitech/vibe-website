@@ -30,10 +30,11 @@ export function ProfileGateLink({
 }
 
 type ProfileLinkProps = {
-  overlay?: boolean;
+  /** Larger avatar that caps the top dock */
+  dock?: boolean;
 };
 
-export function ProfileLink({ overlay = false }: ProfileLinkProps) {
+export function ProfileLink({ dock = false }: ProfileLinkProps) {
   const router = useRouter();
   const { gate, modal } = useLoginGate();
 
@@ -43,15 +44,17 @@ export function ProfileLink({ overlay = false }: ProfileLinkProps) {
         type="button"
         aria-label="Profile"
         onClick={() => gate(() => router.push("/profile"), true)}
-        className={`inline-flex size-[34px] items-center justify-center overflow-hidden rounded-full transition-opacity hover:opacity-90 ${
-          overlay ? "ring-1 ring-white/25" : "ring-1 ring-black/10 dark:ring-white/15"
+        className={`inline-flex shrink-0 items-center justify-center overflow-hidden rounded-full bg-transparent p-0 transition-opacity hover:opacity-90 ${
+          dock
+            ? "relative z-10 size-11 shadow-[0_8px_18px_rgba(0,0,0,0.28)]"
+            : "size-[34px] shadow-[0_4px_10px_rgba(0,0,0,0.22)]"
         }`}
       >
         <Image
-          src="/images/profile-avatar.png"
+          src="/images/profile-avatar-3d.png"
           alt=""
-          width={34}
-          height={34}
+          width={256}
+          height={256}
           className="size-full object-cover"
         />
       </button>

@@ -11,13 +11,8 @@ import {
   Ticket,
   User,
 } from "lucide-react";
-import { AccountAvatar } from "@/components/account/AccountShell";
 import { AccountPageHeader } from "@/components/account/AccountPageHeader";
 import { useAccountData } from "@/components/account/useAccountData";
-import { EditProfileModal } from "@/components/profile/EditProfileModal";
-import { AppearanceToggle } from "@/components/profile/AppearanceToggle";
-import { writeProfile, type VybeProfile } from "@/lib/profile/storage";
-import { writeSavedLocation } from "@/lib/location/cities";
 import {
   readSettings,
   SETTINGS_EVENT,
@@ -114,7 +109,6 @@ function SettingsSection({
 
 export function SettingsView() {
   const data = useAccountData();
-  const [editing, setEditing] = useState(false);
   const [prefs, setPrefs] = useState<SettingsPreferences | null>(null);
 
   useEffect(() => {
@@ -126,20 +120,12 @@ export function SettingsView() {
 
   if (!data || !prefs) {
     return (
-      <div className="w-full max-w-[720px] space-y-4">
+      <div className="mx-auto w-full max-w-[720px] space-y-4">
         <div className="h-24 animate-pulse rounded-[24px] bg-surface-muted" />
         <div className="h-40 animate-pulse rounded-[24px] bg-surface" />
         <div className="h-52 animate-pulse rounded-[24px] bg-surface" />
       </div>
     );
-  }
-
-  const { profile } = data;
-
-  function saveProfile(next: VybeProfile) {
-    writeProfile(next);
-    writeSavedLocation({ city: next.city, state: next.state });
-    setEditing(false);
   }
 
   function updatePrefs(patch: Partial<SettingsPreferences>) {
@@ -149,40 +135,11 @@ export function SettingsView() {
   }
 
   return (
-    <div className="w-full max-w-[720px] space-y-5 sm:space-y-6">
+    <div className="mx-auto w-full max-w-[720px] space-y-5 sm:space-y-6">
       <AccountPageHeader
         title="Settings"
-        subtitle="Account, appearance and notifications"
+        subtitle="Account and notifications"
       />
-
-      <section className="rounded-[24px] border border-border bg-surface p-4 sm:p-5">
-        <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-          <div className="flex min-w-0 items-center gap-3.5">
-            <AccountAvatar profile={profile} size={56} />
-            <div className="min-w-0">
-              <p className="truncate text-[17px] font-extrabold text-text">
-                {profile.name}
-              </p>
-              <p className="mt-0.5 truncate text-[13px] text-text-secondary">
-                {profile.email || profile.phone}
-              </p>
-              <p className="mt-1 text-[12px] text-text-muted">
-                {profile.city}
-                {profile.state ? `, ${profile.state}` : ""}
-              </p>
-            </div>
-          </div>
-          <button
-            type="button"
-            onClick={() => setEditing(true)}
-            className="inline-flex w-fit shrink-0 items-center justify-center rounded-full border border-border bg-surface px-5 py-2.5 text-[13px] font-bold text-text transition-colors hover:border-accent/40 hover:text-accent"
-          >
-            Edit profile
-          </button>
-        </div>
-      </section>
-
-      <AppearanceToggle />
 
       <SettingsSection title="Account">
         <SettingsLinkRow
@@ -245,14 +202,6 @@ export function SettingsView() {
           subtitle="How we use your data"
         />
       </SettingsSection>
-
-      {editing ? (
-        <EditProfileModal
-          profile={profile}
-          onClose={() => setEditing(false)}
-          onSave={saveProfile}
-        />
-      ) : null}
     </div>
   );
 }

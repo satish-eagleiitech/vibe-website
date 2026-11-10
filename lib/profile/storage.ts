@@ -16,18 +16,25 @@ export type VybeProfile = {
 const STORAGE_KEY = "vybe-profile";
 
 export const DEFAULT_PROFILE: VybeProfile = {
-  name: "Bhai",
+  name: "Aanya",
   email: "bharath@vybe.app",
   phone: "+91 9347190965",
   gender: "Male",
   city: "Hyderabad",
   state: "Telangana",
-  avatarUrl:
-    "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=320&q=80",
+  avatarUrl: "/images/profile-avatar-3d.png",
   memberSince: "2024",
 };
 
+const STOCK_AVATARS = new Set([
+  "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=320&q=80",
+  "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=320&q=80",
+  "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=320&q=80",
+  "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=320&q=80",
+]);
+
 export const AVATAR_OPTIONS = [
+  "/images/profile-avatar-3d.png",
   "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=320&q=80",
   "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=320&q=80",
   "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=320&q=80",
@@ -52,9 +59,19 @@ export function readProfile(): VybeProfile {
     const raw = window.localStorage.getItem(STORAGE_KEY);
     if (!raw) return fallback;
     const parsed = JSON.parse(raw) as Partial<VybeProfile>;
+    const storedName = parsed.name?.trim();
+    const name =
+      !storedName || storedName.toLowerCase() === "bhai" ? fallback.name : storedName;
+    const storedAvatar = parsed.avatarUrl?.trim();
+    const avatarUrl =
+      !storedAvatar || STOCK_AVATARS.has(storedAvatar)
+        ? fallback.avatarUrl
+        : storedAvatar;
     return {
       ...fallback,
       ...parsed,
+      name,
+      avatarUrl,
       city: parsed.city || fallback.city,
       state: parsed.state || fallback.state,
     };

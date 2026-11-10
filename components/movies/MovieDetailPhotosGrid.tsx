@@ -1,4 +1,3 @@
-import Image from "next/image";
 import { Camera } from "lucide-react";
 import { Container } from "@/components/common/Container";
 import type { MovieImage } from "@/types/movie";
@@ -14,10 +13,7 @@ export function MovieDetailPhotosGrid({
 }: MovieDetailPhotosGridProps) {
   if (images.length === 0) return null;
 
-  const tiles = images.slice(0, 9);
-  while (tiles.length < 9 && images[0]) {
-    tiles.push(images[tiles.length % images.length]);
-  }
+  const tiles = images.slice(0, 24);
 
   return (
     <section className="bg-bg py-10 md:py-14">
@@ -28,26 +24,22 @@ export function MovieDetailPhotosGrid({
             Photos
           </span>
         </div>
-        <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 sm:gap-3">
+        <div className="columns-2 gap-3 sm:columns-3 sm:gap-4">
           {tiles.map((image, index) => (
             <div
               key={`${image.url}-${index}`}
-              className="relative aspect-[4/3] overflow-hidden rounded-lg bg-surface-muted sm:aspect-[16/10]"
+              className="mb-3 break-inside-avoid overflow-hidden rounded-2xl bg-[#ececee] sm:mb-4 dark:bg-[#1c1c20]"
             >
-              <Image
+              {/* Natural size so posters and stills stay whole, with no crop. */}
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
                 src={image.url}
-                alt={image.alt || `${title} still ${index + 1}`}
-                fill
-                className="object-cover"
-                sizes="(max-width: 640px) 50vw, 33vw"
+                alt={image.alt || `${title} photo ${index + 1}`}
+                className="block h-auto w-full"
+                loading={index < 3 ? "eager" : "lazy"}
               />
             </div>
           ))}
-        </div>
-        <div className="mt-6 flex justify-center gap-2">
-          <span className="h-1 w-8 rounded-full bg-accent" />
-          <span className="h-1 w-3 rounded-full bg-border" />
-          <span className="h-1 w-3 rounded-full bg-border" />
         </div>
         <p className="mt-8 text-center font-serif text-[18px] italic text-text-secondary md:text-[20px]">
           Now showing on VYBE — book your seats.

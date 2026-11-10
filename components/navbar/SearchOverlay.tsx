@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Search, X } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
+import { createPortal } from "react-dom";
 import {
   fallbackActivities,
   fallbackEvents,
@@ -89,7 +90,12 @@ type SearchOverlayProps = {
 export function SearchOverlay({ open, onClose }: SearchOverlayProps) {
   const [query, setQuery] = useState("");
   const [filter, setFilter] = useState<SearchCategory>("all");
+  const [mounted, setMounted] = useState(false);
   const catalog = useMemo(() => buildCatalog(), []);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   useEffect(() => {
     if (!open) return;
@@ -133,9 +139,9 @@ export function SearchOverlay({ open, onClose }: SearchOverlayProps) {
     return pool.slice(0, 12);
   }, [catalog, filter, query, results]);
 
-  if (!open) return null;
+  if (!open || !mounted) return null;
 
-  return (
+  return createPortal(
     <div
       className="fixed inset-0 z-[80] flex items-start justify-center bg-black/50 px-4 py-10 backdrop-blur-[3px] md:py-14 dark:bg-black/70"
       onClick={onClose}
@@ -238,6 +244,7 @@ export function SearchOverlay({ open, onClose }: SearchOverlayProps) {
           )}
         </div>
       </div>
-    </div>
+    </div>,
+    document.body,
   );
 }

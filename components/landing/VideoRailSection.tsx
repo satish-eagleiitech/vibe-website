@@ -53,15 +53,20 @@ function VideoCard({ item }: { item: LandingVideoCard }) {
     const video = videoRef.current;
     if (!video) return;
 
+    video.muted = muted;
+    video.volume = muted ? 0 : 1;
     if (inView) {
       void video.play().catch(() => undefined);
     } else {
       video.pause();
     }
-  }, [hasVideo, inView]);
+  }, [hasVideo, inView, muted]);
 
   useEffect(() => {
-    if (videoRef.current) videoRef.current.muted = muted;
+    const video = videoRef.current;
+    if (!video) return;
+    video.muted = muted;
+    video.volume = muted ? 0 : 1;
   }, [muted]);
 
   const meta = item.venue || item.schedule || item.subtitle || "";

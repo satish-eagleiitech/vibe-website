@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Archivo_Black, Fraunces, Plus_Jakarta_Sans } from "next/font/google";
+import { Archivo_Black, Fraunces, Oswald, Plus_Jakarta_Sans } from "next/font/google";
 import { Footer } from "@/components/footer/Footer";
 import { LocationGate } from "@/components/location/LocationGate";
 import { VybeIntro } from "@/components/intro/VybeIntro";
@@ -13,6 +13,14 @@ const plusJakarta = Plus_Jakarta_Sans({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700", "800"],
   variable: "--font-plus-jakarta",
+  display: "swap",
+});
+
+/** Condensed display face for page and section headings */
+const oswald = Oswald({
+  subsets: ["latin"],
+  weight: ["500", "600", "700"],
+  variable: "--font-oswald",
   display: "swap",
 });
 
@@ -57,7 +65,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${plusJakarta.variable} ${fraunces.variable} ${druk.variable} h-full`}
+      className={`${plusJakarta.variable} ${oswald.variable} ${fraunces.variable} ${druk.variable} h-full`}
       style={{ colorScheme: "light" }}
       suppressHydrationWarning
     >

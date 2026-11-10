@@ -26,7 +26,7 @@ import {
 type LocationButtonProps = {
   className?: string;
   overlay?: boolean;
-  variant?: "inline" | "stacked";
+  variant?: "inline" | "stacked" | "dock";
 };
 
 let locationPickerOwner = false;
@@ -316,7 +316,23 @@ export function LocationButton({
 
   return (
     <>
-      {variant === "stacked" ? (
+      {variant === "dock" ? (
+        <button
+          type="button"
+          onClick={() => setOpen(true)}
+          className={`inline-flex min-w-0 max-w-[8.5rem] items-center gap-1 rounded-full py-1 pr-1 pl-0.5 text-left transition-colors sm:max-w-[11rem] ${
+            overlay
+              ? "text-white hover:text-white"
+              : "text-text hover:text-text dark:text-white"
+          } ${className}`}
+          aria-label={`Current location ${city}. Open location picker.`}
+          data-vybe-location=""
+        >
+          <MapPin className="size-4 shrink-0" strokeWidth={2.15} aria-hidden="true" />
+          <span className="truncate text-[13px] font-semibold">{city}</span>
+          <ChevronDown className="size-3.5 shrink-0" strokeWidth={2.4} aria-hidden="true" />
+        </button>
+      ) : variant === "stacked" ? (
         <button
           type="button"
           onClick={() => setOpen(true)}

@@ -27,6 +27,12 @@ const LANGUAGE_TO_ISO: Record<string, string> = {
   hindi: "hi",
   english: "en",
   tamil: "ta",
+  malayalam: "ml",
+  kannada: "kn",
+  bengali: "bn",
+  marathi: "mr",
+  punjabi: "pa",
+  gujarati: "gu",
 };
 
 const ISO_TO_LANGUAGE: Record<string, string> = {
@@ -36,6 +42,10 @@ const ISO_TO_LANGUAGE: Record<string, string> = {
   ta: "tamil",
   ml: "malayalam",
   kn: "kannada",
+  bn: "bengali",
+  mr: "marathi",
+  pa: "punjabi",
+  gu: "gujarati",
 };
 
 let genreNames: Record<number, string> | null = null;
@@ -114,7 +124,7 @@ function mapPeople(
     name: person.name,
     role: roleKey === "character" ? person.character : person.job,
     imageUrl: person.profile_path
-      ? resolveTmdbImage(person.profile_path, "w185")
+      ? resolveTmdbImage(person.profile_path, "w342")
       : undefined,
   }));
 }
@@ -634,54 +644,23 @@ export async function getNewReleaseMovies(
   }
 }
 
-const HERO_MIX = [
-  { iso: "te", count: 4, badge: "Tollywood" },
-  { iso: "hi", count: 3, badge: "Bollywood" },
-  { iso: "en", count: 3, badge: "Hollywood" },
-] as const;
+/** Landing hero shows only these titles, in this order. Doomsday opens the site. */
+const HERO_PIN_IDS = ["1003596", "1257973", "1234139"] as const; // Avengers: Doomsday, Fauzi, Jailer 2
 
-/** Always lead the landing hero with these titles */
-const HERO_PIN_IDS = ["1620668", "1234139"] as const; // Mayookha, Jailer 2
-/** Drop from landing hero carousel */
-const HERO_EXCLUDE_IDS = new Set(["1787082", "1785244"]); // Poniiy, AAKHRI MULAQAT
-
-/**
- * Landing hero: pinned Mayookha + Jailer 2, then latest regional releases.
- * Excludes Poniiy / AAKHRI MULAQAT.
- */
+/** Landing hero: Avengers: Doomsday, Fauzi, and Jailer 2. */
 export async function getLandingHeroMovies(): Promise<MovieListResult> {
   if (!hasMoviesApi()) {
-    return { items: fallbackMovies.slice(0, 10), source: "fallback" };
+    return { items: fallbackMovies.slice(0, 3), source: "fallback" };
   }
 
   try {
-    const [pinnedDetails, ...groups] = await Promise.all([
-      Promise.all(HERO_PIN_IDS.map((id) => getMovieById(id))),
-      ...HERO_MIX.map(({ iso }) =>
-        fetchNewReleasesFor(iso, 1, { formatBadge: "New Release" }, 300),
-      ),
-    ]);
-
-    const pinned = pinnedDetails.filter((movie): movie is MovieDetails =>
-      Boolean(movie?.posterUrl || movie?.backdropUrl),
+    const details = await Promise.all(HERO_PIN_IDS.map((id) => getMovieById(id)));
+    const items = details.filter((movie): movie is MovieDetails =>
+      Boolean(movie && (movie.posterUrl || movie.backdropUrl)),
     );
-    const pinnedIds = new Set(pinned.map((movie) => movie.id));
-
-    const mixed = HERO_MIX.flatMap(({ count }, index) =>
-      groups[index].items
-        .filter(
-          (movie) =>
-            movie.posterUrl &&
-            !HERO_EXCLUDE_IDS.has(movie.id) &&
-            !pinnedIds.has(movie.id),
-        )
-        .slice(0, count),
-    );
-
-    const items = [...pinned, ...newestFirst(mixed)].slice(0, 10);
     return { items, total: items.length, source: "api" };
   } catch {
-    return { items: fallbackMovies.slice(0, 10), source: "fallback" };
+    return { items: fallbackMovies.slice(0, 3), source: "fallback" };
   }
 }
 

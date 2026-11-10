@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import { ArrowUpRight, Pencil, Ticket } from "lucide-react";
+import { AccountAvatar } from "@/components/account/AccountShell";
 import { useAccountData } from "@/components/account/useAccountData";
 import { EditProfileModal } from "@/components/profile/EditProfileModal";
 import type { BookingCategory, VybeBooking } from "@/lib/bookings/storage";
@@ -131,13 +132,16 @@ export function ProfileView() {
     <div className="w-full min-w-0 max-w-[1200px] space-y-5 sm:space-y-6">
       <section className="rounded-[24px] border border-border px-5 py-5 sm:rounded-[28px] sm:px-8 sm:py-6">
         <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-          <div className="min-w-0">
-            <h2 className="font-display text-[34px] leading-[1.05] font-semibold tracking-[-0.02em] text-text sm:text-[42px] lg:text-[48px]">
+          <div className="flex min-w-0 items-center gap-4 sm:gap-5">
+            <AccountAvatar profile={profile} size={72} />
+            <div className="min-w-0">
+            <h2 className="text-[34px] leading-[1.05] font-semibold tracking-[-0.02em] text-text sm:text-[42px] lg:text-[48px]">
               Hi, {firstName}
             </h2>
             <p className="mt-2 max-w-md text-[14px] leading-snug text-text-secondary sm:text-[15px] lg:text-[16px]">
-              Ready to plan your next movie, event, activity or play session?
+              {profile.phone}
             </p>
+            </div>
           </div>
           <button
             type="button"
@@ -147,30 +151,6 @@ export function ProfileView() {
             <Pencil className="size-4" />
             Edit profile
           </button>
-        </div>
-      </section>
-
-      <section>
-        <h3 className="text-[16px] font-extrabold tracking-tight text-text sm:text-[17px]">Host</h3>
-        <div className="mt-3 grid w-full max-w-[680px] grid-cols-1 gap-2.5 sm:grid-cols-2">
-          <Link href="/list-your-events" className="block overflow-hidden rounded-[16px]">
-            <Image
-              src="/images/profile/host-events.jpg"
-              alt="List your events. Host gigs and nights on VYBE."
-              width={960}
-              height={540}
-              className="h-auto w-full"
-            />
-          </Link>
-          <Link href="/list-your-venue" className="block overflow-hidden rounded-[16px]">
-            <Image
-              src="/images/profile/host-venue-start.jpg"
-              alt="List your venue. Get your courts on VYBE."
-              width={960}
-              height={540}
-              className="h-auto w-full"
-            />
-          </Link>
         </div>
       </section>
 

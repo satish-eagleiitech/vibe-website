@@ -7,11 +7,27 @@ import { publicEnv } from "@/config/public";
 
 type SearchBarProps = {
   overlay?: boolean;
-  variant?: "desktop" | "mobile";
+  variant?: "desktop" | "mobile" | "dock";
 };
 
 export function SearchBar({ overlay = false, variant = "desktop" }: SearchBarProps) {
   const [open, setOpen] = useState(false);
+
+  if (variant === "dock") {
+    return (
+      <>
+        <button
+          type="button"
+          onClick={() => setOpen(true)}
+          aria-label="Search"
+          className="focus-ring-none inline-flex size-9 shrink-0 items-center justify-center rounded-full text-text transition-colors hover:bg-black/[0.06] dark:text-white dark:hover:bg-white/10"
+        >
+          <Search className="size-[18px]" strokeWidth={1.8} />
+        </button>
+        <SearchOverlay open={open} onClose={() => setOpen(false)} />
+      </>
+    );
+  }
 
   if (variant === "mobile") {
     return (

@@ -3,43 +3,9 @@
 import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
 import { ChevronDown } from "lucide-react";
-import { Logo } from "@/components/common/Logo";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { markSignedIn } from "@/lib/auth/session";
 import { DEFAULT_PROFILE, readProfile, writeProfile } from "@/lib/profile/storage";
-
-const SLIDES = [
-  {
-    src: "/images/hero/events.jpg",
-    label: "Events",
-    title: "Your events, in front of millions",
-    text: "Publish on VYBE and reach people discovering their next gig, show, and night out.",
-  },
-  {
-    src: "/images/hero/movies.jpg",
-    label: "Movies",
-    title: "The big screen, closer to you",
-    text: "Premiere nights, new releases, and the seats everyone is booking.",
-  },
-  {
-    src: "/images/activities/spot-gokart.jpg",
-    label: "Activities",
-    title: "Days out worth leaving home for",
-    text: "Parks, karts, and plans that turn a free afternoon into a plan.",
-  },
-  {
-    src: "/images/play/sport-football.jpg",
-    label: "Play",
-    title: "Courts, turfs, and game time",
-    text: "List a ground and let players book the next match in a few taps.",
-  },
-  {
-    src: "/images/activities/spot-theme-night.jpg",
-    label: "Nights",
-    title: "Nights that fill the floor",
-    text: "Music, fairs, and the rooms people come back to.",
-  },
-] as const;
 
 const COUNTRIES = [
   { id: "IN", name: "India", dial: "+91", digits: 10 },
@@ -62,7 +28,6 @@ type LoginViewProps = {
 export function LoginView({ onDone }: LoginViewProps) {
   const router = useRouter();
   const search = useSearchParams();
-  const [index, setIndex] = useState(0);
   const [channel, setChannel] = useState<"email" | "phone">("email");
   const [email, setEmail] = useState("");
   const [countryId, setCountryId] = useState<CountryId>("IN");
@@ -71,13 +36,6 @@ export function LoginView({ onDone }: LoginViewProps) {
   const [otp, setOtp] = useState(["", "", "", "", "", ""]);
   const [sent, setSent] = useState(false);
   const [error, setError] = useState("");
-
-  useEffect(() => {
-    const timer = window.setInterval(() => {
-      setIndex((value) => (value + 1) % SLIDES.length);
-    }, 4200);
-    return () => window.clearInterval(timer);
-  }, []);
 
   function finish(identity: { email?: string; phone?: string; name?: string }) {
     const current = readProfile();
@@ -122,47 +80,27 @@ export function LoginView({ onDone }: LoginViewProps) {
     });
   }
 
-  const slide = SLIDES[index];
-
   return (
     <div className="grid min-h-screen bg-bg lg:grid-cols-2">
-      <section className="relative h-[46vh] min-h-[280px] overflow-hidden bg-[#120818] lg:h-auto lg:min-h-screen">
-        {SLIDES.map((item, slideIndex) => (
-          <div
-            key={item.label}
-            className={`absolute inset-0 transition-opacity duration-700 ${slideIndex === index ? "opacity-100" : "opacity-0"}`}
-            style={{ transform: `translateX(${(slideIndex - index) * 100}%)` }}
-          >
-            <Image
-              src={item.src}
-              alt=""
-              fill
-              className={`object-cover ${item.label === "Play" ? "object-[center_72%]" : ""}`}
-              sizes="(min-width: 1024px) 50vw, 100vw"
-              priority={item.label === "Events"}
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/25 to-black/35" />
-          </div>
-        ))}
-        <div className="absolute inset-x-0 top-0 z-10 flex items-center px-8 pt-7">
-          <Logo overlay priority />
-        </div>
-        <div className="absolute inset-x-0 bottom-0 z-10 px-6 pb-8 text-white lg:px-10 lg:pb-12">
-          <p className="text-[12px] font-extrabold tracking-[0.16em] uppercase text-white/80">{slide.label}</p>
-          <h2 className="mt-2 max-w-md text-[28px] leading-[1.05] font-extrabold tracking-tight lg:mt-3 lg:text-[40px]">{slide.title}</h2>
-          <p className="mt-2 hidden max-w-md text-[15px] leading-relaxed text-white/85 sm:block">{slide.text}</p>
-          <div className="mt-6 flex gap-2">
-            {SLIDES.map((item, dot) => (
-              <button
-                key={item.label}
-                type="button"
-                aria-label={item.label}
-                onClick={() => setIndex(dot)}
-                className={`h-1.5 rounded-full transition-all ${dot === index ? "w-8 bg-white" : "w-3 bg-white/45"}`}
-              />
-            ))}
-          </div>
-        </div>
+      <section className="relative h-[40vh] min-h-[240px] overflow-hidden bg-black sm:h-[46vh] lg:h-auto lg:min-h-screen">
+        <Image
+          src="/images/login/left-panel.jpg"
+          alt=""
+          fill
+          priority
+          className="object-cover object-center"
+          sizes="(min-width: 1024px) 50vw, 100vw"
+        />
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-black/70 to-transparent" />
+        <Image
+          src="/logos/vybe-logo-dark.png?v=24"
+          alt="VYBE"
+          width={320}
+          height={128}
+          priority
+          unoptimized
+          className="absolute top-4 left-4 z-10 h-8 w-auto drop-shadow-[0_6px_16px_rgba(0,0,0,0.45)] sm:top-5 sm:left-5 sm:h-9"
+        />
       </section>
 
       <section className="flex flex-col px-6 py-8 sm:px-12 lg:min-h-screen">
