@@ -57,7 +57,11 @@ export async function getPlayById(id: string): Promise<PlayItem | null> {
   const { items } = await getPlayItems();
   const found = items.find((item) => item.id === id);
   if (found) return found;
-  const generated = findGeneratedPlayVenue(id);
+  const venues = items.filter(isPlayVenue);
+  const generated = findGeneratedPlayVenue(
+    id,
+    (sportId) => venues.filter((venue) => matchesPlaySport(venue, sportId)).length,
+  );
   return generated ? enrichItem(generated) : null;
 }
 

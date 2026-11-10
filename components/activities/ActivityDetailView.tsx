@@ -10,7 +10,7 @@ import {
   Share2,
   Ticket,
 } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { ActivityBookFlow } from "@/components/activities/ActivityBookFlow";
 import { BookingConfirmed } from "@/components/bookings/BookingConfirmed";
 import { ActivityCarousel } from "@/components/activities/ActivityCard";
@@ -23,6 +23,7 @@ import {
   DetailSection,
   buildGallery,
 } from "@/components/detail/DetailParts";
+import { useHideNavOnScroll } from "@/components/detail/useHideNavOnScroll";
 import { useSectionSpy } from "@/components/detail/useSectionSpy";
 import { RecordRecentView } from "@/components/recent/RecordRecentView";
 import {
@@ -51,9 +52,9 @@ export function ActivityDetailView({ activity, related }: ActivityDetailViewProp
     "activity",
     TAB_IDS,
   );
-  const [compact, setCompact] = useState(false);
   const [bookingOpen, setBookingOpen] = useState(false);
   const [booking, setBooking] = useState<VybeBooking | null>(null);
+  const compact = useHideNavOnScroll("activity-hero-sentinel", !booking);
 
   const venue = activity.venue ?? activity.category;
   const place = `${venue}, Hyderabad`;
@@ -65,18 +66,6 @@ export function ActivityDetailView({ activity, related }: ActivityDetailViewProp
     "https://www.google.com/maps?q=" +
     encodeURIComponent(place) +
     "&z=15&output=embed";
-
-  useEffect(() => {
-    const sentinel = document.getElementById("activity-hero-sentinel");
-    if (!sentinel) return;
-    const observer = new IntersectionObserver(
-      ([entry]) =>
-        setCompact(!entry.isIntersecting && entry.boundingClientRect.top < (entry.rootBounds?.top ?? 0)),
-      { rootMargin: "-72px 0px 0px 0px", threshold: 0 },
-    );
-    observer.observe(sentinel);
-    return () => observer.disconnect();
-  }, []);
 
   if (booking) {
     return <BookingConfirmed booking={booking} />;
@@ -94,51 +83,60 @@ export function ActivityDetailView({ activity, related }: ActivityDetailViewProp
       />
 
       <Container className="pt-2 md:pt-5 lg:pt-7">
-        <DetailPhotoGrid title={activity.title} images={gallery} />
+        <DetailPhotoGrid
+          detailId={activity.id}
+          title={activity.title}
+          images={gallery}
+          heroVideoUrl={activity.videoUrl}
+        />
       </Container>
 
-      {compact ? (
-        <div className="sticky top-(--vybe-header-h) z-40 border-b border-border bg-surface/95 backdrop-blur-xl">
-          <Container className="py-3">
-            <div className="flex items-center gap-3">
-              <div className="relative size-10 shrink-0 overflow-hidden rounded-lg bg-surface-muted">
-                <Image
-                  src={activity.imageUrl}
-                  alt=""
-                  fill
-                  className="object-cover"
-                  sizes="40px"
-                />
-              </div>
-              <div className="min-w-0 flex-1">
-                <p className="truncate text-[16px] font-extrabold text-text">
-                  {activity.title}
-                </p>
-                <p className="truncate text-[12px] text-text-secondary">
-                  {formatInr(activity.price)}
-                  {activity.priceUnit} · {venue}
-                </p>
-              </div>
+      <div
+        className={`fixed inset-x-0 top-0 z-[60] border-b border-border bg-surface/95 backdrop-blur-xl transition-all duration-200 ${
+          compact
+            ? "translate-y-0 opacity-100"
+            : "pointer-events-none -translate-y-full opacity-0"
+        }`}
+      >
+        <Container className="py-3">
+          <div className="flex items-center gap-3">
+            <div className="relative size-10 shrink-0 overflow-hidden rounded-lg bg-surface-muted">
+              <Image
+                src={activity.imageUrl}
+                alt=""
+                fill
+                className="object-cover"
+                sizes="40px"
+              />
             </div>
-            <div className="mt-3 hide-scrollbar flex gap-5 overflow-x-auto">
-              {TABS.map((item) => (
-                <button
-                  key={item.id}
-                  type="button"
-                  onClick={() => scrollToSection(item.id)}
-                  className={`shrink-0 border-b-2 pb-1 text-[13px] font-bold ${
-                    tab === item.id
-                      ? "border-accent text-text"
-                      : "border-transparent text-text-secondary"
-                  }`}
-                >
-                  {item.label}
-                </button>
-              ))}
+            <div className="min-w-0 flex-1">
+              <p className="truncate text-[16px] font-extrabold text-text">
+                {activity.title}
+              </p>
+              <p className="truncate text-[12px] text-text-secondary">
+                {formatInr(activity.price)}
+                {activity.priceUnit} · {venue}
+              </p>
             </div>
-          </Container>
-        </div>
-      ) : null}
+          </div>
+          <div className="mt-3 hide-scrollbar flex gap-5 overflow-x-auto">
+            {TABS.map((item) => (
+              <button
+                key={item.id}
+                type="button"
+                onClick={() => scrollToSection(item.id)}
+                className={`shrink-0 border-b-2 pb-1 text-[13px] font-bold ${
+                  tab === item.id
+                    ? "border-accent text-text"
+                    : "border-transparent text-text-secondary"
+                }`}
+              >
+                {item.label}
+              </button>
+            ))}
+          </div>
+        </Container>
+      </div>
 
       <Container className="grid gap-8 pt-3 pb-4 md:pt-5 lg:grid-cols-[minmax(0,1fr)_340px] lg:items-start lg:gap-12 lg:pt-6">
         <div>

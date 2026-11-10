@@ -4,8 +4,10 @@ import Image from "next/image";
 import Link from "next/link";
 import {
   Armchair,
+  ArrowUpRight,
   Bath,
   Briefcase,
+  CalendarDays,
   ChevronDown,
   ChevronLeft,
   ChevronRight,
@@ -14,11 +16,12 @@ import {
   Coffee,
   Cross,
   Droplets,
-  LayoutGrid,
   Lightbulb,
   MapPin,
+  Navigation,
   PersonStanding,
   ShoppingBag,
+  Star,
   Trophy,
   Volume2,
   Wind,
@@ -27,17 +30,39 @@ import {
 } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import { Container } from "@/components/common/Container";
-import { buildGallery } from "@/components/detail/DetailParts";
-import { StickyBookBar } from "@/components/movies/StickyBookBar";
+import {
+  PosterCompactBar,
+  PosterDetailLayout,
+  PosterIconBadge,
+  PosterInfoRow,
+  PosterMapChip,
+  PosterSection,
+  posterButtonClass,
+  posterPriceChipClass,
+  posterChipClass,
+} from "@/components/detail/PosterDetailLayout";
+import { useHideNavOnScroll } from "@/components/detail/useHideNavOnScroll";
+import { useSectionSpy } from "@/components/detail/useSectionSpy";
 import { PlayVenueCard } from "@/components/play/PlayVenueCard";
 import { RecordRecentView } from "@/components/recent/RecordRecentView";
 import { playSports } from "@/lib/data/playSports";
+import { formatInr } from "@/lib/format";
 import type { PlayItem } from "@/types/play";
 
 type PlayDetailViewProps = {
   item: PlayItem;
   related: PlayItem[];
 };
+
+const TABS = [
+  { id: "sports", label: "Sports" },
+  { id: "about", label: "About" },
+  { id: "amenities", label: "Things to know" },
+  { id: "gallery", label: "Gallery" },
+  { id: "location", label: "Location" },
+] as const;
+
+const TAB_IDS = TABS.map((entry) => entry.id);
 
 const ABOUT_PREVIEW_CHARS = 220;
 
@@ -73,6 +98,7 @@ function amenityIcon(label: string): LucideIcon {
 function resolveSports(item: PlayItem): string[] {
   const sports = new Set<string>();
   if (item.sport) sports.add(item.sport);
+  for (const tag of item.sports ?? []) sports.add(tag);
   for (const amenity of item.amenities ?? []) {
     const known = playSports.find(
       (sport) =>
@@ -136,11 +162,19 @@ export function PlayDetailView({ item, related }: PlayDetailViewProps) {
     `${item.venue} ${item.locality || "Hyderabad"}`,
   )}`;
 
-  const allImages = useMemo(() => imagesFor(item, related), [item, related]);
-  const gallery = useMemo(
-    () => buildGallery(item.imageUrl, allImages.slice(1)),
-    [allImages, item.imageUrl],
+  const mapSrc =
+    "https://www.google.com/maps?q=" +
+    encodeURIComponent(`${item.venue} ${item.locality || "Hyderabad"}`) +
+    "&z=15&output=embed";
+  const priceValue = item.price != null ? formatInr(item.price) : "Free";
+  const primarySport = playSports.find(
+    (entry) => entry.label.toLowerCase() === (item.sport ?? "").toLowerCase(),
   );
+
+  const { active: tab, scrollTo: scrollToSection } = useSectionSpy("play", TAB_IDS);
+  const compact = useHideNavOnScroll("play-hero-sentinel");
+
+  const allImages = useMemo(() => imagesFor(item, related), [item, related]);
 
   const sports = useMemo(() => resolveSports(item), [item]);
   const thingsToKnow = useMemo(() => {
@@ -192,53 +226,120 @@ export function PlayDetailView({ item, related }: PlayDetailViewProps) {
         category="play"
       />
 
-      <section id="play-detail-hero" className="bg-bg">
-        <Container className="pt-2 pb-2 md:pt-5 md:pb-3 lg:pt-8">
-          <h1 className="text-[28px] font-extrabold tracking-tight text-text md:text-[36px] lg:text-[40px]">
-            {item.title}
-          </h1>
-        </Container>
-
-        <Container className="pb-6 md:pb-8">
-          <PlayPhotoGallery
-            title={item.title}
-            images={gallery}
-            onShowAll={() => setGalleryOpen(true)}
-          />
-        </Container>
-      </section>
-
-      <StickyBookBar
+      <PosterCompactBar
+        visible={compact}
+        imageSrc={item.imageUrl}
         title={item.title}
-        bookHref={bookHref}
-        heroId="play-detail-hero"
-        bookLabel={bookLabel}
+        subtitle={`${priceValue}${item.priceUnit ? ` ${item.priceUnit}` : ""} · ${place}`}
+        tabs={TABS}
+        active={tab}
+        onSelect={scrollToSection}
       />
 
-      <Container className="grid gap-10 pb-4 lg:grid-cols-[minmax(0,1fr)_300px] lg:items-start lg:gap-14 xl:grid-cols-[minmax(0,1fr)_320px]">
-        <div className="min-w-0">
-          <section>
-            <h2 className="text-[20px] font-extrabold tracking-tight text-text md:text-[22px]">
-              {sports.length} sport{sports.length === 1 ? "" : "s"} available
-            </h2>
-            <div className="mt-3.5 flex flex-wrap gap-2.5">
-              {sports.map((sport) => (
-                <span
-                  key={sport}
-                  className="inline-flex items-center gap-2 rounded-lg border border-border bg-surface px-3.5 py-2 text-[14px] font-semibold text-text"
-                >
-                  <PersonStanding className="size-4 text-text-secondary" strokeWidth={1.75} />
-                  {sport}
+      <Container className="pt-3 pb-4 md:pt-5 lg:pt-7">
+        <PosterDetailLayout
+          title={item.title}
+          posterSrc={item.imageUrl}
+          sentinelId="play-hero-sentinel"
+          saveItem={{
+            id: item.id,
+            title: item.title,
+            href: `/play/${item.id}`,
+            imageUrl: item.imageUrl,
+            meta: place,
+            category: "play",
+          }}
+          bookHref={bookHref}
+          bookLabel={bookLabel}
+          priceCaption={isEvent ? "Entry from" : "Slots from"}
+          priceValue={`${priceValue}${item.priceUnit ? ` ${item.priceUnit}` : ""}`}
+          chips={
+            <>
+              {item.price != null ? (
+                <span className={posterPriceChipClass}>
+                  From {priceValue}
+                  {item.priceUnit ? ` ${item.priceUnit}` : ""}
                 </span>
-              ))}
-            </div>
-          </section>
+              ) : null}
+              {primarySport ? (
+                <Link href={primarySport.href} className={posterChipClass}>
+                  {primarySport.label}
+                  <ArrowUpRight className="size-3.5" />
+                </Link>
+              ) : null}
+            </>
+          }
+          trailingChips={
+            item.rating != null ? (
+              <span className={posterChipClass}>
+                <Star className="size-3.5 fill-current" />
+                {item.rating.toFixed(1)}
+              </span>
+            ) : null
+          }
+          info={
+            <>
+              <PosterInfoRow
+                badge={
+                  <PosterIconBadge>
+                    {isEvent ? (
+                      <CalendarDays className="size-5" />
+                    ) : (
+                      <Clock3 className="size-5" />
+                    )}
+                  </PosterIconBadge>
+                }
+                title={
+                  isEvent
+                    ? (item.dateLabel ?? item.schedule)
+                    : item.hours
+                      ? `Open ${item.hours}`
+                      : item.schedule
+                }
+                subtitle={isEvent ? (item.timeLabel ?? item.schedule) : item.schedule}
+              />
+              <PosterInfoRow
+                badge={
+                  <PosterIconBadge>
+                    <MapPin className="size-5" />
+                  </PosterIconBadge>
+                }
+                title={
+                  <>
+                    {item.venue}
+                    <PosterMapChip href={mapsHref} />
+                  </>
+                }
+                subtitle={
+                  item.distanceKm != null
+                    ? `${address} · ${item.distanceKm} km away`
+                    : address
+                }
+              />
+            </>
+          }
+        >
+          {sports.length > 0 ? (
+            <PosterSection
+              id="play-sports"
+              title={`${sports.length} sport${sports.length === 1 ? "" : "s"} available`}
+            >
+              <div className="flex flex-wrap gap-2">
+                {sports.map((sport) => (
+                  <span
+                    key={sport}
+                    className="inline-flex items-center gap-2 rounded-lg border border-border bg-surface-muted px-3 py-2 text-[13px] font-bold text-text"
+                  >
+                    <PersonStanding className="size-4 text-text-secondary" strokeWidth={1.75} />
+                    {sport}
+                  </span>
+                ))}
+              </div>
+            </PosterSection>
+          ) : null}
 
-          <section className="mt-10">
-            <h2 className="text-[20px] font-extrabold tracking-tight text-text md:text-[22px]">
-              About
-            </h2>
-            <p className="mt-3 max-w-2xl text-[15px] leading-7 text-text-body">
+          <PosterSection id="play-about" title="About">
+            <p className="text-[14px] leading-7 text-text-secondary">
               {aboutText}
               {aboutNeedsTruncation ? (
                 <>
@@ -257,119 +358,65 @@ export function PlayDetailView({ item, related }: PlayDetailViewProps) {
                 </>
               ) : null}
             </p>
-          </section>
+          </PosterSection>
 
           {thingsToKnow.length > 0 ? (
-            <section className="mt-10">
-              <h2 className="text-[20px] font-extrabold tracking-tight text-text md:text-[22px]">
-                Things to know
-              </h2>
-              <ul className="mt-5 grid grid-cols-1 gap-x-10 gap-y-5 sm:grid-cols-2">
+            <PosterSection id="play-amenities" title="Things to know">
+              <ul className="grid grid-cols-1 gap-2.5 sm:grid-cols-2">
                 {thingsToKnow.map((entry) => {
                   const Icon = amenityIcon(entry);
                   return (
                     <li
                       key={entry}
-                      className="flex items-center gap-3 text-[14px] text-text-body md:text-[15px]"
+                      className="flex items-center gap-3 rounded-xl border border-border bg-surface-muted px-3 py-2.5 text-[13px] font-semibold text-text"
                     >
-                      <Icon
-                        className="size-[18px] shrink-0 text-text"
-                        strokeWidth={1.6}
-                      />
+                      <Icon className="size-[18px] shrink-0 text-text" strokeWidth={1.75} />
                       <span>{entry}</span>
                     </li>
                   );
                 })}
               </ul>
-            </section>
+            </PosterSection>
           ) : null}
 
-          <section className="mt-10">
-            <h2 className="text-[20px] font-extrabold tracking-tight text-text md:text-[22px]">
-              Gallery
-            </h2>
+          <PosterSection id="play-gallery" title="Gallery">
             <PlayBlurredGallery
               title={item.title}
               images={allImages}
               onShowAll={() => setGalleryOpen(true)}
             />
-          </section>
-        </div>
+          </PosterSection>
 
-        <aside className="hidden h-fit space-y-4 lg:sticky lg:top-[calc(var(--vybe-header-h)+1.25rem)] lg:block">
-          <div className="rounded-2xl bg-surface p-3 shadow-[0_8px_28px_rgba(17,24,39,0.08)] dark:shadow-[0_8px_28px_rgba(0,0,0,0.35)]">
-            <Link
-              href={bookHref}
-              className="flex w-full items-center justify-center rounded-full bg-cta px-5 py-3.5 text-[15px] font-bold text-cta-text transition-opacity hover:opacity-90"
-            >
-              {bookLabel}
-            </Link>
-          </div>
-
-          <a
-            href={mapsHref}
-            target="_blank"
-            rel="noreferrer"
-            className="flex items-start gap-3 rounded-2xl border border-border bg-surface p-4 shadow-[0_8px_28px_rgba(17,24,39,0.06)] transition-colors hover:border-border-strong dark:shadow-[0_8px_28px_rgba(0,0,0,0.3)]"
-          >
-            <span className="mt-0.5 flex size-11 shrink-0 items-center justify-center rounded-xl border border-border">
-              <MapPin className="size-5 text-text" strokeWidth={1.75} />
-            </span>
-            <span className="min-w-0 flex-1">
-              <span className="block text-[14px] font-bold leading-snug text-text">
-                {item.venue}
-                {item.locality ? `, ${item.locality}` : ""}
-              </span>
-              <span className="mt-1 block text-[12px] leading-5 text-text-secondary">
-                {address}
-              </span>
-              {item.distanceKm != null ? (
-                <span className="mt-1 block text-[12px] text-text-secondary">
-                  {item.distanceKm} km away
-                </span>
-              ) : null}
-            </span>
-            <ChevronRight className="mt-1 size-4 shrink-0 text-text-muted" />
-          </a>
-        </aside>
-      </Container>
-
-      <Container className="mt-2 space-y-3 lg:hidden">
-        <Link
-          href={bookHref}
-          className="flex w-full items-center justify-center rounded-full bg-cta px-5 py-3.5 text-[15px] font-bold text-cta-text shadow-[0_8px_24px_rgba(17,24,39,0.12)] dark:shadow-[0_8px_24px_rgba(0,0,0,0.4)]"
-        >
-          {bookLabel}
-        </Link>
-        <a
-          href={mapsHref}
-          target="_blank"
-          rel="noreferrer"
-          className="flex items-start gap-3 rounded-2xl border border-border bg-surface p-4"
-        >
-          <span className="mt-0.5 flex size-11 shrink-0 items-center justify-center rounded-xl border border-border">
-            <MapPin className="size-5 text-text" strokeWidth={1.75} />
-          </span>
-          <span className="min-w-0 flex-1">
-            <span className="block text-[14px] font-bold leading-snug text-text">
-              {item.venue}
-              {item.locality ? `, ${item.locality}` : ""}
-            </span>
-            <span className="mt-1 block text-[12px] leading-5 text-text-secondary">
-              {address}
-            </span>
-            {item.distanceKm != null ? (
-              <span className="mt-1 block text-[12px] text-text-secondary">
-                {item.distanceKm} km away
-              </span>
-            ) : null}
-          </span>
-          <ChevronRight className="mt-1 size-4 shrink-0 text-text-muted" />
-        </a>
+          <PosterSection id="play-location" title="Location">
+            <div className="overflow-hidden rounded-xl border border-border">
+              <iframe
+                title={`${item.title} map`}
+                src={mapSrc}
+                className="h-[240px] w-full border-0 md:h-[300px]"
+                loading="lazy"
+              />
+            </div>
+            <div className="mt-4 flex flex-wrap items-center justify-between gap-3">
+              <div className="min-w-0">
+                <p className="text-[15px] font-extrabold text-text">{item.venue}</p>
+                <p className="mt-0.5 text-[13px] text-text-secondary">{address}</p>
+              </div>
+              <a
+                href={mapsHref}
+                target="_blank"
+                rel="noreferrer"
+                className={posterButtonClass}
+              >
+                <Navigation className="size-3.5" />
+                Directions
+              </a>
+            </div>
+          </PosterSection>
+        </PosterDetailLayout>
       </Container>
 
       {related.length > 0 ? (
-        <section className="mt-10 border-t border-border bg-bg py-8 md:py-10">
+        <section className="mt-6 border-t border-border bg-bg py-8 md:py-10">
           <Container>
             <h2 className="mb-5 text-[22px] font-extrabold tracking-tight text-text md:text-[26px]">
               More venues near you
@@ -475,73 +522,6 @@ function PlayBlurredGallery({
           </button>
         );
       })}
-    </div>
-  );
-}
-
-function PlayPhotoGallery({
-  title,
-  images,
-  onShowAll,
-}: {
-  title: string;
-  images: string[];
-  onShowAll: () => void;
-}) {
-  const hero = images[0];
-  const tiles = images.slice(1, 5);
-
-  return (
-    <div className="relative overflow-hidden rounded-2xl md:rounded-[20px]">
-      <div className="grid h-[260px] grid-cols-1 gap-1.5 sm:h-[320px] md:h-[420px] md:grid-cols-2 md:gap-2">
-        <button
-          type="button"
-          onClick={onShowAll}
-          className="relative overflow-hidden bg-surface-muted"
-          aria-label="View all photos"
-        >
-          <Image
-            src={hero}
-            alt={title}
-            fill
-            priority
-            className="object-cover transition-transform duration-500 hover:scale-[1.02]"
-            sizes="(max-width: 768px) 100vw, 50vw"
-          />
-        </button>
-
-        <div className="hidden grid-cols-2 grid-rows-2 gap-2 md:grid">
-          {Array.from({ length: 4 }).map((_, index) => {
-            const src = tiles[index] ?? hero;
-            return (
-              <button
-                key={`${src}-${index}`}
-                type="button"
-                onClick={onShowAll}
-                className="relative overflow-hidden bg-surface-muted"
-                aria-label={`View photo ${index + 2}`}
-              >
-                <Image
-                  src={src}
-                  alt=""
-                  fill
-                  className="object-cover transition-transform duration-500 hover:scale-[1.03]"
-                  sizes="25vw"
-                />
-              </button>
-            );
-          })}
-        </div>
-      </div>
-
-      <button
-        type="button"
-        onClick={onShowAll}
-        className="absolute right-3 bottom-3 z-10 inline-flex items-center gap-2 rounded-full bg-surface px-3.5 py-2 text-[12px] font-bold text-text shadow-[0_4px_16px_rgba(17,24,39,0.16)] transition-transform hover:scale-[1.02] dark:shadow-[0_4px_16px_rgba(0,0,0,0.45)] md:right-4 md:bottom-4 md:px-4 md:py-2.5 md:text-[13px]"
-      >
-        <LayoutGrid className="size-3.5 md:size-4" strokeWidth={2} />
-        Show all photos
-      </button>
     </div>
   );
 }

@@ -8,6 +8,8 @@ export type Activity = {
   schedule?: string;
   price: number;
   priceUnit: string;
+  /** Hero loop on activity detail photo grid */
+  videoUrl?: string;
 };
 
 export type ActivityListResult = {

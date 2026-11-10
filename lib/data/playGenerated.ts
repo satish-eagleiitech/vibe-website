@@ -53,7 +53,18 @@ const POOL_HOURS = ["5:30 AM to 9:00 PM", "6:00 AM to 8:30 PM"];
 
 const PROFILES: Record<string, SportProfile> = {
   badminton: {
-    images: ["/images/explore/play/badminton.png", "/images/play/sport-badminton.jpg", "/images/play/play-8.jpg"],
+    images: [
+      "/images/play/venues/badminton-1.jpg",
+      "/images/play/venues/badminton-3.jpg",
+      "/images/play/venues/badminton-8.jpg",
+      "/images/play/venues/badminton-5.jpg",
+      "/images/play/venues/badminton-10.jpg",
+      "/images/play/venues/badminton-2.png",
+      "/images/play/venues/badminton-4.jpg",
+      "/images/play/venues/badminton-12.png",
+      "/images/play/venues/badminton-6.png",
+      "/images/play/venues/badminton-7.png",
+    ],
     suffixes: ["Badminton Arena", "Shuttle Club", "Badminton Centre", "Smashers Court"],
     blurbs: [
       "Synthetic-mat badminton courts with BWF-grade lighting",
@@ -69,7 +80,16 @@ const PROFILES: Record<string, SportProfile> = {
     also: ["Table Tennis", "Pickleball"],
   },
   swimming: {
-    images: ["/images/explore/play/swimming.png", "/images/play/play-11.jpg"],
+    images: [
+      "/images/play/venues/swimming-1.jpg",
+      "/images/play/venues/swimming-3.jpg",
+      "/images/play/venues/swimming-4.jpg",
+      "/images/play/venues/swimming-5.jpg",
+      "/images/play/venues/swimming-7.png",
+      "/images/play/venues/swimming-8.jpg",
+      "/images/play/venues/swimming-9.jpg",
+      "/images/play/venues/swimming-10.jpg",
+    ],
     suffixes: ["Aquatics", "Swim Club", "Swimming Pool", "Aqua Centre"],
     blurbs: [
       "Temperature-controlled pool with lane swimming and lessons",
@@ -354,12 +374,27 @@ export function generatedPlayVenues(sportId: string, existing: number): PlayItem
     const venue = buildVenue(sportId, index);
     if (venue) list.push(venue);
   }
+
+  // Listings sort by distance, so cycling photos in that order keeps repeats apart.
+  const images = PROFILES[sportId]?.images ?? [];
+  if (images.length) {
+    [...list]
+      .sort((a, b) => (a.distanceKm ?? 0) - (b.distanceKm ?? 0))
+      .forEach((venue, rank) => {
+        venue.imageUrl = images[rank % images.length];
+      });
+  }
   return list;
 }
 
-export function findGeneratedPlayVenue(id: string): PlayItem | null {
+/** `existing` must match the count passed to `generatedPlayVenues` for this sport */
+export function findGeneratedPlayVenue(
+  id: string,
+  existing: (sportId: string) => number,
+): PlayItem | null {
   if (!id.startsWith(ID_PREFIX)) return null;
   const match = id.slice(ID_PREFIX.length).match(/^(.+)-(\d+)$/);
   if (!match) return null;
-  return buildVenue(match[1], Number(match[2]) - 1);
+  const sportId = match[1];
+  return generatedPlayVenues(sportId, existing(sportId)).find((venue) => venue.id === id) ?? null;
 }

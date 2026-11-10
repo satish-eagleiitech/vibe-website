@@ -26,23 +26,34 @@ export function StickyBookBar({
     const hero = document.getElementById(heroId);
     if (!hero) return;
 
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        setVisible(!entry.isIntersecting);
-      },
-      {
-        rootMargin: "-80px 0px 0px 0px",
-        threshold: 0,
-      },
-    );
+    let frame = 0;
+    const update = () => {
+      frame = 0;
+      const next = hero.getBoundingClientRect().bottom < 72;
+      setVisible((prev) => (prev === next ? prev : next));
+    };
+    const onScroll = () => {
+      if (!frame) frame = requestAnimationFrame(update);
+    };
 
-    observer.observe(hero);
-    return () => observer.disconnect();
+    update();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    return () => {
+      if (frame) cancelAnimationFrame(frame);
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+    };
   }, [heroId]);
+
+  useEffect(() => {
+    document.documentElement.classList.toggle("vybe-nav-hidden", visible);
+    return () => document.documentElement.classList.remove("vybe-nav-hidden");
+  }, [visible]);
 
   return (
     <div
-      className={`fixed inset-x-0 top-(--vybe-header-h) z-40 border-b border-border bg-surface/95 backdrop-blur-xl transition-all duration-300 ${
+      className={`fixed inset-x-0 top-0 z-[60] border-b border-border bg-surface/95 backdrop-blur-xl transition-all duration-200 ${
         visible
           ? "translate-y-0 opacity-100"
           : "pointer-events-none -translate-y-full opacity-0"

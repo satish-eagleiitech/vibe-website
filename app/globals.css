@@ -116,9 +116,20 @@ body {
   overscroll-behavior: none;
 }
 
+.vybe-site-header {
+  transition: transform 200ms ease;
+}
+
 html.vybe-nav-hidden .vybe-site-header {
   visibility: hidden;
   pointer-events: none;
+  transform: translateY(-100%);
+}
+
+html.vybe-nav-hidden [id^="activity-"],
+html.vybe-nav-hidden [id^="event-"],
+html.vybe-nav-hidden [id^="play-"] {
+  scroll-margin-top: 6.5rem;
 }
 
 @layer base {

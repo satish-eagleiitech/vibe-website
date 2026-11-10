@@ -2,13 +2,48 @@
 
 import Image from "next/image";
 import type { ReactNode } from "react";
+import { resolveDetailHeroVideo } from "@/lib/media/detailHeroVideo";
+
+export function DetailHeroVideo({
+  detailId,
+  title,
+  poster,
+  videoUrl,
+  className = "absolute inset-0 h-full w-full object-cover",
+}: {
+  detailId: string;
+  title: string;
+  poster: string;
+  videoUrl?: string;
+  className?: string;
+}) {
+  const src = resolveDetailHeroVideo(detailId, videoUrl);
+
+  return (
+    <video
+      className={className}
+      src={src}
+      poster={poster}
+      muted
+      loop
+      playsInline
+      autoPlay
+      preload="auto"
+      aria-label={title}
+    />
+  );
+}
 
 export function DetailPhotoGrid({
   title,
   images,
+  detailId,
+  heroVideoUrl,
 }: {
   title: string;
   images: string[];
+  detailId: string;
+  heroVideoUrl?: string;
 }) {
   const hero = images[0];
   const tiles = images.slice(1, 5);
@@ -16,13 +51,11 @@ export function DetailPhotoGrid({
   return (
     <div className="grid h-[280px] grid-cols-1 gap-2 sm:h-[340px] md:h-[420px] md:grid-cols-2">
       <div className="relative overflow-hidden rounded-2xl bg-surface-muted">
-        <Image
-          src={hero}
-          alt={title}
-          fill
-          priority
-          className="object-cover"
-          sizes="(max-width: 768px) 100vw, 50vw"
+        <DetailHeroVideo
+          detailId={detailId}
+          title={title}
+          poster={hero}
+          videoUrl={heroVideoUrl}
         />
       </div>
       <div className="hidden grid-cols-2 grid-rows-2 gap-2 md:grid">
@@ -94,7 +127,7 @@ export function DetailOfferCard({
   detail: string;
 }) {
   return (
-    <div className="rounded-2xl bg-accent-soft px-4 py-5">
+    <div className="rounded-2xl border border-border bg-surface px-4 py-5">
       <p className="text-[18px] font-extrabold tracking-tight text-text">{title}</p>
       <p className="mt-1 text-[13px] text-text-secondary">{detail}</p>
     </div>
@@ -113,7 +146,7 @@ export function DetailActionChip({
   onClick?: () => void;
 }) {
   const className =
-    "inline-flex items-center gap-1.5 rounded-full border border-border bg-surface px-4 py-2 text-[13px] font-bold text-text";
+    "inline-flex items-center gap-1.5 rounded-full border border-accent/30 bg-accent-soft px-4 py-2 text-[13px] font-bold text-accent transition-colors hover:border-accent/50 hover:bg-accent-soft [&_svg]:text-accent";
 
   if (onClick) {
     return (

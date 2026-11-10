@@ -5,19 +5,12 @@ import Link from "next/link";
 import { useState } from "react";
 import { ArrowUpRight, Pencil, Ticket } from "lucide-react";
 import { AccountAvatar } from "@/components/account/AccountShell";
+import { BookingTicketStub } from "@/components/bookings/BookingTicketStub";
 import { useAccountData } from "@/components/account/useAccountData";
 import { EditProfileModal } from "@/components/profile/EditProfileModal";
-import type { BookingCategory, VybeBooking } from "@/lib/bookings/storage";
 import { writeSavedLocation } from "@/lib/location/cities";
 import { categoryColors } from "@/lib/theme/colors";
 import { writeProfile, type VybeProfile } from "@/lib/profile/storage";
-
-const CATEGORY_LABEL: Record<BookingCategory, string> = {
-  movies: "Movies",
-  events: "Events",
-  activities: "Activities",
-  play: "Play",
-};
 
 const PROFILE_CATEGORIES = [
   {
@@ -53,52 +46,6 @@ const PROFILE_CATEGORIES = [
     ...categoryColors.play,
   },
 ];
-
-function BookingRow({ booking }: { booking: VybeBooking }) {
-  return (
-    <article className="flex flex-col gap-3 rounded-[22px] border border-border bg-surface p-3 shadow-[0_6px_18px_rgba(17,24,39,0.04)] sm:flex-row sm:items-center sm:gap-4 sm:p-4 dark:shadow-none">
-      <Link
-        href={`/tickets/${booking.id}`}
-        className="flex min-w-0 flex-1 items-center gap-3 sm:gap-4"
-      >
-        <span className="relative size-16 shrink-0 overflow-hidden rounded-2xl bg-surface-muted sm:size-[72px]">
-          <Image
-            src={booking.posterUrl}
-            alt={booking.title}
-            fill
-            className="object-cover"
-            sizes="72px"
-          />
-        </span>
-        <span className="min-w-0 flex-1">
-          <span className="block truncate text-[15px] font-extrabold text-text">
-            {booking.title}
-          </span>
-          <span className="mt-0.5 line-clamp-2 text-[12px] leading-snug text-text-secondary sm:text-[13px]">
-            {booking.venue} · {booking.dateLabel} at {booking.timeLabel}
-          </span>
-          <span className="mt-2 inline-flex rounded-full bg-accent-soft px-2.5 py-0.5 text-[11px] font-bold text-accent">
-            {CATEGORY_LABEL[booking.category]}
-          </span>
-        </span>
-      </Link>
-
-      <div className="flex items-center justify-between gap-3 border-t border-border pt-3 sm:border-0 sm:pt-0 sm:pl-2">
-        <span className="inline-flex items-center gap-2 text-[12px] font-bold text-text-secondary">
-          <span className="size-2 rounded-full bg-emerald-500" />
-          Confirmed
-        </span>
-        <Link
-          href={`/tickets/${booking.id}`}
-          aria-label={`Open ${booking.title}`}
-          className="inline-flex size-9 items-center justify-center rounded-xl text-text-secondary transition-colors hover:bg-accent-soft hover:text-accent"
-        >
-          <Ticket className="size-4" />
-        </Link>
-      </div>
-    </article>
-  );
-}
 
 export function ProfileView() {
   const data = useAccountData();
@@ -262,7 +209,7 @@ export function ProfileView() {
           <ul className="space-y-3">
             {recent.map((booking) => (
               <li key={booking.id}>
-                <BookingRow booking={booking} />
+                <BookingTicketStub booking={booking} />
               </li>
             ))}
           </ul>

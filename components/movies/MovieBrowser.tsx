@@ -369,7 +369,9 @@ export function MovieBrowser({ latest, catalogs }: MovieBrowserProps) {
         </Container>
 
         {/* Filters sit under Movies heading; stick below nav while scrolling cards */}
-        <StickyFilterBar containerClassName="gap-3">{filterControls}</StickyFilterBar>
+        <StickyFilterBar pinToViewport containerClassName="gap-3">
+          {filterControls}
+        </StickyFilterBar>
 
         <Container className="pt-6 pb-10 md:pt-8 md:pb-12">
           {genreLoading && isGenreTab(quickTab) ? (

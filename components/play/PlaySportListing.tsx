@@ -5,6 +5,7 @@ import { Check, ChevronDown, ChevronLeft, SlidersHorizontal } from "lucide-react
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Container } from "@/components/common/Container";
 import { EmptyState } from "@/components/common/EmptyState";
+import { StickyFilterBar } from "@/components/common/StickyFilterBar";
 import { PlayVenueCard } from "@/components/play/PlayVenueCard";
 import { playSports } from "@/lib/data/playSports";
 import type { PlayItem, PlaySport } from "@/types/play";
@@ -90,8 +91,8 @@ export function PlaySportListing({ sport, venues, city = "Hyderabad" }: PlaySpor
         </p>
       </Container>
 
-      <div className="sticky top-(--vybe-header-h) z-30 mt-5 border-b border-border bg-bg/95 backdrop-blur-xl">
-        <Container className="flex items-center gap-2 py-3">
+      <section className="mt-5 w-full overflow-x-clip scroll-mt-[var(--vybe-header-h)]">
+        <StickyFilterBar pinToViewport containerClassName="gap-2 py-3">
           <div ref={filtersRef} className="relative shrink-0">
             <button
               type="button"
@@ -146,25 +147,22 @@ export function PlaySportListing({ sport, venues, city = "Hyderabad" }: PlaySpor
 
           <span aria-hidden className="mx-1 h-6 w-px shrink-0 bg-border" />
 
-          <div className="hide-scrollbar flex min-w-0 flex-1 gap-2 overflow-x-auto">
-            {playSports.map((entry) => {
-              const current = entry.id === sport.id;
-              return (
-                <Link
-                  key={entry.id}
-                  href={entry.href}
-                  aria-current={current ? "page" : undefined}
-                  className={`${chip} ${current ? chipOn : chipIdle}`}
-                >
-                  {entry.label}
-                </Link>
-              );
-            })}
-          </div>
-        </Container>
-      </div>
+          {playSports.map((entry) => {
+            const current = entry.id === sport.id;
+            return (
+              <Link
+                key={entry.id}
+                href={entry.href}
+                aria-current={current ? "page" : undefined}
+                className={`${chip} ${current ? chipOn : chipIdle}`}
+              >
+                {entry.label}
+              </Link>
+            );
+          })}
+        </StickyFilterBar>
 
-      <Container className="mt-6">
+        <Container className="pt-6 pb-10 md:pt-8 md:pb-12">
         {visible.length === 0 ? (
           <EmptyState
             title={
@@ -180,7 +178,8 @@ export function PlaySportListing({ sport, venues, city = "Hyderabad" }: PlaySpor
             ))}
           </div>
         )}
-      </Container>
+        </Container>
+      </section>
     </div>
   );
 }

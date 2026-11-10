@@ -33,7 +33,8 @@ export function useSectionSpy<T extends string>(
       frame = 0;
       if (Date.now() < lockUntilRef.current) return;
 
-      const line = headerHeight() + STICKY_BAR_OFFSET;
+      const navHidden = document.documentElement.classList.contains("vybe-nav-hidden");
+      const line = (navHidden ? 0 : headerHeight()) + STICKY_BAR_OFFSET;
       const atBottom =
         window.innerHeight + window.scrollY >=
         document.documentElement.scrollHeight - 4;

@@ -5,6 +5,7 @@ import { BookTicketsButton } from "@/components/movies/BookTicketsButton";
 import { MovieDetailPhotosGrid } from "@/components/movies/MovieDetailPhotosGrid";
 import { MoviePeopleRail } from "@/components/movies/MoviePeopleRail";
 import { MovieTrailersRail } from "@/components/movies/MovieTrailersRail";
+import { StickyBookBar } from "@/components/movies/StickyBookBar";
 import { RecordRecentView } from "@/components/recent/RecordRecentView";
 import { getMovieById } from "@/lib/api/movies";
 
@@ -125,6 +126,12 @@ export default async function MovieDetailPage({
           </div>
         </Container>
       </section>
+
+      <StickyBookBar
+        title={movie.title}
+        bookHref={`/movies/${movie.id}/book`}
+        certification={movie.certification}
+      />
 
       <section className="bg-bg py-8 md:py-10">
         <Container className="space-y-10">
