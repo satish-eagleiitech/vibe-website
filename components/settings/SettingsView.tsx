@@ -129,7 +129,8 @@ export function SettingsView() {
   }
 
   function updatePrefs(patch: Partial<SettingsPreferences>) {
-    const next = { ...prefs, ...patch };
+    if (!prefs) return;
+    const next: SettingsPreferences = { ...prefs, ...patch };
     setPrefs(next);
     writeSettings(next);
   }
