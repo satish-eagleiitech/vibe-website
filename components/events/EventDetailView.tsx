@@ -3,6 +3,7 @@
 import { BadgeCheck, Navigation, Target, UsersRound } from "lucide-react";
 import { EventCarousel } from "@/components/events/EventCard";
 import { Container } from "@/components/common/Container";
+import { DetailGallery } from "@/components/detail/DetailGallery";
 import { DetailOfferCard } from "@/components/detail/DetailParts";
 import {
   PosterCompactBar,
@@ -20,6 +21,7 @@ const TABS = [
   { id: "about", label: "About" },
   { id: "offers", label: "Offers" },
   { id: "guidelines", label: "Guidelines" },
+  { id: "gallery", label: "Gallery" },
   { id: "location", label: "Location" },
 ] as const;
 
@@ -45,6 +47,16 @@ export function EventDetailView({ event, related }: EventDetailViewProps) {
     "https://www.google.com/maps?q=" +
     encodeURIComponent(place || "Hyderabad") +
     "&z=15&output=embed";
+
+  const gallery = [
+    ...new Set([
+      event.imageUrl,
+      ...related.filter((item) => item.category === event.category).map((item) => item.imageUrl),
+      ...related.map((item) => item.imageUrl),
+    ]),
+  ]
+    .filter(Boolean)
+    .slice(0, 8);
 
   const highlights = [
     {
@@ -120,6 +132,10 @@ export function EventDetailView({ event, related }: EventDetailViewProps) {
               <li>Gates open 60 minutes before the scheduled start time.</li>
               <li>Outside food and beverages may not be allowed at the venue.</li>
             </ul>
+          </PosterSection>
+
+          <PosterSection id="event-gallery" title="Gallery">
+            <DetailGallery title={event.title} images={gallery} />
           </PosterSection>
 
           <PosterSection id="event-location" title="Location">

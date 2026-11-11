@@ -5,36 +5,12 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Logo } from "@/components/common/Logo";
 import { LocationButton } from "@/components/navbar/LocationButton";
+import { MobileNavMenu } from "@/components/navbar/MobileNavMenu";
+import { TAB_ICONS, TabIcon } from "@/components/navbar/NavTabIcon";
 import { ProfileLink } from "@/components/navbar/ProfileLink";
 import { SearchBar } from "@/components/navbar/SearchBar";
 import { ThemeToggle } from "@/components/navbar/ThemeToggle";
 import { siteConfig } from "@/config/site";
-
-const TAB_ICONS: Record<(typeof siteConfig.nav)[number]["href"], string> = {
-  "/movies": "/icons/nav-movies.png",
-  "/events": "/icons/nav-events.png",
-  "/activities": "/icons/nav-activities.png",
-  "/play": "/icons/nav-play.png",
-};
-
-function TabIcon({ src }: { src: string }) {
-  return (
-    <span
-      aria-hidden
-      className="inline-block size-[18px] shrink-0 bg-current"
-      style={{
-        maskImage: `url(${src})`,
-        WebkitMaskImage: `url(${src})`,
-        maskRepeat: "no-repeat",
-        WebkitMaskRepeat: "no-repeat",
-        maskPosition: "center",
-        WebkitMaskPosition: "center",
-        maskSize: "contain",
-        WebkitMaskSize: "contain",
-      }}
-    />
-  );
-}
 
 function NavTab({
   href,
@@ -80,7 +56,7 @@ export function TopDock() {
     : "bg-white/40 shadow-none backdrop-blur-xl dark:bg-black/35";
 
   return (
-    <div className="pointer-events-auto grid w-full grid-cols-[auto_minmax(0,1fr)_auto] items-start gap-3 px-3 sm:gap-4 sm:px-4">
+    <div className="pointer-events-auto relative grid w-full grid-cols-[auto_minmax(0,1fr)_auto] items-start gap-3 px-3 sm:gap-4 sm:px-4">
       <div className="relative z-10 flex min-w-0 items-center gap-1.5 self-stretch sm:gap-2">
         <Logo priority />
         <LocationButton
@@ -94,7 +70,7 @@ export function TopDock() {
         />
       </div>
 
-      <div className="flex min-w-0 justify-center">
+      <div className="flex min-w-0 justify-center max-[769px]:invisible">
         <div
           className={`max-w-full overflow-hidden rounded-b-[28px] transition-[background-color,box-shadow,backdrop-filter] duration-300 ${chrome}`}
         >
@@ -121,18 +97,23 @@ export function TopDock() {
         </div>
       </div>
 
-      <div className="flex shrink-0 items-center gap-1.5">
-        <div
-          className={`grid size-9 place-items-center rounded-full ring-1 ring-black/10 transition-[background-color,box-shadow,backdrop-filter] duration-300 dark:ring-white/15 ${chrome}`}
-        >
-          <SearchBar variant="dock" />
+      <div className="flex shrink-0 items-center gap-1.5 self-stretch">
+        <div className="flex items-center gap-1.5 max-[769px]:hidden">
+          <div
+            className={`grid size-9 place-items-center rounded-full ring-1 ring-black/10 transition-[background-color,box-shadow,backdrop-filter] duration-300 dark:ring-white/15 ${chrome}`}
+          >
+            <SearchBar variant="dock" />
+          </div>
+          <div
+            className={`grid size-9 place-items-center rounded-full ring-1 ring-black/10 transition-[background-color,box-shadow,backdrop-filter] duration-300 dark:ring-white/15 ${chrome}`}
+          >
+            <ThemeToggle dock />
+          </div>
+          <ProfileLink dock />
         </div>
-        <div
-          className={`grid size-9 place-items-center rounded-full ring-1 ring-black/10 transition-[background-color,box-shadow,backdrop-filter] duration-300 dark:ring-white/15 ${chrome}`}
-        >
-          <ThemeToggle dock />
+        <div className="min-[769px]:hidden">
+          <MobileNavMenu chrome={chrome} />
         </div>
-        <ProfileLink dock />
       </div>
     </div>
   );
