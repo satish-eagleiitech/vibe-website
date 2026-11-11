@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { Container } from "@/components/common/Container";
 import { BookTicketsButton } from "@/components/movies/BookTicketsButton";
 import { MovieDetailPhotosGrid } from "@/components/movies/MovieDetailPhotosGrid";
+import { MovieHeroPoster } from "@/components/movies/MovieHeroPoster";
 import { MoviePeopleRail } from "@/components/movies/MoviePeopleRail";
 import { MovieTrailersRail } from "@/components/movies/MovieTrailersRail";
 import { StickyBookBar } from "@/components/movies/StickyBookBar";
@@ -112,18 +113,11 @@ export default async function MovieDetailPage({
               Book Tickets
             </BookTicketsButton>
           </div>
-          <div className="relative w-[132px] shrink-0 overflow-hidden rounded-2xl shadow-[0_18px_40px_rgba(0,0,0,0.45)] ring-1 ring-white/20 sm:w-[180px] md:w-[220px] lg:w-[250px]">
-            <div className="relative aspect-[2/3] bg-black/40">
-              <Image
-                src={movie.posterUrl}
-                alt=""
-                fill
-                priority
-                className="object-cover"
-                sizes="250px"
-              />
-            </div>
-          </div>
+          <MovieHeroPoster
+            title={movie.title}
+            posterUrl={movie.posterUrl}
+            trailer={videos.find((video) => video.type === "Trailer") ?? videos[0]}
+          />
         </Container>
       </section>
 

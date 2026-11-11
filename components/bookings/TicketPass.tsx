@@ -1,8 +1,16 @@
 "use client";
 
 import Image from "next/image";
-import { Armchair } from "lucide-react";
-import type { VybeBooking } from "@/lib/bookings/storage";
+import { Armchair, ScanLine } from "lucide-react";
+import { TicketQr } from "@/components/bookings/TicketQr";
+import type { BookingCategory, VybeBooking } from "@/lib/bookings/storage";
+
+const SCAN_PLACE: Record<BookingCategory, string> = {
+  movies: "at the cinema entrance",
+  events: "at the gate",
+  play: "at the venue desk",
+  activities: "at the entry counter",
+};
 
 type TicketPassProps = {
   booking: VybeBooking;
@@ -106,6 +114,27 @@ export function TicketPass({ booking }: TicketPassProps) {
           </p>
           <p className="mt-1 text-[11px] font-bold tracking-wide text-text-muted uppercase">
             {brand}
+          </p>
+        </div>
+      </div>
+
+      <NotchDivider />
+
+      <div className="flex flex-col items-center gap-4 px-5 py-5 sm:flex-row sm:gap-5 md:px-6">
+        <div className="shrink-0 rounded-2xl border border-border bg-white p-2.5 shadow-sm">
+          <TicketQr value={booking.bookingCode || booking.id} className="size-36" />
+        </div>
+        <div className="min-w-0 text-center sm:text-left">
+          <p className="inline-flex items-center gap-1.5 text-[15px] font-extrabold text-text">
+            <ScanLine className="size-4 text-text-secondary" />
+            Show this QR {SCAN_PLACE[booking.category]}
+          </p>
+          <p className="mt-1 text-[12px] leading-relaxed text-text-secondary">
+            Staff will scan it to let you in. A screenshot works too — turn your
+            brightness up for a quick scan.
+          </p>
+          <p className="mt-3 inline-block rounded-lg border border-dashed border-border px-3 py-1.5 font-mono text-[13px] font-bold tracking-wider text-text">
+            {booking.bookingCode || booking.id}
           </p>
         </div>
       </div>

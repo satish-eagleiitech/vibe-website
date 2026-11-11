@@ -13,7 +13,7 @@ import {
   Share2,
   Ticket,
 } from "lucide-react";
-import { FauxQr } from "@/components/bookings/FauxQr";
+import { TicketQr } from "@/components/bookings/TicketQr";
 import { seedBookings } from "@/lib/bookings/seeds";
 import {
   getBookingById,
@@ -246,7 +246,7 @@ export function TicketDetailView({ id }: { id: string }) {
 
           <div className="flex flex-col items-center gap-5 p-4 @lg:flex-row @lg:items-center @lg:p-6">
             <div className="rounded-2xl border border-border bg-white p-2.5 shadow-sm">
-              <FauxQr value={current.bookingCode || current.id} className="size-36 @lg:size-40" />
+              <TicketQr value={current.bookingCode || current.id} className="size-36 @lg:size-40" />
             </div>
             <div className="w-full min-w-0 text-center @lg:text-left">
               <p className="text-[15px] font-extrabold text-text">Show this QR at the entry</p>

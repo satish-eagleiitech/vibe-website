@@ -8,6 +8,8 @@ const TRAILER_OVERRIDES: Record<string, Array<{ key: string; name: string }>> = 
   "1620668": [{ key: "pYB9ImQYNjY", name: "Official Trailer" }],
   // Aadarsha Kutumbam House No: 47 - AK47
   "1496785": [{ key: "R_nEckALsuI", name: "Official Trailer" }],
+  // Summer Holidays
+  "1803837": [{ key: "E4mq9JB6AFY", name: "Official Trailer" }],
 };
 
 /** Certifications missing from TMDB release_dates */
