@@ -8,8 +8,8 @@ const CITIES = ["Hyderabad", "Bengaluru", "Mumbai", "Delhi", "Chennai", "Pune"];
 
 const TERMS_LINKS = [
   { href: "/privacy-policy", label: "Privacy policy" },
-  { href: "/terms-of-service", label: "Booking policy" },
-  { href: "/refund-policy", label: "Cancellations" },
+  { href: "/refund-policy", label: "Cancellation policy" },
+  { href: "/faq", label: "FAQs" },
 ];
 
 const INFO_LINKS = [
