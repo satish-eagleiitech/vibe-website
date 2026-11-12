@@ -64,10 +64,11 @@ const TAB_IDS = TABS.map((entry) => entry.id);
 const ABOUT_PREVIEW_CHARS = 220;
 
 const SPORT_IMAGES: [RegExp, string][] = [
-  [/football|turf|soccer/, "/images/play/sport-football.jpg"],
-  [/cricket/, "/images/play/sport-cricket.jpg"],
+  [/football|turf|soccer/, "/images/play/venues/football-9.jpg"],
+  [/cricket/, "/images/play/venues/cricket-6.png"],
   [/badminton/, "/images/play/sport-badminton.jpg"],
-  [/pickleball/, "/images/play/sport-pickleball.jpg"],
+  [/pickleball/, "/images/play/venues/pickleball-5.png"],
+  [/table tennis/, "/images/play/venues/table-tennis-2.jpg"],
   [/tennis/, "/images/play/sport-tennis.jpg"],
   [/volleyball/, "/images/play/sport-volleyball.jpg"],
 ];

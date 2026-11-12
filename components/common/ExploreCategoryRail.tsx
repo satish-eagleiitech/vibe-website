@@ -113,7 +113,7 @@ function CategoryCard({
   );
 }
 
-/** Explore cards: 2-row horizontal scroll (district-style) until xl; denser grid after. */
+/** Explore cards: 2-row horizontal scroll (district-style) until lg; denser grid after. */
 export function ExploreCategoryRail({
   title,
   items,
@@ -132,8 +132,8 @@ export function ExploreCategoryRail({
           {title}
         </h2>
 
-        {/* Phone → laptop (~1050): 2 rows, swipe sideways */}
-        <div className="mt-3 hide-scrollbar overflow-x-auto px-4 pb-1 md:mt-4 md:px-0 xl:hidden">
+        {/* Phone → tablet: 2 rows, swipe sideways */}
+        <div className="mt-3 hide-scrollbar overflow-x-auto px-4 pb-1 md:mt-4 md:px-0 lg:hidden">
           <div
             className={`grid grid-flow-col grid-rows-2 ${
               bare
@@ -149,8 +149,8 @@ export function ExploreCategoryRail({
           </div>
         </div>
 
-        {/* xl+: compact multi-column grid */}
-        <div className="mt-5 hidden grid-cols-6 gap-3 xl:grid 2xl:grid-cols-8">
+        {/* lg+: compact multi-column grid */}
+        <div className="mt-5 hidden grid-cols-6 gap-3 lg:grid 2xl:grid-cols-8">
           {items.map((item) => (
             <div key={item.id} className="aspect-[5/6]">
               <CategoryCard item={item} charcoal={charcoal} bare={bare} />

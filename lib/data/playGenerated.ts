@@ -105,11 +105,16 @@ const PROFILES: Record<string, SportProfile> = {
   },
   pickleball: {
     images: [
-      "/images/explore/play/pickleball.png",
-      "/images/play/sport-pickleball.jpg",
-      "/images/play/play-1.jpg",
-      "/images/play/play-7.jpg",
-      "/images/play/play-12.jpg",
+      "/images/play/venues/pickleball-1.png",
+      "/images/play/venues/pickleball-5.png",
+      "/images/play/venues/pickleball-4.jpg",
+      "/images/play/venues/pickleball-8.png",
+      "/images/play/venues/pickleball-7.jpg",
+      "/images/play/venues/pickleball-2.jpg",
+      "/images/play/venues/pickleball-6.jpg",
+      "/images/play/venues/pickleball-10.jpg",
+      "/images/play/venues/pickleball-9.jpg",
+      "/images/play/venues/pickleball-3.png",
     ],
     suffixes: ["Pickleball Club", "Pickle Courts", "Dink Arena", "Pickleball Hub"],
     blurbs: [
@@ -126,7 +131,18 @@ const PROFILES: Record<string, SportProfile> = {
     also: ["Padel", "Badminton"],
   },
   "turf-football": {
-    images: ["/images/explore/play/turf-football.png", "/images/play/play-4.jpg", "/images/play/sport-football.jpg"],
+    images: [
+      "/images/play/venues/football-1.jpg",
+      "/images/play/venues/football-5.jpg",
+      "/images/play/venues/football-2.jpg",
+      "/images/play/venues/football-8.jpg",
+      "/images/play/venues/football-6.jpg",
+      "/images/play/venues/football-9.jpg",
+      "/images/play/venues/football-3.jpg",
+      "/images/play/venues/football-7.jpg",
+      "/images/play/venues/football-10.png",
+      "/images/play/venues/football-4.jpg",
+    ],
     suffixes: ["Turf", "Football Turf", "5s Arena", "Sports Turf"],
     blurbs: [
       "FIFA-grade artificial turf for 5-a-side and 7-a-side games",
@@ -142,7 +158,19 @@ const PROFILES: Record<string, SportProfile> = {
     also: ["Football", "Box Cricket"],
   },
   "table-tennis": {
-    images: ["/images/explore/play/table-tennis.png", "/images/play/play-10.jpg"],
+    images: [
+      "/images/play/venues/table-tennis-1.png",
+      "/images/play/venues/table-tennis-2.jpg",
+      "/images/play/venues/table-tennis-4.png",
+      "/images/play/venues/table-tennis-10.jpg",
+      "/images/play/venues/table-tennis-3.png",
+      "/images/play/venues/table-tennis-9.png",
+      "/images/play/venues/table-tennis-6.jpg",
+      "/images/play/venues/table-tennis-8.jpg",
+      "/images/play/venues/table-tennis-11.jpg",
+      "/images/play/venues/table-tennis-7.png",
+      "/images/play/venues/table-tennis-5.jpg",
+    ],
     suffixes: ["TT Club", "Table Tennis Centre", "Spin Studio", "Ping Pong Lounge"],
     blurbs: [
       "ITTF-approved tables in an air-conditioned hall",
@@ -159,10 +187,15 @@ const PROFILES: Record<string, SportProfile> = {
   },
   "box-cricket": {
     images: [
-      "/images/explore/play/box-cricket.png",
-      "/images/play/sport-cricket.jpg",
-      "/images/play/play-2.jpg",
-      "/images/play/play-4.jpg",
+      "/images/play/venues/cricket-6.png",
+      "/images/play/venues/cricket-1.jpg",
+      "/images/play/venues/cricket-8.png",
+      "/images/play/venues/cricket-4.png",
+      "/images/play/venues/cricket-9.png",
+      "/images/play/venues/cricket-2.png",
+      "/images/play/venues/cricket-5.png",
+      "/images/play/venues/cricket-10.jpg",
+      "/images/play/venues/cricket-3.jpg",
     ],
     suffixes: ["Box Cricket", "Cricket Box", "Box Arena", "Cricket Turf"],
     blurbs: [
@@ -195,7 +228,18 @@ const PROFILES: Record<string, SportProfile> = {
     also: ["Pickleball", "Tennis"],
   },
   "cricket-nets": {
-    images: ["/images/explore/play/cricket-nets.png", "/images/play/sport-cricket.jpg", "/images/explore/play/cricket.png"],
+    images: [
+      "/images/play/venues/cricket-8.png",
+      "/images/play/venues/cricket-4.png",
+      "/images/play/venues/cricket-6.png",
+      "/images/play/venues/cricket-10.jpg",
+      "/images/play/venues/cricket-7.png",
+      "/images/play/venues/cricket-1.jpg",
+      "/images/play/venues/cricket-9.png",
+      "/images/play/venues/cricket-5.png",
+      "/images/play/venues/cricket-2.png",
+      "/images/play/venues/cricket-3.jpg",
+    ],
     suffixes: ["Cricket Nets", "Cricket Academy", "Practice Nets", "Nets & Bowling"],
     blurbs: [
       "Turf and cement practice nets with a bowling machine",
@@ -291,7 +335,18 @@ const PROFILES: Record<string, SportProfile> = {
     also: ["Basketball"],
   },
   football: {
-    images: ["/images/explore/play/football.png", "/images/play/sport-football.jpg", "/images/play/play-6.jpg"],
+    images: [
+      "/images/play/venues/football-10.png",
+      "/images/play/venues/football-6.jpg",
+      "/images/play/venues/football-9.jpg",
+      "/images/play/venues/football-3.jpg",
+      "/images/play/venues/football-8.jpg",
+      "/images/play/venues/football-1.jpg",
+      "/images/play/venues/football-7.jpg",
+      "/images/play/venues/football-2.jpg",
+      "/images/play/venues/football-5.jpg",
+      "/images/play/venues/football-4.jpg",
+    ],
     suffixes: ["Football Ground", "FC Ground", "Football Park", "Sports Ground"],
     blurbs: [
       "Full-size natural grass ground for 11-a-side matches",
