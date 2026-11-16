@@ -63,6 +63,11 @@ function movieHasLanguage(movie: Movie, lang: string) {
   return movie.languages.some((item) => item.toLowerCase() === lang.toLowerCase());
 }
 
+/** Telugu / Hindi tabs highlight pan-India releases (2+ languages). */
+function isPanIndia(movie: Movie) {
+  return new Set(movie.languages.map((item) => item.toLowerCase())).size >= 2;
+}
+
 function movieMatchesFormats(movie: Movie, formats: string[]) {
   if (!formats.length) return true;
   const hay = `${movie.formatBadge ?? ""} ${movie.statusBadge ?? ""}`.toUpperCase();
@@ -144,6 +149,10 @@ export function MovieBrowser({ latest, catalogs }: MovieBrowserProps) {
   const visible = useMemo(() => {
     let list = baseList;
     list = applyModalFilters(list, modalFilters);
+    if (quickTab === "telugu" || quickTab === "hindi") {
+      const panIndia = list.filter(isPanIndia);
+      list = panIndia.length ? panIndia : list;
+    }
     if (quickTab === "rating") {
       list = [...list].sort((a, b) => (b.rating ?? 0) - (a.rating ?? 0));
     }
@@ -158,9 +167,9 @@ export function MovieBrowser({ latest, catalogs }: MovieBrowserProps) {
     }
     switch (quickTab) {
       case "telugu":
-        return "Telugu";
+        return "Pan-India · Telugu";
       case "hindi":
-        return "Hindi";
+        return "Pan-India · Hindi";
       case "english":
         return "English";
       case "rating":

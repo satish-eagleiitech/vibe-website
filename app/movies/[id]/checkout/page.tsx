@@ -23,6 +23,8 @@ export default async function CheckoutPage({
     show?: string;
     date?: string;
     seats?: string;
+    lang?: string;
+    food?: string;
   }>;
 }) {
   const { id } = await params;
@@ -42,6 +44,8 @@ export default async function CheckoutPage({
       showId={query.show || ""}
       dateIso={query.date || getBookingDates(1)[0]?.iso || ""}
       seatIds={seatIds}
+      language={query.lang}
+      food={query.food}
     />
   );
 }

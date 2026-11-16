@@ -145,15 +145,60 @@ export type SeatCell = {
   category: string;
 };
 
+export type ShowPriceTier = {
+  name: string;
+  price: number;
+  status: "AVAILABLE" | "FILLING FAST" | "ALMOST FULL";
+};
+
+/** Seat-category prices shown on showtime hover. */
+export function getShowPriceTiers(
+  showId: string,
+  status?: MovieShowtime["status"],
+): ShowPriceTier[] {
+  let seed = 0;
+  for (const ch of showId) seed = (seed + ch.charCodeAt(0) * 13) % 997;
+  const bump = (seed % 3) * 20;
+  const classic = 275 + bump;
+  const prime = classic;
+  const recliner = classic + 59;
+  const fill =
+    status === "almost"
+      ? "ALMOST FULL"
+      : status === "filling"
+        ? "FILLING FAST"
+        : "AVAILABLE";
+
+  return [
+    { name: "CLASSIC ROWS", price: classic, status: fill },
+    {
+      name: "PRIME ROWS",
+      price: prime,
+      status: status === "filling" ? "FILLING FAST" : "AVAILABLE",
+    },
+    {
+      name: "RECLINER ROWS",
+      price: recliner,
+      status: status === "almost" ? "ALMOST FULL" : "AVAILABLE",
+    },
+    {
+      name: "LOUNGER ROWS",
+      price: recliner,
+      status: "AVAILABLE",
+    },
+  ];
+}
+
 /** Deterministic seat map so the same show always looks consistent. */
 export function buildSeatMap(showId: string): {
   categories: { name: string; price: number; rows: string[] }[];
   seats: SeatCell[];
 } {
   const categories = [
-    { name: "BOX", price: 350, rows: ["BOX"] },
-    { name: "EXECUTIVE CLASS", price: 190, rows: ["A", "B", "C"] },
-    { name: "CLASSIC", price: 150, rows: ["D", "E", "F"] },
+    { name: "RECLINER ROWS", price: 418, rows: ["A", "B"] },
+    { name: "LOUNGER ROWS", price: 418, rows: ["C"] },
+    { name: "PRIME ROWS", price: 359, rows: ["D", "E"] },
+    { name: "CLASSIC ROWS", price: 295, rows: ["F", "G", "H"] },
   ];
 
   const seats: SeatCell[] = [];
@@ -165,7 +210,8 @@ export function buildSeatMap(showId: string): {
       for (let number = 1; number <= 16; number++) {
         // aisle gap visually between 8 and 9
         seed = (seed * 31 + number + row.charCodeAt(0)) % 997;
-        const occupied = seed % 5 === 0 || (row === "BOX" && number % 2 === 0);
+        const occupied =
+          seed % 5 === 0 || (category.name.startsWith("RECLINER") && number % 2 === 0);
         seats.push({
           id: `${row}-${number}`,
           row,

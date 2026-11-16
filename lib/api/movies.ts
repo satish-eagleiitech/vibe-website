@@ -16,6 +16,7 @@ import type {
   TmdbPagedResponse,
   TmdbVideos,
 } from "@/types/tmdb";
+import { withPanIndiaLanguages } from "@/lib/movies/panIndia";
 import {
   applyTrailerOverrides,
   CERT_OVERRIDES,
@@ -146,7 +147,11 @@ function mapListMovie(
       .map((id) => genres[id])
       .filter(Boolean)
       .slice(0, 3),
-    languages: [mapLanguage(raw.original_language)].filter(Boolean),
+    languages: withPanIndiaLanguages(
+      String(raw.id),
+      raw.title,
+      [mapLanguage(raw.original_language)].filter(Boolean),
+    ),
     description: raw.overview,
     releaseDate: raw.release_date || undefined,
     formatBadge: extras?.formatBadge,
@@ -192,9 +197,13 @@ function mapDetails(raw: TmdbMovieDetailsResponse): MovieDetails {
     voteLabel: raw.vote_count ? formatVoteCount(raw.vote_count) : undefined,
     certification: CERT_OVERRIDES[movieId] ?? indianCertification(raw),
     genres,
-    languages: raw.spoken_languages?.length
-      ? raw.spoken_languages.map((item) => mapLanguage(item.iso_639_1))
-      : [mapLanguage(raw.original_language)].filter(Boolean),
+    languages: withPanIndiaLanguages(
+      movieId,
+      raw.title,
+      raw.spoken_languages?.length
+        ? raw.spoken_languages.map((item) => mapLanguage(item.iso_639_1))
+        : [mapLanguage(raw.original_language)].filter(Boolean),
+    ),
     duration: formatRuntime(raw.runtime),
     statusBadge: raw.status === "Released" ? "Now in theatres" : raw.status,
     description: raw.overview,

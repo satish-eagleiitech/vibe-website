@@ -15,16 +15,19 @@ export async function generateMetadata({
 
 export default async function BookMoviePage({
   params,
+  searchParams,
 }: {
   params: Promise<{ id: string }>;
+  searchParams: Promise<{ lang?: string }>;
 }) {
   const { id } = await params;
+  const query = await searchParams;
   const movie = await getMovieById(id);
   if (!movie) notFound();
   return (
     <>
       <AdultBookingGate movieId={movie.id} certification={movie.certification} />
-      <BookShowtimes movie={movie} />
+      <BookShowtimes movie={movie} language={query.lang} />
     </>
   );
 }

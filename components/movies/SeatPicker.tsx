@@ -5,6 +5,7 @@ import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import { ArrowRight, Play } from "lucide-react";
 import { useLoginGate } from "@/components/auth/useLoginGate";
+import { BookingTermsModal } from "@/components/movies/BookingTermsModal";
 import {
   buildSeatMap,
   findShowtime,
@@ -20,6 +21,7 @@ type SeatPickerProps = {
   theatreId: string;
   showId: string;
   dateIso: string;
+  language?: string;
 };
 
 function longDate(iso: string) {
@@ -47,6 +49,7 @@ export function SeatPicker({
   theatreId,
   showId,
   dateIso,
+  language,
 }: SeatPickerProps) {
   const router = useRouter();
   const { gate, modal } = useLoginGate();
@@ -61,6 +64,7 @@ export function SeatPicker({
   const map = useMemo(() => buildSeatMap(showId), [showId]);
   const [selected, setSelected] = useState<string[]>([]);
   const [secondsLeft, setSecondsLeft] = useState(5 * 60);
+  const [termsOpen, setTermsOpen] = useState(false);
 
   useEffect(() => {
     setSelected([]);
@@ -103,6 +107,7 @@ export function SeatPicker({
       show: nextShowId,
       date: nextDate,
     });
+    if (language) params.set("lang", language);
     router.push(`/movies/${movie.id}/seats?${params.toString()}`);
   }
 
@@ -119,20 +124,31 @@ export function SeatPicker({
 
   function continueCheckout() {
     if (!selected.length || secondsLeft === 0) return;
+    setTermsOpen(true);
+  }
+
+  function acceptTerms() {
+    setTermsOpen(false);
     const params = new URLSearchParams({
       theatre: theatreId,
       show: showId,
       date: dateIso,
       seats: selected.join(","),
     });
+    if (language) params.set("lang", language);
     gate(() =>
-      router.push(`/movies/${movie.id}/checkout?${params.toString()}`),
+      router.push(`/movies/${movie.id}/food?${params.toString()}`),
     );
   }
 
   return (
     <div className="relative min-h-svh bg-bg pt-(--vybe-header-h) text-text">
       {modal}
+      <BookingTermsModal
+        open={termsOpen}
+        onClose={() => setTermsOpen(false)}
+        onAccept={acceptTerms}
+      />
       {movie.backdropUrl ? (
         <div className="pointer-events-none absolute top-0 right-0 h-[calc(340px+var(--vybe-header-h))] w-full overflow-hidden sm:w-[78%] lg:w-[58%]">
           <Image
@@ -299,7 +315,7 @@ export function SeatPicker({
                     const rowSeats = map.seats.filter((seat) => seat.row === row);
                     const left = rowSeats.filter((seat) => seat.number <= 8);
                     const right = rowSeats.filter((seat) => seat.number > 8);
-                    const label = row === "BOX" ? "L" : row;
+                    const label = row;
                     return (
                       <div
                         key={row}

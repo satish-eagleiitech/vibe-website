@@ -9,11 +9,15 @@ import { Container } from "@/components/common/Container";
 import {
   getBookingDates,
   getMovieTheatres,
+  getShowPriceTiers,
 } from "@/lib/data/booking";
+import { formatInr } from "@/lib/format";
+import { languageDisplay } from "@/lib/data/bookingTerms";
 import type { MovieDetails } from "@/types/movie";
 
 type BookShowtimesProps = {
   movie: MovieDetails;
+  language?: string;
 };
 
 const filters = [
@@ -24,7 +28,7 @@ const filters = [
   "Premium Seats",
 ] as const;
 
-export function BookShowtimes({ movie }: BookShowtimesProps) {
+export function BookShowtimes({ movie, language }: BookShowtimesProps) {
   const router = useRouter();
   const dates = useMemo(() => getBookingDates(7), []);
   const [dateIso, setDateIso] = useState(dates[0]?.iso ?? "");
@@ -33,6 +37,7 @@ export function BookShowtimes({ movie }: BookShowtimesProps) {
     () => getMovieTheatres(movie.id, dateIso),
     [movie.id, dateIso],
   );
+  const langLabel = language ? languageDisplay(language).en : null;
 
   const monthLabel = dates[0]?.month ?? "";
 
@@ -57,11 +62,13 @@ export function BookShowtimes({ movie }: BookShowtimesProps) {
               {[movie.certification, movie.duration]
                 .filter(Boolean)
                 .join(" | ")}
-              {movie.languages.length
-                ? ` · ${movie.languages
-                    .map((l) => l.charAt(0).toUpperCase() + l.slice(1))
-                    .join(", ")}`
-                : ""}
+              {langLabel
+                ? ` · ${langLabel}`
+                : movie.languages.length
+                  ? ` · ${movie.languages
+                      .map((l) => l.charAt(0).toUpperCase() + l.slice(1))
+                      .join(", ")}`
+                  : ""}
             </p>
             <p className="mt-1 text-[13px] text-text-muted">
               {movie.genres.slice(0, 3).join(", ")}
@@ -189,24 +196,60 @@ export function BookShowtimes({ movie }: BookShowtimesProps) {
                       : show.status === "filling"
                         ? "border-amber-400/50 text-amber-500"
                         : "border-emerald-500/40 text-emerald-500";
+                  const tiers = getShowPriceTiers(show.id, show.status);
+                  const params = new URLSearchParams({
+                    theatre: theatre.id,
+                    show: show.id,
+                    date: dateIso,
+                  });
+                  if (language) params.set("lang", language);
                   return (
-                    <button
-                      key={show.id}
-                      type="button"
-                      onClick={() =>
-                        router.push(
-                          `/movies/${movie.id}/seats?theatre=${theatre.id}&show=${show.id}&date=${dateIso}`,
-                        )
-                      }
-                      className={`min-w-[92px] rounded-xl border bg-bg px-3 py-2.5 text-center transition-transform hover:scale-[1.02] ${tone}`}
-                    >
-                      <span className="block text-[14px] font-extrabold text-text">
-                        {show.label}
-                      </span>
-                      <span className="block text-[11px] font-semibold opacity-80">
-                        {show.format}
-                      </span>
-                    </button>
+                    <div key={show.id} className="group relative">
+                      <button
+                        type="button"
+                        onClick={() =>
+                          router.push(
+                            `/movies/${movie.id}/seats?${params.toString()}`,
+                          )
+                        }
+                        className={`min-w-[92px] rounded-xl border bg-bg px-3 py-2.5 text-center transition-transform hover:scale-[1.02] ${tone}`}
+                      >
+                        <span className="block text-[14px] font-extrabold text-text">
+                          {show.label}
+                        </span>
+                        <span className="block text-[11px] font-semibold opacity-80">
+                          {show.format}
+                        </span>
+                      </button>
+                      <div className="pointer-events-none absolute bottom-[calc(100%+10px)] left-1/2 z-20 hidden w-max -translate-x-1/2 group-hover:block">
+                        <div className="rounded-2xl border border-border bg-surface px-4 py-3 shadow-[0_16px_40px_rgba(0,0,0,0.16)]">
+                          <div className="flex gap-5">
+                            {tiers.map((tier) => (
+                              <div key={tier.name} className="min-w-[88px] text-center">
+                                <p className="text-[10px] font-bold tracking-[0.06em] text-text uppercase">
+                                  {tier.name}
+                                </p>
+                                <p className="mt-1 text-[15px] font-extrabold text-text">
+                                  {formatInr(tier.price)}
+                                </p>
+                                <p
+                                  className={`mt-0.5 text-[10px] font-bold tracking-wide uppercase ${
+                                    tier.status === "AVAILABLE"
+                                      ? "text-emerald-500"
+                                      : tier.status === "FILLING FAST"
+                                        ? "text-amber-500"
+                                        : "text-rose-500"
+                                  }`}
+                                >
+                                  {tier.status}
+                                </p>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                        <span className="mx-auto mt-[-1px] block h-2.5 w-2.5 rotate-45 border-r border-b border-border bg-surface" />
+                      </div>
+                    </div>
                   );
                 })}
               </div>

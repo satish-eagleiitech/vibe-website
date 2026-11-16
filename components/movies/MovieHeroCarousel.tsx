@@ -415,6 +415,8 @@ export function MovieHeroCarousel({ movies }: MovieHeroCarouselProps) {
                     <BookTicketsButton
                       href={`/movies/${item.id}/book`}
                       certification={item.certification}
+                      title={item.title}
+                      languages={item.languages}
                       className="inline-flex min-w-0 flex-1 items-center justify-center gap-2 rounded-xl bg-accent px-5 py-3 text-[14px] font-extrabold text-white shadow-[0_12px_36px_rgba(255,0,91,0.35)] transition-transform hover:scale-[1.02] sm:min-w-[200px] sm:flex-none sm:px-7 lg:min-w-[220px] lg:px-8 lg:py-3.5 lg:text-[15px]"
                     >
                       <span

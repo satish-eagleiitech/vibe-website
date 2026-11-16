@@ -108,6 +108,8 @@ export default async function MovieDetailPage({
             <BookTicketsButton
               href={`/movies/${movie.id}/book`}
               certification={movie.certification}
+              title={movie.title}
+              languages={movie.languages}
               className="mt-6 inline-flex items-center justify-center rounded-full bg-white px-8 py-3 text-[16px] font-bold text-black transition-transform hover:scale-[1.02]"
             >
               Book Tickets
@@ -125,6 +127,7 @@ export default async function MovieDetailPage({
         title={movie.title}
         bookHref={`/movies/${movie.id}/book`}
         certification={movie.certification}
+        languages={movie.languages}
       />
 
       <section className="bg-bg py-8 md:py-10">

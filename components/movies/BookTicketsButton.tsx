@@ -5,6 +5,8 @@ import { Ticket } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState, type MouseEvent, type ReactNode } from "react";
 import { AdultRatingModal } from "@/components/movies/AdultRatingModal";
+import { LanguageSelectModal } from "@/components/movies/LanguageSelectModal";
+import { isPanIndiaMovie } from "@/lib/data/bookingTerms";
 import { isAdultCertification } from "@/lib/movies/adult";
 
 type BookTicketsButtonProps = {
@@ -12,6 +14,8 @@ type BookTicketsButtonProps = {
   certification?: string;
   className?: string;
   children?: ReactNode;
+  title?: string;
+  languages?: string[];
 };
 
 function ackKey(href: string) {
@@ -23,34 +27,61 @@ export function BookTicketsButton({
   certification,
   className = "",
   children,
+  title = "Movie",
+  languages = [],
 }: BookTicketsButtonProps) {
   const router = useRouter();
   const adult = isAdultCertification(certification);
-  const [open, setOpen] = useState(false);
+  const needsLanguage = isPanIndiaMovie(languages);
+  const [adultOpen, setAdultOpen] = useState(false);
+  const [langOpen, setLangOpen] = useState(false);
 
-  function go() {
-    router.push(href);
+  function bookUrl(language?: string) {
+    if (!language) return href;
+    const join = href.includes("?") ? "&" : "?";
+    return `${href}${join}lang=${encodeURIComponent(language)}`;
   }
 
-  function onClick(event: MouseEvent<HTMLAnchorElement>) {
-    if (!adult) return;
-    try {
-      if (sessionStorage.getItem(ackKey(href)) === "1") return;
-    } catch {
-      /* ignore */
-    }
-    event.preventDefault();
-    setOpen(true);
+  function go(language?: string) {
+    router.push(bookUrl(language));
   }
 
-  function onContinue() {
+  function afterAdultAck() {
     try {
       sessionStorage.setItem(ackKey(href), "1");
     } catch {
       /* ignore */
     }
-    setOpen(false);
+    setAdultOpen(false);
+    if (needsLanguage) {
+      setLangOpen(true);
+      return;
+    }
     go();
+  }
+
+  function onClick(event: MouseEvent<HTMLAnchorElement>) {
+    if (!adult && !needsLanguage) return;
+    event.preventDefault();
+
+    if (adult) {
+      try {
+        if (sessionStorage.getItem(ackKey(href)) === "1") {
+          if (needsLanguage) {
+            setLangOpen(true);
+            return;
+          }
+          go();
+          return;
+        }
+      } catch {
+        /* ignore */
+      }
+      setAdultOpen(true);
+      return;
+    }
+
+    setLangOpen(true);
   }
 
   return (
@@ -64,10 +95,21 @@ export function BookTicketsButton({
         )}
       </Link>
       <AdultRatingModal
-        open={open}
+        open={adultOpen}
         certification={certification}
-        onContinue={onContinue}
-        onClose={() => setOpen(false)}
+        onContinue={afterAdultAck}
+        onClose={() => setAdultOpen(false)}
+      />
+      <LanguageSelectModal
+        open={langOpen}
+        title={title}
+        languages={languages}
+        originalLanguage={languages[0]}
+        onClose={() => setLangOpen(false)}
+        onProceed={(language) => {
+          setLangOpen(false);
+          go(language);
+        }}
       />
     </>
   );

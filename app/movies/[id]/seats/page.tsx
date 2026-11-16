@@ -18,7 +18,12 @@ export default async function SeatsPage({
   searchParams,
 }: {
   params: Promise<{ id: string }>;
-  searchParams: Promise<{ theatre?: string; show?: string; date?: string }>;
+  searchParams: Promise<{
+    theatre?: string;
+    show?: string;
+    date?: string;
+    lang?: string;
+  }>;
 }) {
   const { id } = await params;
   const query = await searchParams;
@@ -37,6 +42,7 @@ export default async function SeatsPage({
       theatreId={theatreId}
       showId={showId}
       dateIso={dateIso}
+      language={query.lang}
     />
   );
 }

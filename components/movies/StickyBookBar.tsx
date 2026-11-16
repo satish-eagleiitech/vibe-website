@@ -11,6 +11,7 @@ type StickyBookBarProps = {
   heroId?: string;
   bookLabel?: string;
   certification?: string;
+  languages?: string[];
 };
 
 export function StickyBookBar({
@@ -19,6 +20,7 @@ export function StickyBookBar({
   heroId = "movie-detail-hero",
   bookLabel = "Book tickets",
   certification,
+  languages = [],
 }: StickyBookBarProps) {
   const [visible, setVisible] = useState(false);
 
@@ -67,6 +69,8 @@ export function StickyBookBar({
         <BookTicketsButton
           href={bookHref}
           certification={certification}
+          title={title}
+          languages={languages}
           className="inline-flex shrink-0 items-center gap-2 rounded-full bg-accent px-6 py-2.5 text-[14px] font-extrabold text-white transition-transform hover:scale-[1.02] md:px-7 md:py-3 md:text-[15px]"
         >
           <Ticket className="size-4 md:size-5" />
