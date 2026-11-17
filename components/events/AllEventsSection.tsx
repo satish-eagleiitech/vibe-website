@@ -60,17 +60,12 @@ export function AllEventsSection({
       className="scroll-mt-[var(--vybe-header-h)] w-full overflow-x-clip pt-3 md:pt-6 lg:pt-10"
     >
       <Container>
-        <div className="mb-5 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between md:mb-6">
-          <div>
-            <h2 className="text-[20px] font-extrabold tracking-tight text-text md:text-[24px]">
-              All Events
-            </h2>
-            <p className="mt-0.5 text-[13px] text-text-secondary">
-              Live nights worth going out for
-            </p>
-          </div>
-          <p className="text-[14px] font-semibold text-text-muted">
-            {filtered.length} {filtered.length === 1 ? "event" : "events"}
+        <div className="mb-5 md:mb-6">
+          <h2 className="text-[20px] font-extrabold tracking-tight text-text md:text-[24px]">
+            All Events
+          </h2>
+          <p className="mt-0.5 text-[13px] text-text-secondary">
+            Live nights worth going out for
           </p>
         </div>
       </Container>
@@ -116,10 +111,7 @@ export function AllEventsSection({
       </StickyFilterBar>
 
       <Container className="pt-6 pb-10 md:pt-8 md:pb-12">
-        <EventSubcategoryGrid
-          items={subcategories}
-          title={parent ? `${parent.label} types` : "Subcategories"}
-        />
+        <EventSubcategoryGrid items={subcategories} />
         <div className="mt-8">
         {filtered.length === 0 ? (
           <EmptyState title="No events for this filter" />

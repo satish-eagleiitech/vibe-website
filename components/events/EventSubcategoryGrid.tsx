@@ -11,7 +11,7 @@ type EventSubcategoryGridProps = {
 
 export function EventSubcategoryGrid({
   items,
-  title = "Subcategories",
+  title,
   meta,
 }: EventSubcategoryGridProps) {
   if (items.length === 0) return null;

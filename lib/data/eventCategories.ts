@@ -36,8 +36,8 @@ export const eventExploreCategories: EventExploreCategory[] = [
     href: "/events/category/nightlife",
     imageUrl: "/images/explore/events/nightlife.jpg",
     subcategories: [
-      { id: "dj-nights", label: "DJ nights", imageUrl: "/images/events/poster-05.jpg", eventId: "event-dj-night" },
-      { id: "club-nights", label: "Club nights", imageUrl: "/images/explore/events/nightlife.jpg", eventId: "event-dj-night" },
+      { id: "dj-nights", label: "DJ nights", imageUrl: "/images/events/subcats/dj-nights.jpg", eventId: "event-dj-night" },
+      { id: "club-nights", label: "Club nights", imageUrl: "/images/events/subcats/club-nights.jpg", eventId: "event-dj-night" },
       { id: "rooftop", label: "Rooftop sets", imageUrl: "/images/events/poster-16.jpg", eventId: "event-sunset-date" },
     ],
   },
@@ -59,7 +59,7 @@ export const eventExploreCategories: EventExploreCategory[] = [
     imageUrl: "/images/explore/events/sports.jpg",
     subcategories: [
       { id: "arena", label: "Arena nights", imageUrl: "/images/events/poster-01.jpg", eventId: "event-neon-arena" },
-      { id: "grounds", label: "Ground events", imageUrl: "/images/explore/events/sports.jpg", eventId: "event-folk-fusion" },
+      { id: "grounds", label: "Ground events", imageUrl: "/images/events/subcats/ground-events.jpg", eventId: "event-folk-fusion" },
       { id: "stadium", label: "Stadium shows", imageUrl: "/images/events/poster-08.jpg", eventId: "event-rock-revival" },
     ],
   },

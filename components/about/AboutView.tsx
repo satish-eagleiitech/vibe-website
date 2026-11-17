@@ -401,7 +401,7 @@ export function AboutView() {
 
         <div
           data-about-reveal
-          className="mt-10 overflow-hidden rounded-[28px] bg-[linear-gradient(135deg,#1a0f1f_0%,#FF005B_48%,#D4AF37_100%)] p-7 text-white shadow-[0_30px_70px_-30px_rgba(255,0,91,0.45)] md:flex md:items-center md:justify-between md:p-10"
+          className="mt-10 overflow-hidden rounded-[28px] bg-[#0B0B0C] p-7 text-white shadow-[0_24px_60px_-28px_rgba(0,0,0,0.45)] md:flex md:items-center md:justify-between md:p-10"
         >
           <div className="max-w-[520px]">
             <h2 className="text-[26px] font-extrabold tracking-tight md:text-[32px]">

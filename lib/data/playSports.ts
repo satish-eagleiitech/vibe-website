@@ -2,6 +2,7 @@ import type { PlayItem, PlaySport } from "@/types/play";
 
 /** Studio shots with the white backdrop removed so they sit on dark cards. */
 const onDark = new Set([
+  "cricket",
   "badminton",
   "swimming",
   "pickleball",
@@ -11,7 +12,6 @@ const onDark = new Set([
   "basketball",
   "snooker",
   "volleyball",
-  "cricket",
 ]);
 
 function sport(
@@ -31,12 +31,11 @@ function sport(
 }
 
 export const playSports: PlaySport[] = [
+  sport("box-cricket", "Box Cricket", "Box Cricket Turfs"),
   sport("badminton", "Badminton", "Badminton Courts"),
-  sport("swimming", "Swimming", "Swimming Pools"),
   sport("pickleball", "Pickleball", "Pickleball Courts"),
   sport("turf-football", "Turf Football", "Football Turfs"),
   sport("table-tennis", "Table Tennis", "Table Tennis Venues"),
-  sport("box-cricket", "Box Cricket", "Box Cricket Turfs"),
   sport("padel", "Padel", "Padel Courts"),
   sport("cricket-nets", "Cricket Nets", "Cricket Nets"),
   sport("tennis", "Tennis", "Tennis Courts"),
@@ -45,6 +44,7 @@ export const playSports: PlaySport[] = [
   sport("volleyball", "Volleyball", "Volleyball Courts"),
   sport("football", "Football", "Football Grounds"),
   sport("cricket", "Cricket", "Cricket Grounds"),
+  sport("swimming", "Swimming", "Swimming Pools"),
 ];
 
 export function findPlaySport(sportId: string) {

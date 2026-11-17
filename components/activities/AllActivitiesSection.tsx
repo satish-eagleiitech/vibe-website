@@ -100,7 +100,7 @@ export function AllActivitiesSection({
       <Container>
         <div className="mb-5 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between md:mb-6">
           <div>
-            <h2 className="text-[20px] font-extrabold tracking-tight text-text md:text-[24px]">
+            <h2 className="text-[20px] font-extrabold tracking-tight text-text md:text-[30px]">
               All activities
             </h2>
             <p className="mt-0.5 text-[13px] text-text-secondary">
