@@ -20,30 +20,30 @@ import { siteConfig } from "@/config/site";
 const featured = {
   tag: "Our story",
   title: "One app for every plan in the city",
-  body: "Showtimes, concerts, adventures and sports slots used to live in different chats and screenshots. VYBE brings them together — discover, book, and walk in with a QR.",
-  image: "/images/about/lux-story-hero.jpg",
-  read: "Built in Hyderabad",
+  body: "Movies, events, activities and play — discover what is on in your city, book in minutes, and keep every VYBE ticket ready as a QR.",
+  image: "/images/about/vybe-story-hero.jpg",
+  read: "Made for city plans",
 };
 
 const storyCards = [
   {
     tag: "Movies",
     title: "Seats, snacks and offers in one flow",
-    body: "Pick a show, grab F&B, apply bank offers, and pay — without bouncing between apps.",
+    body: "Choose a showtime, pick seats, add F&B, apply offers, and pay — all inside the VYBE movie booking flow.",
     image: "/images/about/lux-card-movies.jpg",
     href: "/movies",
   },
   {
     tag: "Events",
     title: "Nights worth dressing up for",
-    body: "Comedy, live music, workshops and fests curated for your city.",
-    image: "/images/about/lux-card-events.jpg",
+    body: "Comedy, live music, workshops and fests listed on VYBE for your city — book passes and walk in with your ticket.",
+    image: "/images/about/vybe-card-events.jpg",
     href: "/events",
   },
   {
     tag: "Play",
-    title: "Book the turf, not the group chat",
-    body: "Courts, nets and game zones with clear hourly slots and free cancellation windows.",
+    title: "Book courts and game zones by the hour",
+    body: "Turfs, nets and play venues with clear slots, prices and cancellation windows on VYBE.",
     image: "/images/about/lux-card-play.jpg",
     href: "/play",
   },
@@ -52,25 +52,25 @@ const storyCards = [
 const pillars = [
   {
     title: "Movies",
-    body: "Showtimes, seats, food and bank offers — checkout that feels finished.",
+    body: "Showtimes, seats, food and offers — checkout finished on VYBE.",
     href: "/movies",
     image: "/images/about/lux-pillar-movies.jpg",
   },
   {
     title: "Events",
-    body: "Concerts, comedy, workshops and nightlife near you.",
+    body: "Concerts, comedy, workshops and city nights you can book here.",
     href: "/events",
-    image: "/images/about/lux-pillar-events.jpg",
+    image: "/images/about/vybe-card-events.jpg",
   },
   {
     title: "Activities",
-    body: "Parks, fitness, adventures and weekend escapes.",
+    body: "Parks, fitness, adventures and day-out plans on VYBE.",
     href: "/activities",
     image: "/images/about/lux-pillar-activities.jpg",
   },
   {
     title: "Play",
-    body: "Turfs, courts and game zones you can book by the hour.",
+    body: "Turfs, courts and game zones booked by the hour.",
     href: "/play",
     image: "/images/about/lux-pillar-play.jpg",
   },
@@ -79,26 +79,26 @@ const pillars = [
 const values = [
   {
     title: "Clear prices",
-    body: "Fees and refunds shown before you pay — no surprise charges at the gate.",
+    body: "Ticket totals, fees and refund rules are shown on VYBE before you pay.",
     tone: "bg-[#F3E7C9] text-[#2a2110]",
   },
   {
     title: "City-first discovery",
-    body: "Listings follow your city so you see plans you can actually reach tonight.",
+    body: "Movies, events, activities and play follow the city you pick on VYBE.",
     tone: "bg-[#E4EDE6] text-[#1a2e24]",
   },
   {
     title: "Tickets that stick",
-    body: "QR, booking ID and directions live under Profile → Bookings on this device.",
+    body: "Every confirmed booking stays under Profile → Bookings with QR and directions.",
     tone: "bg-[#F2D9E3] text-[#4a1830]",
   },
 ];
 
 const trusts = [
-  { icon: Ticket, title: "Instant tickets", body: "QR ready the moment you pay" },
-  { icon: ShieldCheck, title: "Secure checkout", body: "Payments via trusted partners" },
-  { icon: Zap, title: "Fast discovery", body: "City-aware movies, events & play" },
-  { icon: QrCode, title: "Walk-in ready", body: "Screenshots welcome at entry" },
+  { icon: Ticket, title: "Instant tickets", body: "QR ready the moment you pay on VYBE" },
+  { icon: ShieldCheck, title: "Secure checkout", body: "Payments handled through trusted partners" },
+  { icon: Zap, title: "Fast discovery", body: "Movies, events, activities and play in one place" },
+  { icon: QrCode, title: "Walk-in ready", body: "Show your VYBE QR at the venue entry" },
 ];
 
 export function AboutView() {
@@ -123,17 +123,17 @@ export function AboutView() {
             data-about-hero
             className="mx-auto mt-5 max-w-[18ch] text-[36px] leading-[1.05] font-extrabold tracking-tight text-text md:text-[54px]"
           >
-            Luxury plans that help you move{" "}
+            Discover and book on{" "}
             <em className="font-[family-name:var(--font-fraunces)] font-semibold text-accent italic">
-              faster.
+              VYBE.
             </em>
           </h1>
           <p
             data-about-hero
             className="mx-auto mt-4 max-w-[540px] text-[15px] leading-relaxed text-text-secondary md:text-[16px]"
           >
-            {siteConfig.name} is {siteConfig.tagline.toLowerCase()} — discover what&apos;s on,
-            book in minutes, and keep every ticket in one place.
+            {siteConfig.name} brings movies, events, activities and play into one booking
+            experience — {siteConfig.tagline.toLowerCase()}.
           </p>
         </Container>
       </section>
@@ -214,7 +214,7 @@ export function AboutView() {
             <div className="overflow-hidden rounded-[28px] bg-[#EDE8FF] text-[#1b1640] shadow-[0_20px_50px_-28px_rgba(40,20,80,0.35)] md:grid md:grid-cols-[0.95fr_1.05fr] dark:bg-[#2a2438] dark:text-[#f0ebff]">
               <div className="relative min-h-[220px] overflow-hidden md:min-h-full">
                 <Image
-                  src="/images/about/lux-why.jpg"
+                  src="/images/about/vybe-why-lobby.jpg"
                   alt=""
                   fill
                   className="object-cover transition-transform duration-700 hover:scale-105"
@@ -226,12 +226,12 @@ export function AboutView() {
                   Why VYBE
                 </p>
                 <h3 className="mt-2 text-[24px] leading-tight font-extrabold md:text-[28px]">
-                  Plans shouldn&apos;t need five apps
+                  Discovery and booking in one place
                 </h3>
                 <p className="mt-3 text-[14px] leading-relaxed opacity-80">
-                  We started in Hyderabad with a simple bet: if discovery and booking
-                  lived together, weekends would get easier — and tickets would stop
-                  getting lost in WhatsApp.
+                  VYBE is built so you can find movies, events, activities and play near
+                  you, compare options, and confirm tickets without jumping between
+                  different booking sites.
                 </p>
               </div>
             </div>
@@ -240,7 +240,7 @@ export function AboutView() {
               className="flex flex-col justify-center rounded-[28px] bg-surface p-6 shadow-[0_16px_40px_-28px_rgba(15,15,20,0.3)] ring-1 ring-[#D4AF37]/20 lg:p-7"
             >
               <p className="text-[20px] leading-snug font-extrabold text-text md:text-[22px]">
-                From first browse to entry QR — one calm path.
+                From browse to paid ticket — your VYBE QR is ready at entry.
               </p>
               <Link
                 href="/movies"
@@ -257,7 +257,7 @@ export function AboutView() {
           >
             <div className="flex flex-col justify-center rounded-[28px] bg-surface p-6 shadow-[0_16px_40px_-28px_rgba(15,15,20,0.3)] lg:p-7">
               <p className="text-[20px] leading-snug font-extrabold text-text md:text-[22px]">
-                Host a show or list a venue — we bring the crowd.
+                Host on VYBE — list events or venues for people already browsing plans.
               </p>
               <Link
                 href="/partner-with-us"
@@ -274,8 +274,9 @@ export function AboutView() {
                 Events & venues on the same network
               </h3>
               <p className="mt-3 text-[14px] leading-relaxed text-white/70">
-                Organisers sell tickets. Venue owners open hourly slots. Cinema and
-                activity operators can reach us directly for inventory deals.
+                Sell event tickets or open sports venue slots on VYBE. Cinema and
+                activity partners can also connect inventory through our partnerships
+                team.
               </p>
               <div className="mt-5 flex flex-wrap gap-2">
                 <Link
@@ -297,7 +298,7 @@ export function AboutView() {
               className="relative min-h-[220px] overflow-hidden rounded-[28px] shadow-[0_16px_40px_-28px_rgba(15,15,20,0.35)] ring-1 ring-[#D4AF37]/25"
             >
               <Image
-                src="/images/about/lux-champagne.jpg"
+                src="/images/about/vybe-ticket-qr.jpg"
                 alt=""
                 fill
                 className="object-cover"
@@ -405,11 +406,11 @@ export function AboutView() {
         >
           <div className="max-w-[520px]">
             <h2 className="text-[26px] font-extrabold tracking-tight md:text-[32px]">
-              Got a show or a space?
+              List on VYBE
             </h2>
             <p className="mt-2 text-[14px] text-white/85 md:text-[15px]">
-              List events and venues on VYBE, or write to us if you run cinemas and
-              activity parks.
+              Publish events and venues for the VYBE crowd, or contact us for cinema
+              and activity inventory partnerships.
             </p>
           </div>
           <div className="mt-5 flex flex-wrap gap-2 md:mt-0">

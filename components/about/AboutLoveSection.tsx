@@ -9,28 +9,28 @@ import { Container } from "@/components/common/Container";
 const testimonials = [
   {
     quote:
-      "VYBE completely changed how we plan weekends. Movie seats and a turf slot in the same evening — both QRs just worked at the gate.",
+      "Booked movie seats and a play slot on VYBE the same evening. Both QRs scanned fine at entry.",
     name: "Ananya Reddy",
     role: "Product designer · Hyderabad",
     image: "/images/about/about-avatar-ananya.jpg",
   },
   {
     quote:
-      "I used to juggle three apps for comedy nights and parks. Now everything lives in one place with clear prices before I pay.",
+      "Comedy nights, parks and movies used to mean three different sites. On VYBE I browse and pay in one place.",
     name: "Karthik Mehta",
     role: "Founder · Bengaluru",
     image: "/images/about/about-avatar-karthik.jpg",
   },
   {
     quote:
-      "Play slot cancellation was honest and quick. Refund hit my UPI in a few days exactly like the policy said.",
+      "Cancelled a play booking from the ticket page. The refund followed VYBE’s policy and landed on my UPI.",
     name: "Meera Sharma",
     role: "Marketing lead · Mumbai",
     image: "/images/about/about-avatar-meera.jpg",
   },
   {
     quote:
-      "Booked Wonderla and a concert the same month. Tickets stayed under Profile with directions — no lost screenshots.",
+      "Booked an activity and a concert on VYBE. Both tickets stayed under Profile with directions ready.",
     name: "Rohan Iyer",
     role: "Student · Chennai",
     image: "/images/about/about-avatar-rohan.jpg",
@@ -57,11 +57,11 @@ export function AboutLoveSection() {
               People love the VYBE
             </span>
             <h2 className="mt-4 text-[28px] font-extrabold tracking-tight text-text md:text-[36px]">
-              Why city planners choose VYBE
+              Why people book on VYBE
             </h2>
             <p className="mt-3 text-[14px] leading-relaxed text-text-secondary md:text-[15px]">
-              Exceptional booking flows and city-first discovery that set the bar for
-              movies, events, activities and play.
+              Clear booking flows and city-first listings for movies, events, activities
+              and play — all in one VYBE account.
             </p>
           </div>
 
@@ -84,8 +84,8 @@ export function AboutLoveSection() {
               </div>
               <div className="flex flex-col p-6 md:p-7">
                 <p className="text-[15px] leading-relaxed text-text-secondary md:text-[16px]">
-                  Built for real nights out — showtimes, passes and hourly slots with
-                  tickets that stay on your phone.
+                  Book showtimes, event passes and hourly play slots on VYBE — your
+                  tickets stay under Profile with a ready QR.
                 </p>
                 <Link
                   href="/movies"
@@ -102,7 +102,7 @@ export function AboutLoveSection() {
               className="relative min-h-[220px] overflow-hidden rounded-[28px] shadow-[0_18px_50px_-28px_rgba(15,15,20,0.45)] lg:col-span-5"
             >
               <Image
-                src="/images/about/lux-love-friends.jpg"
+                src="/images/about/vybe-friends-event.jpg"
                 alt=""
                 fill
                 className="object-cover"
@@ -113,7 +113,7 @@ export function AboutLoveSection() {
                 <p className="max-w-[22ch] text-[22px] leading-snug font-extrabold text-white md:text-[26px]">
                   Trusted by{" "}
                   <span className="font-[family-name:var(--font-fraunces)] font-semibold italic">
-                    planners across India.
+                    VYBE users across India.
                   </span>
                 </p>
               </div>
@@ -144,11 +144,11 @@ export function AboutLoveSection() {
               className="flex min-h-[220px] items-end rounded-[28px] bg-surface p-6 shadow-[0_18px_50px_-28px_rgba(15,15,20,0.45)] ring-1 ring-[#D4AF37]/15 md:p-8 lg:col-span-5"
             >
               <p className="max-w-[28ch] text-[22px] leading-snug font-extrabold tracking-tight text-text md:text-[26px]">
-                Elevates{" "}
+                Turns browsing into{" "}
                 <span className="font-[family-name:var(--font-fraunces)] font-semibold text-accent italic">
-                  weekend plans
+                  confirmed VYBE tickets
                 </span>{" "}
-                and turns scattered chats into confirmed tickets.
+                for movies, events, activities and play.
               </p>
             </article>
 
@@ -157,7 +157,7 @@ export function AboutLoveSection() {
               className="relative min-h-[240px] overflow-hidden rounded-[28px] shadow-[0_18px_50px_-28px_rgba(15,15,20,0.45)] lg:col-span-3"
             >
               <Image
-                src="/images/about/lux-cover-bar.jpg"
+                src="/images/about/vybe-booking-desk.jpg"
                 alt=""
                 fill
                 className="object-cover"
@@ -173,11 +173,11 @@ export function AboutLoveSection() {
               Testimonials
             </span>
             <h2 className="mt-4 text-[28px] font-extrabold tracking-tight text-text md:text-[36px]">
-              What our users say
+              What VYBE users say
             </h2>
             <p className="mt-3 text-[14px] leading-relaxed text-text-secondary md:text-[15px]">
-              Hear from people who book movies, events, activities and play on VYBE
-              every week.
+              Real feedback from people booking movies, events, activities and play on
+              VYBE.
             </p>
           </div>
 
