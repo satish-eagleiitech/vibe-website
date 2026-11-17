@@ -20,6 +20,7 @@ type PolicyPageProps = {
 };
 
 const RELATED = [
+  { href: "/terms-of-service", label: "Terms of service" },
   { href: "/privacy-policy", label: "Privacy policy" },
   { href: "/refund-policy", label: "Cancellation & refund policy" },
   { href: "/faq", label: "FAQs" },

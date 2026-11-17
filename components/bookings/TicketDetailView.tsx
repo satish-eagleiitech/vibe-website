@@ -12,14 +12,19 @@ import {
   Navigation,
   Share2,
   Ticket,
+  XCircle,
 } from "lucide-react";
 import { TicketQr } from "@/components/bookings/TicketQr";
 import { seedBookings } from "@/lib/bookings/seeds";
 import {
+  cancelBooking,
+  estimateRefund,
   getBookingById,
+  isBookingCancellable,
   type BookingCategory,
   type VybeBooking,
 } from "@/lib/bookings/storage";
+import { formatInr } from "@/lib/format";
 
 const CATEGORY_LABEL: Record<BookingCategory, string> = {
   movies: "Movies",
@@ -83,6 +88,8 @@ export function TicketDetailView({ id }: { id: string }) {
   const [booking, setBooking] = useState<VybeBooking | null>(null);
   const [ready, setReady] = useState(false);
   const [shared, setShared] = useState(false);
+  const [confirmCancel, setConfirmCancel] = useState(false);
+  const [cancelling, setCancelling] = useState(false);
 
   useEffect(() => {
     const load = () => {
@@ -90,6 +97,8 @@ export function TicketDetailView({ id }: { id: string }) {
       setReady(true);
     };
     load();
+    window.addEventListener("vybe-bookings-updated", load);
+    return () => window.removeEventListener("vybe-bookings-updated", load);
   }, [id]);
 
   if (!ready) {
@@ -120,6 +129,9 @@ export function TicketDetailView({ id }: { id: string }) {
   }
 
   const current = booking;
+  const cancelled = (current.status ?? "confirmed") === "cancelled";
+  const canCancel = isBookingCancellable(current);
+  const refundDue = estimateRefund(current);
   const chips = [
     current.language
       ? current.language.charAt(0).toUpperCase() + current.language.slice(1)
@@ -160,6 +172,14 @@ export function TicketDetailView({ id }: { id: string }) {
     }
   }
 
+  function handleCancel() {
+    setCancelling(true);
+    const next = cancelBooking(current.id, current);
+    if (next) setBooking(next);
+    setConfirmCancel(false);
+    setCancelling(false);
+  }
+
   return (
     <div>
       <div className="mb-5 flex flex-wrap items-center justify-between gap-3">
@@ -170,10 +190,17 @@ export function TicketDetailView({ id }: { id: string }) {
           <ArrowLeft className="size-4" />
           Bookings
         </Link>
-        <span className="inline-flex items-center gap-1.5 rounded-full bg-emerald-500/10 px-3 py-1.5 text-[12px] font-extrabold text-emerald-600 dark:text-emerald-400">
-          <Check className="size-3.5" />
-          Booking confirmed
-        </span>
+        {cancelled ? (
+          <span className="inline-flex items-center gap-1.5 rounded-full bg-rose-500/10 px-3 py-1.5 text-[12px] font-extrabold text-rose-600 dark:text-rose-400">
+            <XCircle className="size-3.5" />
+            Cancelled
+          </span>
+        ) : (
+          <span className="inline-flex items-center gap-1.5 rounded-full bg-emerald-500/10 px-3 py-1.5 text-[12px] font-extrabold text-emerald-600 dark:text-emerald-400">
+            <Check className="size-3.5" />
+            Booking confirmed
+          </span>
+        )}
       </div>
 
       <div className="grid grid-cols-1 gap-5 xl:grid-cols-[minmax(0,1fr)_300px]">
@@ -245,13 +272,21 @@ export function TicketDetailView({ id }: { id: string }) {
           </div>
 
           <div className="flex flex-col items-center gap-5 p-4 @lg:flex-row @lg:items-center @lg:p-6">
-            <div className="rounded-2xl border border-border bg-white p-2.5 shadow-sm">
+            <div
+              className={`rounded-2xl border border-border bg-white p-2.5 shadow-sm ${
+                cancelled ? "opacity-40 grayscale" : ""
+              }`}
+            >
               <TicketQr value={current.bookingCode || current.id} className="size-36 @lg:size-40" />
             </div>
             <div className="w-full min-w-0 text-center @lg:text-left">
-              <p className="text-[15px] font-extrabold text-text">Show this QR at the entry</p>
+              <p className="text-[15px] font-extrabold text-text">
+                {cancelled ? "This ticket is no longer valid" : "Show this QR at the entry"}
+              </p>
               <p className="mt-0.5 text-[12px] text-text-secondary">
-                Screenshots work too. Brightness up helps the scanner.
+                {cancelled
+                  ? `Refund of ${formatInr(current.refundAmount ?? refundDue)} is due to your original payment method in 5–7 working days.`
+                  : "Screenshots work too. Brightness up helps the scanner."}
               </p>
               <dl className="mt-4 grid grid-cols-1 gap-2.5 text-left @md:grid-cols-2">
                 <div className="min-w-0 rounded-2xl border border-dashed border-border px-3.5 py-2.5">
@@ -290,7 +325,8 @@ export function TicketDetailView({ id }: { id: string }) {
             <button
               type="button"
               onClick={share}
-              className="flex flex-col items-center gap-1.5 rounded-[20px] bg-accent px-3 py-3.5 text-[12px] font-extrabold text-white shadow-[0_10px_24px_rgba(255,0,91,0.25)] transition-opacity hover:opacity-90 xl:flex-row xl:justify-center xl:gap-2 xl:text-[13px]"
+              disabled={cancelled}
+              className="flex flex-col items-center gap-1.5 rounded-[20px] bg-accent px-3 py-3.5 text-[12px] font-extrabold text-white shadow-[0_10px_24px_rgba(255,0,91,0.25)] transition-opacity hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-40 xl:flex-row xl:justify-center xl:gap-2 xl:text-[13px]"
             >
               {shared ? <Check className="size-4" /> : <Share2 className="size-4" />}
               {shared ? "Shared" : "Share ticket"}
@@ -312,6 +348,68 @@ export function TicketDetailView({ id }: { id: string }) {
               Get help
             </Link>
           </div>
+
+          {canCancel ? (
+            <div className="rounded-[24px] border border-border bg-surface p-5">
+              {confirmCancel ? (
+                <>
+                  <p className="text-[14px] font-extrabold text-text">Cancel this booking?</p>
+                  <p className="mt-1 text-[13px] leading-relaxed text-text-secondary">
+                    Estimated refund {formatInr(refundDue)}. Convenience fees are not refunded.
+                    This cannot be undone.
+                  </p>
+                  <div className="mt-4 flex gap-2">
+                    <button
+                      type="button"
+                      onClick={handleCancel}
+                      disabled={cancelling}
+                      className="flex-1 rounded-full bg-rose-600 px-4 py-2.5 text-[13px] font-extrabold text-white transition-opacity hover:opacity-90 disabled:opacity-50"
+                    >
+                      {cancelling ? "Cancelling…" : "Confirm cancel"}
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setConfirmCancel(false)}
+                      className="flex-1 rounded-full border border-border px-4 py-2.5 text-[13px] font-extrabold text-text"
+                    >
+                      Keep ticket
+                    </button>
+                  </div>
+                </>
+              ) : (
+                <>
+                  <p className="text-[14px] font-extrabold text-text">Need to cancel?</p>
+                  <p className="mt-1 text-[13px] text-text-secondary">
+                    Refunds follow the{" "}
+                    <Link href="/refund-policy" className="font-semibold text-accent underline">
+                      cancellation policy
+                    </Link>
+                    .
+                  </p>
+                  <button
+                    type="button"
+                    onClick={() => setConfirmCancel(true)}
+                    className="mt-4 inline-flex w-full items-center justify-center gap-2 rounded-full border border-rose-500/30 bg-rose-500/10 px-4 py-2.5 text-[13px] font-extrabold text-rose-600 transition-colors hover:bg-rose-500/15 dark:text-rose-400"
+                  >
+                    <XCircle className="size-4" />
+                    Cancel booking
+                  </button>
+                </>
+              )}
+            </div>
+          ) : cancelled ? null : (
+            <div className="rounded-[24px] border border-border bg-surface p-5">
+              <p className="text-[14px] font-extrabold text-text">Non-cancellable</p>
+              <p className="mt-1 text-[13px] leading-relaxed text-text-secondary">
+                Event tickets cannot be cancelled unless the organiser cancels or reschedules.
+                See the{" "}
+                <Link href="/refund-policy" className="font-semibold text-accent underline">
+                  refund policy
+                </Link>
+                .
+              </p>
+            </div>
+          )}
 
           <div className="rounded-[24px] bg-sidebar p-5 text-white">
             <p className="flex items-center gap-2 text-[10px] font-extrabold tracking-[0.16em] text-accent uppercase">

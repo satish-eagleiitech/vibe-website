@@ -361,6 +361,33 @@ const PROFILES: Record<string, SportProfile> = {
     amenities: ["Floodlights", "Bibs & balls", "Changing rooms", "Parking"],
     also: ["Turf Football"],
   },
+  cricket: {
+    images: [
+      "/images/play/venues/cricket-3.jpg",
+      "/images/play/venues/cricket-7.png",
+      "/images/play/venues/cricket-10.jpg",
+      "/images/play/venues/cricket-2.png",
+      "/images/play/venues/cricket-5.png",
+      "/images/play/venues/cricket-9.png",
+      "/images/play/venues/cricket-1.jpg",
+      "/images/play/venues/cricket-4.png",
+      "/images/play/venues/cricket-8.png",
+      "/images/play/venues/cricket-6.png",
+    ],
+    suffixes: ["Cricket Ground", "Cricket Stadium", "Cricket Oval", "Cricket Club"],
+    blurbs: [
+      "Full-size turf cricket ground with practice nets and pavilion",
+      "Floodlit cricket oval for weekend league and corporate matches",
+      "Grass cricket ground with kit hire and umpire on request",
+      "Academy-grade cricket ground with bowling machines nearby",
+    ],
+    price: [2500, 6000],
+    unit: "/ hour",
+    hours: DAY_HOURS,
+    schedules: ["Weekends and evenings", "Daily slots", "Morning & evening slots"],
+    amenities: ["Practice nets", "Floodlights", "Pavilion", "Parking"],
+    also: ["Box Cricket", "Cricket Nets"],
+  },
 };
 
 const ID_PREFIX = "play-x-";

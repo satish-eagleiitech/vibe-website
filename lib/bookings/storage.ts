@@ -2,6 +2,8 @@ export type BookingCategory = "movies" | "events" | "play" | "activities";
 
 const BOOKING_CATEGORIES: BookingCategory[] = ["movies", "events", "play", "activities"];
 
+export type BookingStatus = "confirmed" | "cancelled";
+
 export type VybeBooking = {
   id: string;
   bookingCode: string;
@@ -24,6 +26,9 @@ export type VybeBooking = {
   paymentMethod?: string;
   total: number;
   createdAt: string;
+  status?: BookingStatus;
+  cancelledAt?: string;
+  refundAmount?: number;
 };
 
 const STORAGE_KEY = "vybe-bookings";
@@ -59,6 +64,34 @@ export function getBookingById(id: string): VybeBooking | null {
 
 export function bookingsByCategory(category: BookingCategory): VybeBooking[] {
   return readBookings().filter((item) => item.category === category);
+}
+
+/** Events stay non-cancellable unless the organiser cancels (partner-side). */
+export function isBookingCancellable(booking: VybeBooking) {
+  if ((booking.status ?? "confirmed") === "cancelled") return false;
+  return booking.category !== "events";
+}
+
+export function estimateRefund(booking: VybeBooking) {
+  const fees = booking.convenienceFee ?? 0;
+  return Math.max(0, booking.total - fees);
+}
+
+export function cancelBooking(
+  id: string,
+  fallback?: VybeBooking | null,
+): VybeBooking | null {
+  if (!canUseStorage()) return null;
+  const current = getBookingById(id) ?? fallback ?? null;
+  if (!current || current.id !== id || !isBookingCancellable(current)) return null;
+  const next: VybeBooking = {
+    ...current,
+    status: "cancelled",
+    cancelledAt: new Date().toISOString(),
+    refundAmount: estimateRefund(current),
+  };
+  saveBooking(next);
+  return next;
 }
 
 export function createBookingId() {

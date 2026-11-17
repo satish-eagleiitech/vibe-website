@@ -7,18 +7,18 @@ import { siteConfig } from "@/config/site";
 const CITIES = ["Hyderabad", "Bengaluru", "Mumbai", "Delhi", "Chennai", "Pune"];
 
 const TERMS_LINKS = [
+  { href: "/terms-of-service", label: "Terms of service" },
   { href: "/privacy-policy", label: "Privacy policy" },
   { href: "/refund-policy", label: "Cancellation policy" },
   { href: "/faq", label: "FAQs" },
 ];
 
-const INFO_LINKS = [
-  ...siteConfig.nav,
-];
+const INFO_LINKS = [...siteConfig.footer.company];
 
 const QUICK_LINKS = [
   { href: "/list-your-events", label: "List your events" },
   { href: "/list-your-venue", label: "List your venue" },
+  ...siteConfig.nav,
 ];
 
 const year = new Date().getFullYear();

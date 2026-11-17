@@ -1,14 +1,10 @@
-import { PlaceholderPage } from "@/components/common/PlaceholderPage";
+import { redirect } from "next/navigation";
 
 export const metadata = {
   title: "History",
 };
 
+/** Past adventures live under My bookings. */
 export default function HistoryPage() {
-  return (
-    <PlaceholderPage
-      title="Past adventures"
-      description="A timeline of places and shows you've already done on VYBE."
-    />
-  );
+  redirect("/tickets");
 }

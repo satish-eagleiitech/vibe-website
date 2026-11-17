@@ -34,6 +34,8 @@ type Offer = {
   title: string;
   detail: string;
   tone: string;
+  /** Instant checkout discount (cashback-only offers return 0). */
+  discount: (ticketSubtotal: number) => number;
 };
 
 const OFFERS: Offer[] = [
@@ -44,6 +46,8 @@ const OFFERS: Offer[] = [
     title: "10% off with Visa",
     detail: "Up to ₹150 off on movie tickets. Min cart ₹500.",
     tone: "bg-[#1A1F71] text-white",
+    discount: (subtotal) =>
+      subtotal >= 500 ? Math.min(150, Math.round(subtotal * 0.1)) : 0,
   },
   {
     id: "upi",
@@ -52,6 +56,7 @@ const OFFERS: Offer[] = [
     title: "Flat ₹50 off on UPI",
     detail: "Valid once per user this week.",
     tone: "bg-gradient-to-br from-[#FF6B35] to-[#F7C948] text-white",
+    discount: () => 50,
   },
   {
     id: "hdfc",
@@ -60,6 +65,7 @@ const OFFERS: Offer[] = [
     title: "HDFC Debit Card",
     detail: "Get ₹100 cashback on spends above ₹799.",
     tone: "bg-gradient-to-br from-[#004C8F] to-[#00A3E0] text-white",
+    discount: () => 0,
   },
   {
     id: "vybe",
@@ -68,6 +74,7 @@ const OFFERS: Offer[] = [
     title: "Scratch card boost",
     detail: "Book now and unlock an extra Rewards scratch.",
     tone: "bg-accent text-white",
+    discount: () => 0,
   },
 ];
 
@@ -117,13 +124,15 @@ export function CheckoutPanel({
   }, 0);
   const subtotal = seats.reduce((sum, seat) => sum + seat.price, 0);
   const fees = Math.round(subtotal * 0.08);
-  const total = subtotal + fees + foodTotal;
   const [booking, setBooking] = useState<VybeBooking | null>(null);
   const [name, setName] = useState("Vamshi");
   const [phone, setPhone] = useState("+91 9347190965");
   const [termsOpen, setTermsOpen] = useState(false);
   const [offersOpen, setOffersOpen] = useState(false);
   const [offerId, setOfferId] = useState<string | null>(null);
+  const selectedOffer = OFFERS.find((item) => item.id === offerId) ?? null;
+  const offerDiscount = selectedOffer ? selectedOffer.discount(subtotal) : 0;
+  const total = Math.max(0, subtotal + fees + foodTotal - offerDiscount);
 
   const langMeta =
     language ??
@@ -379,11 +388,14 @@ export function CheckoutPanel({
                 <dt>Convenience fee</dt>
                 <dd className="font-semibold text-text">{formatInr(fees)}</dd>
               </div>
-              {offerId ? (
+              {selectedOffer ? (
                 <div className="flex justify-between text-emerald-600">
-                  <dt>Offer applied</dt>
+                  <dt>
+                    {selectedOffer.brand}
+                    {offerDiscount > 0 ? " discount" : " perk"}
+                  </dt>
                   <dd className="font-semibold">
-                    {OFFERS.find((item) => item.id === offerId)?.brand}
+                    {offerDiscount > 0 ? `−${formatInr(offerDiscount)}` : "Applied"}
                   </dd>
                 </div>
               ) : null}

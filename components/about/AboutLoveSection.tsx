@@ -1,0 +1,222 @@
+"use client";
+
+import Image from "next/image";
+import Link from "next/link";
+import { useRef } from "react";
+import { ArrowLeft, ArrowRight } from "lucide-react";
+import { Container } from "@/components/common/Container";
+
+const testimonials = [
+  {
+    quote:
+      "VYBE completely changed how we plan weekends. Movie seats and a turf slot in the same evening — both QRs just worked at the gate.",
+    name: "Ananya Reddy",
+    role: "Product designer · Hyderabad",
+    image: "/images/about/about-avatar-ananya.jpg",
+  },
+  {
+    quote:
+      "I used to juggle three apps for comedy nights and parks. Now everything lives in one place with clear prices before I pay.",
+    name: "Karthik Mehta",
+    role: "Founder · Bengaluru",
+    image: "/images/about/about-avatar-karthik.jpg",
+  },
+  {
+    quote:
+      "Play slot cancellation was honest and quick. Refund hit my UPI in a few days exactly like the policy said.",
+    name: "Meera Sharma",
+    role: "Marketing lead · Mumbai",
+    image: "/images/about/about-avatar-meera.jpg",
+  },
+  {
+    quote:
+      "Booked Wonderla and a concert the same month. Tickets stayed under Profile with directions — no lost screenshots.",
+    name: "Rohan Iyer",
+    role: "Student · Chennai",
+    image: "/images/about/about-avatar-rohan.jpg",
+  },
+];
+
+export function AboutLoveSection() {
+  const scrollerRef = useRef<HTMLDivElement>(null);
+
+  function scrollByCard(direction: -1 | 1) {
+    const node = scrollerRef.current;
+    if (!node) return;
+    const card = node.querySelector<HTMLElement>("[data-love-card]");
+    const amount = (card?.offsetWidth ?? 300) + 20;
+    node.scrollBy({ left: direction * amount, behavior: "smooth" });
+  }
+
+  return (
+    <section className="mt-12 bg-[#F3F3F5] py-12 dark:bg-[#16161a] md:mt-16 md:py-16">
+      <Container>
+        <div className="mb-14 md:mb-16">
+          <div className="mx-auto mb-8 max-w-[640px] text-center">
+            <span className="inline-flex rounded-full border border-border bg-surface px-3.5 py-1 text-[11px] font-extrabold tracking-[0.16em] text-text-secondary uppercase shadow-sm">
+              People love the VYBE
+            </span>
+            <h2 className="mt-4 text-[28px] font-extrabold tracking-tight text-text md:text-[36px]">
+              Why city planners choose VYBE
+            </h2>
+            <p className="mt-3 text-[14px] leading-relaxed text-text-secondary md:text-[15px]">
+              Exceptional booking flows and city-first discovery that set the bar for
+              movies, events, activities and play.
+            </p>
+          </div>
+
+          <div className="grid gap-4 lg:grid-cols-12 lg:grid-rows-[minmax(220px,1fr)_minmax(220px,1fr)] lg:gap-5">
+            <article className="flex flex-col overflow-hidden rounded-[28px] bg-surface shadow-[0_18px_50px_-28px_rgba(15,15,20,0.45)] lg:col-span-4 lg:row-span-2">
+              <div className="relative aspect-[4/3] lg:min-h-0 lg:flex-1 lg:aspect-auto">
+                <Image
+                  src="/images/about/about-love-bowling.jpg"
+                  alt=""
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 1024px) 100vw, 33vw"
+                />
+              </div>
+              <div className="flex flex-col p-6 md:p-7">
+                <p className="text-[15px] leading-relaxed text-text-secondary md:text-[16px]">
+                  Built for real nights out — showtimes, passes and hourly slots with
+                  tickets that stay on your phone.
+                </p>
+                <Link
+                  href="/movies"
+                  className="mt-6 inline-flex w-fit items-center gap-1.5 rounded-full bg-[#111] px-5 py-2.5 text-[13px] font-extrabold text-white transition-opacity hover:opacity-90 dark:bg-white dark:text-[#111]"
+                >
+                  Explore plans
+                  <ArrowRight className="size-3.5" />
+                </Link>
+              </div>
+            </article>
+
+            <article className="relative min-h-[220px] overflow-hidden rounded-[28px] shadow-[0_18px_50px_-28px_rgba(15,15,20,0.45)] lg:col-span-5">
+              <Image
+                src="/images/about/about-love-friends.jpg"
+                alt=""
+                fill
+                className="object-cover"
+                sizes="(max-width: 1024px) 100vw, 42vw"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/25 to-transparent" />
+              <div className="absolute inset-x-0 bottom-0 p-6 md:p-7">
+                <p className="max-w-[22ch] text-[22px] leading-snug font-extrabold text-white md:text-[26px]">
+                  Trusted by{" "}
+                  <span className="font-[family-name:var(--font-fraunces)] font-semibold italic">
+                    planners across India.
+                  </span>
+                </p>
+              </div>
+            </article>
+
+            <article className="relative min-h-[220px] overflow-hidden rounded-[28px] shadow-[0_18px_50px_-28px_rgba(15,15,20,0.45)] lg:col-span-3">
+              <Image
+                src="/images/about/about-love-gokart.jpg"
+                alt=""
+                fill
+                className="object-cover"
+                sizes="(max-width: 1024px) 100vw, 25vw"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#0B1220]/90 via-[#0B1220]/35 to-transparent" />
+              <div className="relative flex h-full min-h-[220px] flex-col justify-end p-5 text-white md:p-6">
+                <p className="text-[42px] leading-none font-extrabold md:text-[48px]">4×</p>
+                <p className="mt-2 text-[13px] leading-snug font-semibold text-white/80">
+                  categories in one booking home — movies, events, activities & play
+                </p>
+              </div>
+            </article>
+
+            <article className="flex min-h-[220px] items-end rounded-[28px] bg-surface p-6 shadow-[0_18px_50px_-28px_rgba(15,15,20,0.45)] md:p-8 lg:col-span-5">
+              <p className="max-w-[28ch] text-[22px] leading-snug font-extrabold tracking-tight text-text md:text-[26px]">
+                Elevates{" "}
+                <span className="font-[family-name:var(--font-fraunces)] font-semibold text-accent italic">
+                  weekend plans
+                </span>{" "}
+                and turns scattered chats into confirmed tickets.
+              </p>
+            </article>
+
+            <article className="relative min-h-[240px] overflow-hidden rounded-[28px] shadow-[0_18px_50px_-28px_rgba(15,15,20,0.45)] lg:col-span-3">
+              <Image
+                src="/images/about/about-love-park.jpg"
+                alt=""
+                fill
+                className="object-cover"
+                sizes="(max-width: 1024px) 100vw, 25vw"
+              />
+            </article>
+          </div>
+        </div>
+
+        <div>
+          <div className="mx-auto mb-8 max-w-[640px] text-center">
+            <span className="inline-flex rounded-full border border-border bg-surface px-3.5 py-1 text-[11px] font-extrabold tracking-[0.16em] text-text-secondary uppercase shadow-sm">
+              Testimonials
+            </span>
+            <h2 className="mt-4 text-[28px] font-extrabold tracking-tight text-text md:text-[36px]">
+              What our users say
+            </h2>
+            <p className="mt-3 text-[14px] leading-relaxed text-text-secondary md:text-[15px]">
+              Hear from people who book movies, events, activities and play on VYBE
+              every week.
+            </p>
+          </div>
+
+          <div
+            ref={scrollerRef}
+            className="hide-scrollbar flex gap-4 overflow-x-auto scroll-smooth pb-2 md:gap-5"
+          >
+            {testimonials.map((item) => (
+              <article
+                key={item.name}
+                data-love-card
+                className="flex w-[min(85vw,300px)] shrink-0 flex-col justify-between rounded-[28px] bg-surface p-6 shadow-[0_18px_50px_-28px_rgba(15,15,20,0.4)] md:w-[300px] md:p-7"
+              >
+                <p className="font-[family-name:var(--font-fraunces)] text-[16px] leading-relaxed text-text md:text-[17px]">
+                  “{item.quote}”
+                </p>
+                <div className="mt-8 flex items-center gap-3">
+                  <div className="relative size-11 overflow-hidden rounded-full bg-surface-muted">
+                    <Image
+                      src={item.image}
+                      alt=""
+                      fill
+                      className="object-cover"
+                      sizes="44px"
+                    />
+                  </div>
+                  <div className="min-w-0">
+                    <p className="truncate text-[14px] font-extrabold text-text">
+                      {item.name}
+                    </p>
+                    <p className="truncate text-[12px] text-text-muted">{item.role}</p>
+                  </div>
+                </div>
+              </article>
+            ))}
+          </div>
+
+          <div className="mt-6 flex items-center gap-2">
+            <button
+              type="button"
+              onClick={() => scrollByCard(-1)}
+              aria-label="Previous testimonials"
+              className="grid size-10 place-items-center rounded-full border border-border bg-surface text-text transition-colors hover:border-accent/40"
+            >
+              <ArrowLeft className="size-4" />
+            </button>
+            <button
+              type="button"
+              onClick={() => scrollByCard(1)}
+              aria-label="Next testimonials"
+              className="grid size-10 place-items-center rounded-full border border-border bg-surface text-text transition-colors hover:border-accent/40"
+            >
+              <ArrowRight className="size-4" />
+            </button>
+          </div>
+        </div>
+      </Container>
+    </section>
+  );
+}

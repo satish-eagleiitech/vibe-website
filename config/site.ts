@@ -29,7 +29,6 @@ export const siteConfig = {
     ],
     company: [
       { href: "/about-us", label: "About Us" },
-      { href: "/careers", label: "Careers" },
       { href: "/contact", label: "Contact" },
       { href: "/partner-with-us", label: "Partner With Us" },
     ],

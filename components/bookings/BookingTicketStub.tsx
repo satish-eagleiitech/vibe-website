@@ -57,9 +57,15 @@ export function BookingTicketStub({ booking }: { booking: VybeBooking }) {
           aria-hidden
           className="pointer-events-none absolute bottom-0 left-0 size-4 -translate-x-1/2 translate-y-1/2 rounded-full bg-bg lg:bg-dash"
         />
-        <span className="inline-flex items-center gap-1.5 text-[10px] font-extrabold tracking-wide text-emerald-600 uppercase dark:text-emerald-400">
+        <span
+          className={`inline-flex items-center gap-1.5 text-[10px] font-extrabold tracking-wide uppercase ${
+            (booking.status ?? "confirmed") === "cancelled"
+              ? "text-rose-600 dark:text-rose-400"
+              : "text-emerald-600 dark:text-emerald-400"
+          }`}
+        >
           <span className="size-1.5 rounded-full bg-current" />
-          Confirmed
+          {(booking.status ?? "confirmed") === "cancelled" ? "Cancelled" : "Confirmed"}
         </span>
         <span className="rounded-full bg-accent px-3 py-1.5 text-center text-[10px] font-extrabold tracking-wide text-white uppercase transition-transform group-hover:scale-105">
           View ticket

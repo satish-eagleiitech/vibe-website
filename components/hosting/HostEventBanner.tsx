@@ -22,7 +22,7 @@ export function HostEventBanner() {
             </div>
           </div>
           <Link
-            href="/partner-with-us"
+            href="/list-your-events"
             className="w-full shrink-0 rounded-full bg-accent px-8 py-3 text-center text-sm font-semibold text-white shadow-md transition-all hover:bg-[#E70052] md:w-auto"
           >
             Start Hosting
