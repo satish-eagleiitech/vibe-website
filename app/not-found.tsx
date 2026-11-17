@@ -15,7 +15,6 @@ export default function NotFound() {
           className="mx-auto h-auto max-h-[min(58svh,520px)] w-full object-contain"
         />
       </div>
-
       <Link
         href="/"
         className="mt-7 inline-flex rounded-full bg-accent px-8 py-3 text-[14px] font-extrabold text-white transition-transform hover:scale-[1.02]"
