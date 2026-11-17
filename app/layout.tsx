@@ -79,7 +79,9 @@ export default function RootLayout({
           <HideOnAccount>
             <Navbar />
           </HideOnAccount>
-          <main className="w-full min-w-0 bg-bg pt-0">{children}</main>
+          <main className="flex w-full min-w-0 flex-1 flex-col bg-bg pt-0">
+            {children}
+          </main>
           <HideOnAccount>
             <Footer />
           </HideOnAccount>

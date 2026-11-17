@@ -101,12 +101,8 @@ const quotes = [
 
 export default function PartnerWithUsPage() {
   return (
-    <div className="w-full overflow-x-hidden pb-16 md:pb-24">
+    <div className="-mb-10 w-full flex-1 overflow-x-hidden bg-white pb-16 md:-mb-14 md:pb-24 dark:bg-bg">
       <section className="relative pt-10 pb-8 md:pt-14 md:pb-10">
-        <div
-          aria-hidden
-          className="pointer-events-none absolute inset-x-0 top-0 h-[420px] bg-[radial-gradient(ellipse_at_top,_rgba(14,165,233,0.14),_transparent_55%),radial-gradient(ellipse_at_20%_10%,_rgba(255,0,91,0.12),_transparent_40%)]"
-        />
         <Container className="relative text-center">
           <span className="inline-flex rounded-full border border-border bg-surface px-3.5 py-1 text-[11px] font-extrabold tracking-[0.16em] text-text-secondary uppercase shadow-sm">
             Partners
@@ -283,7 +279,7 @@ export default function PartnerWithUsPage() {
       </Container>
 
       {/* Dark GAZU-style band */}
-      <section className="mt-12 bg-[#121214] py-12 text-white md:mt-16 md:py-16">
+      <section className="mt-12 bg-[#0c0c0e] py-12 text-white md:mt-16 md:py-16">
         <Container>
           <div className="mb-8">
             <p className="text-[11px] font-extrabold tracking-[0.18em] text-accent uppercase">
@@ -345,6 +341,8 @@ export default function PartnerWithUsPage() {
         </Container>
       </section>
 
+      {/* Fills footer top gap so page gray does not show through */}
+      <div className="h-10 bg-white md:h-14 dark:bg-bg" aria-hidden />
     </div>
   );
 }

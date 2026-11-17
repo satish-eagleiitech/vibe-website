@@ -106,12 +106,11 @@ export function AboutView() {
   useAboutMotion(rootRef);
 
   return (
-    <div ref={rootRef} className="about-lux w-full overflow-x-hidden pb-16 md:pb-24">
+    <div
+      ref={rootRef}
+      className="about-lux -mb-10 w-full flex-1 overflow-x-hidden bg-white pb-16 md:-mb-14 md:pb-24 dark:bg-bg"
+    >
       <section className="relative pt-10 pb-8 md:pt-14 md:pb-12">
-        <div
-          aria-hidden
-          className="pointer-events-none absolute inset-x-0 top-0 h-[480px] bg-[radial-gradient(ellipse_at_top,_rgba(212,175,55,0.14),_transparent_50%),radial-gradient(ellipse_at_80%_0%,_rgba(255,0,91,0.1),_transparent_45%)]"
-        />
         <Container className="relative text-center">
           <span
             data-about-hero
@@ -244,7 +243,7 @@ export function AboutView() {
               </p>
               <Link
                 href="/movies"
-                className="mt-4 inline-flex w-fit rounded-full border border-border bg-bg px-4 py-2 text-[13px] font-extrabold text-text shadow-sm transition-colors hover:border-accent/40 hover:text-accent"
+                className="mt-4 inline-flex w-fit rounded-full border border-border bg-white px-4 py-2 text-[13px] font-extrabold text-text shadow-sm transition-colors hover:border-accent/40 hover:text-accent dark:bg-surface"
               >
                 Explore movies
               </Link>
@@ -261,7 +260,7 @@ export function AboutView() {
               </p>
               <Link
                 href="/partner-with-us"
-                className="mt-4 inline-flex w-fit rounded-full border border-border bg-bg px-4 py-2 text-[13px] font-extrabold text-text shadow-sm transition-colors hover:border-accent/40 hover:text-accent"
+                className="mt-4 inline-flex w-fit rounded-full border border-border bg-white px-4 py-2 text-[13px] font-extrabold text-text shadow-sm transition-colors hover:border-accent/40 hover:text-accent dark:bg-surface"
               >
                 Partner with us
               </Link>
@@ -436,6 +435,8 @@ export function AboutView() {
           </a>
         </p>
       </Container>
+      {/* Fills footer top gap so page gray does not show through */}
+      <div className="h-10 bg-white md:h-14 dark:bg-bg" aria-hidden />
     </div>
   );
 }

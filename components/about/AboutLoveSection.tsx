@@ -49,7 +49,7 @@ export function AboutLoveSection() {
   }
 
   return (
-    <section className="mt-12 bg-[#F4F0E8] py-12 dark:bg-[#16161a] md:mt-16 md:py-16">
+    <section className="mt-12 bg-white py-12 dark:bg-bg md:mt-16 md:py-16">
       <Container>
         <div className="mb-14 md:mb-16">
           <div data-about-reveal className="mx-auto mb-8 max-w-[640px] text-center">
