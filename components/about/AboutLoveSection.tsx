@@ -49,11 +49,11 @@ export function AboutLoveSection() {
   }
 
   return (
-    <section className="mt-12 bg-[#F3F3F5] py-12 dark:bg-[#16161a] md:mt-16 md:py-16">
+    <section className="mt-12 bg-[#F4F0E8] py-12 dark:bg-[#16161a] md:mt-16 md:py-16">
       <Container>
         <div className="mb-14 md:mb-16">
-          <div className="mx-auto mb-8 max-w-[640px] text-center">
-            <span className="inline-flex rounded-full border border-border bg-surface px-3.5 py-1 text-[11px] font-extrabold tracking-[0.16em] text-text-secondary uppercase shadow-sm">
+          <div data-about-reveal className="mx-auto mb-8 max-w-[640px] text-center">
+            <span className="inline-flex rounded-full border border-[#D4AF37]/35 bg-surface px-3.5 py-1 text-[11px] font-extrabold tracking-[0.16em] text-[#8a6d1f] uppercase shadow-sm dark:text-[#E8D59A]">
               People love the VYBE
             </span>
             <h2 className="mt-4 text-[28px] font-extrabold tracking-tight text-text md:text-[36px]">
@@ -65,14 +65,20 @@ export function AboutLoveSection() {
             </p>
           </div>
 
-          <div className="grid gap-4 lg:grid-cols-12 lg:grid-rows-[minmax(220px,1fr)_minmax(220px,1fr)] lg:gap-5">
-            <article className="flex flex-col overflow-hidden rounded-[28px] bg-surface shadow-[0_18px_50px_-28px_rgba(15,15,20,0.45)] lg:col-span-4 lg:row-span-2">
-              <div className="relative aspect-[4/3] lg:min-h-0 lg:flex-1 lg:aspect-auto">
+          <div
+            data-about-stagger
+            className="grid gap-4 lg:grid-cols-12 lg:grid-rows-[minmax(220px,1fr)_minmax(220px,1fr)] lg:gap-5"
+          >
+            <article
+              data-about-item
+              className="flex flex-col overflow-hidden rounded-[28px] bg-surface shadow-[0_18px_50px_-28px_rgba(15,15,20,0.45)] ring-1 ring-[#D4AF37]/15 lg:col-span-4 lg:row-span-2"
+            >
+              <div className="relative aspect-[4/3] overflow-hidden lg:min-h-0 lg:flex-1 lg:aspect-auto">
                 <Image
-                  src="/images/about/about-love-bowling.jpg"
+                  src="/images/about/lux-love-bowling.jpg"
                   alt=""
                   fill
-                  className="object-cover"
+                  className="object-cover transition-transform duration-700 hover:scale-105"
                   sizes="(max-width: 1024px) 100vw, 33vw"
                 />
               </div>
@@ -91,9 +97,12 @@ export function AboutLoveSection() {
               </div>
             </article>
 
-            <article className="relative min-h-[220px] overflow-hidden rounded-[28px] shadow-[0_18px_50px_-28px_rgba(15,15,20,0.45)] lg:col-span-5">
+            <article
+              data-about-item
+              className="relative min-h-[220px] overflow-hidden rounded-[28px] shadow-[0_18px_50px_-28px_rgba(15,15,20,0.45)] lg:col-span-5"
+            >
               <Image
-                src="/images/about/about-love-friends.jpg"
+                src="/images/about/lux-love-friends.jpg"
                 alt=""
                 fill
                 className="object-cover"
@@ -110,9 +119,12 @@ export function AboutLoveSection() {
               </div>
             </article>
 
-            <article className="relative min-h-[220px] overflow-hidden rounded-[28px] shadow-[0_18px_50px_-28px_rgba(15,15,20,0.45)] lg:col-span-3">
+            <article
+              data-about-item
+              className="relative min-h-[220px] overflow-hidden rounded-[28px] shadow-[0_18px_50px_-28px_rgba(15,15,20,0.45)] lg:col-span-3"
+            >
               <Image
-                src="/images/about/about-love-gokart.jpg"
+                src="/images/about/lux-love-court.jpg"
                 alt=""
                 fill
                 className="object-cover"
@@ -127,7 +139,10 @@ export function AboutLoveSection() {
               </div>
             </article>
 
-            <article className="flex min-h-[220px] items-end rounded-[28px] bg-surface p-6 shadow-[0_18px_50px_-28px_rgba(15,15,20,0.45)] md:p-8 lg:col-span-5">
+            <article
+              data-about-item
+              className="flex min-h-[220px] items-end rounded-[28px] bg-surface p-6 shadow-[0_18px_50px_-28px_rgba(15,15,20,0.45)] ring-1 ring-[#D4AF37]/15 md:p-8 lg:col-span-5"
+            >
               <p className="max-w-[28ch] text-[22px] leading-snug font-extrabold tracking-tight text-text md:text-[26px]">
                 Elevates{" "}
                 <span className="font-[family-name:var(--font-fraunces)] font-semibold text-accent italic">
@@ -137,9 +152,12 @@ export function AboutLoveSection() {
               </p>
             </article>
 
-            <article className="relative min-h-[240px] overflow-hidden rounded-[28px] shadow-[0_18px_50px_-28px_rgba(15,15,20,0.45)] lg:col-span-3">
+            <article
+              data-about-item
+              className="relative min-h-[240px] overflow-hidden rounded-[28px] shadow-[0_18px_50px_-28px_rgba(15,15,20,0.45)] lg:col-span-3"
+            >
               <Image
-                src="/images/about/about-love-park.jpg"
+                src="/images/about/lux-cover-bar.jpg"
                 alt=""
                 fill
                 className="object-cover"
@@ -149,9 +167,9 @@ export function AboutLoveSection() {
           </div>
         </div>
 
-        <div>
+        <div data-about-reveal>
           <div className="mx-auto mb-8 max-w-[640px] text-center">
-            <span className="inline-flex rounded-full border border-border bg-surface px-3.5 py-1 text-[11px] font-extrabold tracking-[0.16em] text-text-secondary uppercase shadow-sm">
+            <span className="inline-flex rounded-full border border-[#D4AF37]/35 bg-surface px-3.5 py-1 text-[11px] font-extrabold tracking-[0.16em] text-[#8a6d1f] uppercase shadow-sm dark:text-[#E8D59A]">
               Testimonials
             </span>
             <h2 className="mt-4 text-[28px] font-extrabold tracking-tight text-text md:text-[36px]">

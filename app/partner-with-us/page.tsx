@@ -22,7 +22,7 @@ const paths = [
     body: "Concerts, comedy, workshops and sports nights — publish shows and sell tickets to people already browsing plans.",
     href: "/list-your-events",
     cta: "Start hosting",
-    image: "/images/hero/concert.jpg",
+    image: "/images/partner/partner-events-hero.jpg",
     tone: "from-[#FF005B]/90 via-[#FF005B]/40 to-transparent",
   },
   {
@@ -31,7 +31,7 @@ const paths = [
     body: "Turfs, courts, studios and game zones with hourly slots, discovery and booking that syncs to the VYBE crowd.",
     href: "/list-your-venue",
     cta: "List a venue",
-    image: "/images/hero/play.jpg",
+    image: "/images/partner/partner-venues-hero.jpg",
     tone: "from-[#0EA5E9]/90 via-[#0EA5E9]/35 to-transparent",
   },
 ];
@@ -68,19 +68,19 @@ const steps = [
     n: "01",
     title: "Register",
     body: "Create an organiser or venue profile in a few minutes.",
-    image: "/images/list-events/step-register.jpg",
+    image: "/images/partner/partner-step-register.jpg",
   },
   {
     n: "02",
     title: "Add inventory",
     body: "Upload visuals, timings, ticket tiers or hourly slots.",
-    image: "/images/list-events/step-ticket.jpg",
+    image: "/images/partner/partner-step-ticket.jpg",
   },
   {
     n: "03",
     title: "Go live",
     body: "Publish to VYBE and start selling to city explorers.",
-    image: "/images/list-events/step-live.jpg",
+    image: "/images/partner/partner-step-live.jpg",
   },
 ];
 
@@ -221,7 +221,7 @@ export default function PartnerWithUsPage() {
             </div>
             <div className="relative min-h-[240px]">
               <Image
-                src="/images/events/poster-03.jpg"
+                src="/images/partner/partner-how-music.jpg"
                 alt=""
                 fill
                 className="object-cover"
@@ -298,19 +298,19 @@ export default function PartnerWithUsPage() {
               {
                 title: "Event organisers",
                 body: "Single nights or multi-day festivals with ticket tiers.",
-                image: "/images/explore/fests.png",
+                image: "/images/about/lux-pillar-events.jpg",
                 href: "/list-your-events",
               },
               {
                 title: "Sports venues",
                 body: "Turfs, courts and nets with hourly inventory.",
-                image: "/images/explore/sports.png",
+                image: "/images/about/lux-love-court.jpg",
                 href: "/list-your-venue",
               },
               {
                 title: "Cinemas & parks",
                 body: "Talk to partnerships for inventory integrations.",
-                image: "/images/explore/screenings.png",
+                image: "/images/about/lux-pillar-activities.jpg",
                 href: "/contact",
               },
             ].map((item) => (
