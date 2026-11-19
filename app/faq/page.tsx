@@ -1,5 +1,6 @@
 import { ChevronDown } from "lucide-react";
 import { PolicyPage } from "@/components/legal/PolicyPage";
+import { faqNav } from "@/lib/data/termsOfService";
 
 export const metadata = { title: "FAQs" };
 
@@ -42,7 +43,7 @@ const groups: { title: string; items: { q: string; a: string }[] }[] = [
       },
       {
         q: "What is the cancellation window for sports venues?",
-        a: "Play bookings can be cancelled for free up to 6 hours before your slot.",
+        a: "Play bookings: more than 24 hours before the slot — 100% refund of base price; 12–24 hours — 50%; within 12 hours or no-show — no refund. Convenience fee is not refunded. Facility-specific terms on the venue page prevail if different.",
       },
     ],
   },
@@ -98,11 +99,11 @@ const groups: { title: string; items: { q: string; a: string }[] }[] = [
 export default function FaqPage() {
   return (
     <PolicyPage
-      eyebrow="Help"
       title="Frequently Asked Questions"
       updated="12 November 2026"
       intro="Quick answers about booking, tickets, cancellations, payments and your VYBE account."
       current="/faq"
+      nav={faqNav}
     >
       {groups.map((group) => (
         <article

@@ -1,17 +1,21 @@
 "use client";
 
-import Link from "next/link";
-import { useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { ChevronDown, SlidersHorizontal } from "lucide-react";
 import { Container } from "@/components/common/Container";
 import { EmptyState } from "@/components/common/EmptyState";
+import { ListingFilterModal } from "@/components/common/ListingFilterModal";
 import { StickyFilterBar } from "@/components/common/StickyFilterBar";
 import { EventListingCard } from "@/components/events/EventListingCard";
-import { EventSubcategoryGrid } from "@/components/events/EventSubcategoryGrid";
-import { allEventSubcategories, findEventCategory, matchesEventCategory } from "@/lib/data/eventCategories";
+import {
+  eventExploreCategories,
+  filterEvents,
+  findEventCategory,
+} from "@/lib/data/eventCategories";
 import type { LiveEvent } from "@/types/event";
 
-type EventFiltersBarProps = {
+type AllEventsSectionProps = {
   events: LiveEvent[];
   category?: string;
   when?: string;
@@ -23,27 +27,63 @@ const WHEN_FILTERS = [
   { id: "weekend", label: "This Weekend" },
 ] as const;
 
-const QUICK_CATEGORIES = ["Music", "Nightlife", "Comedy"] as const;
+const ALL_CATEGORIES = eventExploreCategories.map((category) => ({
+  id: category.id,
+  label: category.label,
+}));
+
+/** Short chip row — rest live in the Filters modal */
+const QUICK_CATEGORIES = ALL_CATEGORIES.slice(0, 4);
 
 export function AllEventsSection({
   events,
-  category,
-  when,
-}: EventFiltersBarProps) {
-  const filtered = useMemo(() => {
-    return events.filter((event) => matchesEventCategory(event, category));
-  }, [events, category]);
-  const parent = findEventCategory(category ?? "");
-  const subcategories = parent ? parent.subcategories : allEventSubcategories();
+  category: categoryProp = "",
+  when: whenProp = "",
+}: AllEventsSectionProps) {
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const [category, setCategory] = useState(categoryProp);
+  const [when, setWhen] = useState(whenProp);
+  const [filterOpen, setFilterOpen] = useState(false);
 
-  function hrefFor(next: { category?: string; when?: string }) {
+  useEffect(() => {
+    setCategory(searchParams.get("category") ?? categoryProp ?? "");
+    setWhen(searchParams.get("when") ?? whenProp ?? "");
+  }, [searchParams, categoryProp, whenProp]);
+
+  const categoryKey = findEventCategory(category)?.id ?? category;
+
+  const uniqueEvents = useMemo(() => {
+    const filtered = filterEvents(events, { category: categoryKey, when });
+    const seen = new Set<string>();
+    return filtered.filter((event) => {
+      if (seen.has(event.id)) return false;
+      seen.add(event.id);
+      return true;
+    });
+  }, [events, categoryKey, when]);
+
+  function syncUrl(nextCategory: string, nextWhen: string) {
     const params = new URLSearchParams();
-    const cat = "category" in next ? next.category : category;
-    const w = "when" in next ? next.when : when;
-    if (cat) params.set("category", cat);
-    if (w) params.set("when", w);
+    if (nextCategory) params.set("category", nextCategory);
+    if (nextWhen) params.set("when", nextWhen);
     const qs = params.toString();
-    return qs ? `/events?${qs}#all-events` : "/events#all-events";
+    router.replace(qs ? `${pathname}?${qs}#all-events` : `${pathname}#all-events`, {
+      scroll: false,
+    });
+  }
+
+  function selectCategory(id: string) {
+    const next = categoryKey === id ? "" : id;
+    setCategory(next);
+    syncUrl(next, when);
+  }
+
+  function selectWhen(id: string) {
+    const next = when === id ? "" : id;
+    setWhen(next);
+    syncUrl(categoryKey, next);
   }
 
   function chipClass(selected: boolean) {
@@ -53,6 +93,8 @@ export function AllEventsSection({
         : "border-border bg-surface text-text hover:border-accent/40"
     }`;
   }
+
+  const filterActive = Boolean(categoryKey || when);
 
   return (
     <section
@@ -71,59 +113,80 @@ export function AllEventsSection({
       </Container>
 
       <StickyFilterBar pinToViewport>
-        <span className="inline-flex shrink-0 items-center gap-1 rounded-full border border-border bg-surface px-2.5 py-1.5 text-[12px] font-bold text-text">
+        <button
+          type="button"
+          onClick={() => setFilterOpen(true)}
+          className={`inline-flex shrink-0 items-center gap-1 rounded-full border px-2.5 py-1.5 text-[12px] font-bold transition-colors ${
+            filterActive
+              ? "border-accent bg-accent-soft text-accent"
+              : "border-border bg-surface text-text hover:border-accent/40"
+          }`}
+        >
           <SlidersHorizontal className="size-3" />
           Filters
-          <ChevronDown className="size-3 text-text-muted" />
-        </span>
+          <ChevronDown className="size-3 opacity-70" />
+        </button>
 
-        {WHEN_FILTERS.map((item) => {
-          const selected = when === item.id;
-          return (
-            <Link
-              key={item.id}
-              href={hrefFor({ when: selected ? "" : item.id })}
-              scroll={false}
-              className={chipClass(selected)}
-            >
-              {item.label}
-            </Link>
-          );
-        })}
+        {WHEN_FILTERS.map((item) => (
+          <button
+            key={item.id}
+            type="button"
+            onClick={() => selectWhen(item.id)}
+            className={chipClass(when === item.id)}
+          >
+            {item.label}
+          </button>
+        ))}
 
         <span className="shrink-0 rounded-full border border-border bg-surface px-3 py-1.5 text-[12px] font-semibold text-text-secondary">
           Under 10 km
         </span>
 
-        {QUICK_CATEGORIES.map((label) => {
-          const selected = (category || "").toLowerCase() === label.toLowerCase();
-          return (
-            <Link
-              key={label}
-              href={hrefFor({ category: selected ? "" : label })}
-              scroll={false}
-              className={chipClass(selected)}
-            >
-              {label}
-            </Link>
-          );
-        })}
+        {QUICK_CATEGORIES.map((item) => (
+          <button
+            key={item.id}
+            type="button"
+            onClick={() => selectCategory(item.id)}
+            className={chipClass(categoryKey === item.id)}
+          >
+            {item.label}
+          </button>
+        ))}
       </StickyFilterBar>
 
       <Container className="pt-6 pb-10 md:pt-8 md:pb-12">
-        <EventSubcategoryGrid items={subcategories} />
-        <div className="mt-8">
-        {filtered.length === 0 ? (
+        {uniqueEvents.length === 0 ? (
           <EmptyState title="No events for this filter" />
         ) : (
           <div className="grid grid-cols-2 gap-x-3 gap-y-6 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 lg:gap-x-4 lg:gap-y-7 3xl:grid-cols-6 4xl:grid-cols-7">
-            {filtered.map((event) => (
+            {uniqueEvents.map((event) => (
               <EventListingCard key={event.id} event={event} />
             ))}
           </div>
         )}
-        </div>
       </Container>
+
+      <ListingFilterModal
+        open={filterOpen}
+        values={{ category: categoryKey }}
+        panels={[
+          {
+            id: "category",
+            label: "Category",
+            options: ALL_CATEGORIES,
+          },
+        ]}
+        onClose={() => setFilterOpen(false)}
+        onClear={() => {
+          setCategory("");
+          syncUrl("", when);
+        }}
+        onApply={(values) => {
+          const nextCategory = values.category ?? "";
+          setCategory(nextCategory);
+          syncUrl(nextCategory, when);
+        }}
+      />
     </section>
   );
 }

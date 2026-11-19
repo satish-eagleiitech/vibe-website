@@ -10,7 +10,7 @@ export function ExploreSportsSection() {
       items={playSports.map((sport) => ({
         id: sport.id,
         label: sport.label,
-        href: sport.href,
+        href: `/play?sport=${sport.id}#all-venues`,
         imageUrl: `/images/explore/play/clay/${sport.id}.png?v=1`,
         imageClassName: "object-contain object-center",
       }))}

@@ -1,4 +1,4 @@
-import { ActivitiesHero } from "@/components/activities/ActivitiesHero";
+import { Suspense } from "react";
 import { AllActivitiesSection } from "@/components/activities/AllActivitiesSection";
 import { ExploreActivitiesSection } from "@/components/activities/ExploreActivitiesSection";
 import { TrendingActivitiesSection } from "@/components/activities/TrendingActivitiesSection";
@@ -18,14 +18,15 @@ export default async function ActivitiesPage({
 
   return (
     <div className="w-full pb-12">
-      {/* <ActivitiesHero activities={result.items} /> */}
       <ExploreActivitiesSection />
       <TrendingActivitiesSection activities={result.items} />
-      <AllActivitiesSection
-        activities={result.items}
-        category={category}
-        when={when}
-      />
+      <Suspense fallback={null}>
+        <AllActivitiesSection
+          activities={result.items}
+          category={category}
+          when={when}
+        />
+      </Suspense>
     </div>
   );
 }

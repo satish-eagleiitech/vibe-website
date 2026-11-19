@@ -56,18 +56,26 @@ export function playItemSports(item: PlayItem): string[] {
   return item.sport ? [item.sport] : [];
 }
 
+function normalizeSport(value: string) {
+  return value.toLowerCase().replace(/[-_\s]+/g, " ").trim();
+}
+
 /** Venue tag match first; falls back to text search for items without tags */
 export function matchesPlaySport(item: PlayItem, sportId?: string) {
   if (!sportId) return true;
   const entry = findPlaySport(sportId);
-  const label = (entry?.label ?? sportId.replace(/-/g, " ")).toLowerCase();
+  const label = normalizeSport(entry?.label ?? sportId);
+  const idNorm = normalizeSport(sportId);
 
   if (item.sports?.length) {
-    return item.sports.some((tag) => tag.toLowerCase() === label);
+    return item.sports.some((tag) => {
+      const t = normalizeSport(tag);
+      return t === label || t === idNorm || t.includes(label) || label.includes(t);
+    });
   }
 
-  const hay = `${item.sport ?? ""} ${item.title} ${item.description}`.toLowerCase();
-  return hay.includes(label);
+  const hay = normalizeSport(`${item.sport ?? ""} ${item.title} ${item.description}`);
+  return hay.includes(label) || hay.includes(idNorm);
 }
 
 export function isPlayEvent(item: PlayItem) {

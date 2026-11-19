@@ -371,9 +371,6 @@ export function MovieBrowser({ latest, catalogs }: MovieBrowserProps) {
                 Grab best seats at theatres around you
               </p>
             </div>
-            <p className="text-[14px] font-semibold text-text-muted">
-              {visible.length} {visible.length === 1 ? "title" : "titles"}
-            </p>
           </div>
         </Container>
 

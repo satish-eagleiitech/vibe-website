@@ -66,7 +66,7 @@ export function EventCategoryView({
         <Container className="pt-6 pb-10 md:pt-8 md:pb-12">
           <EventSubcategoryGrid
             items={category.subcategories}
-            meta={category.label}
+            events={events}
           />
 
           <h2 className="mt-10 text-[20px] font-extrabold tracking-tight text-text md:text-[24px]">

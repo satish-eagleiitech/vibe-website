@@ -76,10 +76,6 @@ export default function ContactPage() {
               Prefer self-serve? Check the{" "}
               <Link href="/faq" className="font-semibold text-accent underline">
                 FAQs
-              </Link>{" "}
-              or{" "}
-              <Link href="/help-center" className="font-semibold text-accent underline">
-                Help center
               </Link>
               .
             </p>

@@ -2,8 +2,9 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { MapPin } from "lucide-react";
 import { RailPager, useRailPager } from "@/components/common/RailPager";
+import { SaveButton } from "@/components/common/SaveButton";
+import { EventCardMeta } from "@/components/events/EventCardMeta";
 import type { LiveEvent } from "@/types/event";
 import { trackRecentView } from "@/lib/recent/storage";
 
@@ -37,20 +38,26 @@ export function EventCard({ event, className = "" }: EventCardProps) {
           className="object-cover transition-transform duration-300 group-hover:scale-105"
           sizes="240px"
         />
-      </div>
-      <div className="pt-3">
-        <div className="flex items-start gap-1 text-[12px] text-accent">
-          <MapPin className="mt-0.5 size-3.5 shrink-0" />
-          <span className="line-clamp-1">{event.venue}</span>
+        <div className="absolute top-2.5 right-2.5 z-10">
+          <SaveButton
+            label={`Save ${event.title}`}
+            itemId={event.id}
+            title={event.title}
+            href={`/events/${event.id}`}
+            imageUrl={event.imageUrl}
+            meta={[event.venue, event.city].filter(Boolean).join(" · ")}
+            category="events"
+            tone="solid"
+          />
         </div>
-        <h3 className="mt-1 line-clamp-2 text-[15px] font-bold text-text">
-          {event.title}
-        </h3>
-        <p className="mt-0.5 text-[12px] text-text-secondary">
-          {event.month} {event.day}
-          {event.city ? ` · ${event.city}` : ""}
-        </p>
       </div>
+      <EventCardMeta
+        title={event.title}
+        day={event.day}
+        month={event.month}
+        venue={event.venue}
+        city={event.city}
+      />
     </Link>
   );
 }

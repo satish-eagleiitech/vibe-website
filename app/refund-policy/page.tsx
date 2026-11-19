@@ -1,4 +1,5 @@
 import { PolicyPage, type PolicySection } from "@/components/legal/PolicyPage";
+import { termsNav } from "@/lib/data/termsOfService";
 
 export const metadata = { title: "Cancellation & Refund Policy" };
 
@@ -25,7 +26,7 @@ const sections: PolicySection[] = [
       "Movies: tickets can be cancelled from the ticket page before showtime, where the cinema allows cancellation. Food and beverage add-ons are refunded only if the cinema permits it.",
       "Events: tickets are non-cancellable and non-refundable unless the organiser cancels or reschedules the event.",
       "Activities: cancellation is allowed only as per the operator's policy shown at checkout. Date-specific passes cannot be moved to another date.",
-      "Play (sports venues): free cancellation up to 6 hours before your slot. Cancellations within 6 hours of the slot, or no-shows, are not refunded.",
+      "Play (sports venues): more than 24 hours before slot — 100% refund of base booking price; 12–24 hours — 50% refund; within 12 hours or no-show — no refund. Convenience fee is not refunded. Facility-specific terms on the venue page prevail if different.",
     ],
   },
   {
@@ -66,6 +67,7 @@ export default function RefundPage() {
       intro="This policy explains when you can cancel a booking made on VYBE, how much is refunded, and when the money reaches you."
       sections={sections}
       current="/refund-policy"
+      nav={termsNav}
     />
   );
 }

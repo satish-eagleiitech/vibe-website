@@ -2,6 +2,8 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { SaveButton } from "@/components/common/SaveButton";
+import { EventCardMeta } from "@/components/events/EventCardMeta";
 import { trackRecentView } from "@/lib/recent/storage";
 import type { LiveEvent } from "@/types/event";
 
@@ -10,9 +12,6 @@ type EventListingCardProps = {
 };
 
 export function EventListingCard({ event }: EventListingCardProps) {
-  const dateLabel = [event.month, event.day].filter(Boolean).join(" ");
-  const meta = [dateLabel, event.venue].filter(Boolean).join(" · ");
-
   return (
     <Link
       href={`/events/${event.id}`}
@@ -36,13 +35,26 @@ export function EventListingCard({ event }: EventListingCardProps) {
           className="object-cover transition-transform duration-300 group-hover:scale-[1.04]"
           sizes="(max-width: 640px) 46vw, (max-width: 1024px) 25vw, 20vw"
         />
+        <div className="absolute top-2 right-2 z-10">
+          <SaveButton
+            label={`Save ${event.title}`}
+            itemId={event.id}
+            title={event.title}
+            href={`/events/${event.id}`}
+            imageUrl={event.imageUrl}
+            meta={[event.venue, event.city].filter(Boolean).join(" · ")}
+            category="events"
+            tone="solid"
+          />
+        </div>
       </div>
-      <h3 className="mt-2 line-clamp-1 text-[13px] font-semibold text-text sm:text-[14px]">
-        {event.title}
-      </h3>
-      <p className="mt-0.5 line-clamp-1 text-[12px] text-text-secondary">
-        {meta || event.category}
-      </p>
+      <EventCardMeta
+        title={event.title}
+        day={event.day}
+        month={event.month}
+        venue={event.venue}
+        city={event.city}
+      />
     </Link>
   );
 }

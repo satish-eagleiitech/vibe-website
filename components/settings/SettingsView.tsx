@@ -183,10 +183,10 @@ export function SettingsView() {
 
       <SettingsSection title="Support & legal">
         <SettingsLinkRow
-          href="/help-center"
+          href="/faq"
           icon={LifeBuoy}
-          title="Help & safety"
-          subtitle="FAQs, contact and safety tips"
+          title="FAQ"
+          subtitle="Quick answers about bookings and your account"
         />
         <div className="h-px bg-border" />
         <SettingsLinkRow

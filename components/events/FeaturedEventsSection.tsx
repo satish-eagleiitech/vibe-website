@@ -2,10 +2,11 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { MapPin } from "lucide-react";
 import { Container } from "@/components/common/Container";
 import { EmptyState } from "@/components/common/EmptyState";
 import { RailPager, useRailPager } from "@/components/common/RailPager";
+import { SaveButton } from "@/components/common/SaveButton";
+import { EventCardMeta } from "@/components/events/EventCardMeta";
 import { trackRecentView } from "@/lib/recent/storage";
 import type { LiveEvent } from "@/types/event";
 
@@ -53,8 +54,6 @@ export function FeaturedEventsSection({ events }: FeaturedEventsSectionProps) {
 }
 
 function FeaturedEventCard({ event }: { event: LiveEvent }) {
-  const dateLabel = [event.month, event.day].filter(Boolean).join(" ");
-
   return (
     <Link
       href={`/events/${event.id}`}
@@ -79,19 +78,26 @@ function FeaturedEventCard({ event }: { event: LiveEvent }) {
           className="object-cover transition-transform duration-300 group-hover:scale-[1.03]"
           sizes="200px"
         />
+        <div className="absolute top-2 right-2 z-10">
+          <SaveButton
+            label={`Save ${event.title}`}
+            itemId={event.id}
+            title={event.title}
+            href={`/events/${event.id}`}
+            imageUrl={event.imageUrl}
+            meta={[event.venue, event.city].filter(Boolean).join(" · ")}
+            category="events"
+            tone="solid"
+          />
+        </div>
       </div>
-      <div className="pt-2.5">
-        <p className="inline-flex items-start gap-1 text-[12px] text-text-secondary">
-          <MapPin className="mt-0.5 size-3.5 shrink-0" />
-          <span className="line-clamp-1">{event.venue}</span>
-        </p>
-        <h3 className="mt-1 line-clamp-2 text-[14px] font-extrabold leading-snug text-text sm:text-[15px]">
-          {event.title}
-        </h3>
-        <p className="mt-1 text-[12px] text-text-secondary">
-          {dateLabel ? `${dateLabel} onwards` : event.city}
-        </p>
-      </div>
+      <EventCardMeta
+        title={event.title}
+        day={event.day}
+        month={event.month}
+        venue={event.venue}
+        city={event.city}
+      />
     </Link>
   );
 }

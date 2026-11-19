@@ -1,10 +1,11 @@
 "use client";
 
-import Link from "next/link";
-import { useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { ChevronDown, SlidersHorizontal } from "lucide-react";
 import { Container } from "@/components/common/Container";
 import { EmptyState } from "@/components/common/EmptyState";
+import { ListingFilterModal } from "@/components/common/ListingFilterModal";
 import { StickyFilterBar } from "@/components/common/StickyFilterBar";
 import { PlayVenueCard } from "@/components/play/PlayVenueCard";
 import { matchesPlaySport, playSports } from "@/lib/data/playSports";
@@ -16,43 +17,64 @@ type AllPlayVenuesSectionProps = {
   near?: string;
 };
 
-const QUICK_SPORTS = [
-  "badminton",
-  "box-cricket",
-  "pickleball",
-  "turf-football",
-] as const;
+const QUICK_SPORTS = playSports.slice(0, 4);
 
 export function AllPlayVenuesSection({
   venues,
-  sport,
-  near,
+  sport: sportProp = "",
+  near: nearProp = "",
 }: AllPlayVenuesSectionProps) {
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const [sport, setSport] = useState(sportProp);
+  const [near, setNear] = useState(nearProp);
+  const [filterOpen, setFilterOpen] = useState(false);
+
+  useEffect(() => {
+    setSport(searchParams.get("sport") ?? sportProp ?? "");
+    setNear(searchParams.get("near") ?? nearProp ?? "");
+  }, [searchParams, sportProp, nearProp]);
+
   const filtered = useMemo(() => {
     return venues.filter((item) => {
-      if (!matchesPlaySport(item, sport)) return false;
+      if (!matchesPlaySport(item, sport || undefined)) return false;
       if (near === "5km" && (item.distanceKm ?? 99) > 5) return false;
       return true;
     });
   }, [venues, sport, near]);
 
-  function hrefFor(next: { sport?: string; near?: string }) {
+  function syncUrl(nextSport: string, nextNear: string) {
     const params = new URLSearchParams();
-    const nextSport = "sport" in next ? next.sport : sport;
-    const nextNear = "near" in next ? next.near : near;
     if (nextSport) params.set("sport", nextSport);
     if (nextNear) params.set("near", nextNear);
     const qs = params.toString();
-    return qs ? `/play?${qs}#all-venues` : "/play#all-venues";
+    router.replace(qs ? `${pathname}?${qs}#all-venues` : `${pathname}#all-venues`, {
+      scroll: false,
+    });
+  }
+
+  function selectSport(id: string) {
+    const next = sport === id ? "" : id;
+    setSport(next);
+    syncUrl(next, near);
+  }
+
+  function toggleNear() {
+    const next = near === "5km" ? "" : "5km";
+    setNear(next);
+    syncUrl(sport, next);
   }
 
   function chipClass(selected: boolean) {
-    return `shrink-0 rounded-full border px-3 py-1.5 text-[12px] font-bold ${
+    return `shrink-0 rounded-full border px-3 py-1.5 text-[12px] font-bold transition-colors ${
       selected
         ? "border-accent bg-accent-soft text-accent"
         : "border-border bg-surface text-text hover:border-accent/40"
     }`;
   }
+
+  const filterActive = Boolean(sport || near);
 
   return (
     <section
@@ -60,50 +82,45 @@ export function AllPlayVenuesSection({
       className="scroll-mt-[var(--vybe-header-h)] w-full overflow-x-clip pt-3 md:pt-6 lg:pt-10"
     >
       <Container>
-        <div className="mb-5 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between md:mb-6">
-          <div>
-            <h2 className="text-[20px] font-extrabold tracking-tight text-text md:text-[24px]">
-              All Sports Venues
-            </h2>
-            <p className="mt-0.5 text-[13px] text-text-secondary">
-              Courts, turf and game time near you
-            </p>
-          </div>
-          <p className="text-[14px] font-semibold text-text-muted">
-            {filtered.length} {filtered.length === 1 ? "venue" : "venues"}
+        <div className="mb-5 md:mb-6">
+          <h2 className="text-[20px] font-extrabold tracking-tight text-text md:text-[24px]">
+            All Sports Venues
+          </h2>
+          <p className="mt-0.5 text-[13px] text-text-secondary">
+            Courts, turf and game time near you
           </p>
         </div>
       </Container>
 
       <StickyFilterBar pinToViewport>
-        <span className="inline-flex shrink-0 items-center gap-1 rounded-full border border-border bg-surface px-2.5 py-1.5 text-[12px] font-bold text-text">
+        <button
+          type="button"
+          onClick={() => setFilterOpen(true)}
+          className={`inline-flex shrink-0 items-center gap-1 rounded-full border px-2.5 py-1.5 text-[12px] font-bold transition-colors ${
+            filterActive
+              ? "border-accent bg-accent-soft text-accent"
+              : "border-border bg-surface text-text hover:border-accent/40"
+          }`}
+        >
           <SlidersHorizontal className="size-3" />
           Filters
-          <ChevronDown className="size-3 text-text-muted" />
-        </span>
+          <ChevronDown className="size-3 opacity-70" />
+        </button>
 
-        <Link
-          href={hrefFor({ near: near === "5km" ? "" : "5km" })}
-          scroll={false}
-          className={chipClass(near === "5km")}
-        >
+        <button type="button" onClick={toggleNear} className={chipClass(near === "5km")}>
           Under 5 km
-        </Link>
+        </button>
 
-        {QUICK_SPORTS.map((id) => {
-          const label = playSports.find((item) => item.id === id)?.label ?? id;
-          const selected = sport === id;
-          return (
-            <Link
-              key={id}
-              href={hrefFor({ sport: selected ? "" : id })}
-              scroll={false}
-              className={chipClass(selected)}
-            >
-              {label}
-            </Link>
-          );
-        })}
+        {QUICK_SPORTS.map((item) => (
+          <button
+            key={item.id}
+            type="button"
+            onClick={() => selectSport(item.id)}
+            className={chipClass(sport === item.id)}
+          >
+            {item.label}
+          </button>
+        ))}
       </StickyFilterBar>
 
       <Container className="pt-6 pb-10 md:pt-8 md:pb-12">
@@ -117,6 +134,28 @@ export function AllPlayVenuesSection({
           </div>
         )}
       </Container>
+
+      <ListingFilterModal
+        open={filterOpen}
+        values={{ sport }}
+        panels={[
+          {
+            id: "sport",
+            label: "Sport",
+            options: playSports.map((item) => ({ id: item.id, label: item.label })),
+          },
+        ]}
+        onClose={() => setFilterOpen(false)}
+        onClear={() => {
+          setSport("");
+          syncUrl("", near);
+        }}
+        onApply={(values) => {
+          const nextSport = values.sport ?? "";
+          setSport(nextSport);
+          syncUrl(nextSport, near);
+        }}
+      />
     </section>
   );
 }

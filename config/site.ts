@@ -33,7 +33,8 @@ export const siteConfig = {
       { href: "/partner-with-us", label: "Partner With Us" },
     ],
     support: [
-      { href: "/help-center", label: "Help & FAQ" },
+      { href: "/faq", label: "FAQ" },
+
       { href: "/terms-of-service", label: "Terms of Service" },
       { href: "/privacy-policy", label: "Privacy Policy" },
       { href: "/refund-policy", label: "Refund Policy" },
