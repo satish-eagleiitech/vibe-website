@@ -30,11 +30,7 @@ export function CategoryCard({ category }: CategoryCardProps) {
         height={720}
         unoptimized
         className="pointer-events-none absolute right-0 bottom-0 z-[1] w-auto max-w-none select-none"
-        style={
-          category.id === "events"
-            ? { height: "98%", width: "auto", transform: "translate(6%, 4%)" }
-            : { height: "92%", width: "auto", transform: "translate(10%, 10%)" }
-        }
+        style={{ height: "85%", width: "auto", transform: "translate(2%, 4%)" }}
       />
       <div className="relative z-[2] flex h-full max-w-[46%] flex-col justify-between p-4 md:p-5">
         <div>
