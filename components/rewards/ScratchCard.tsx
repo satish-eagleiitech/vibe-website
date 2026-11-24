@@ -17,8 +17,8 @@ function paintFoil(canvas: HTMLCanvasElement) {
   ctx.scale(dpr, dpr);
 
   const gradient = ctx.createLinearGradient(0, 0, rect.width, rect.height);
-  gradient.addColorStop(0, "#ff005b");
-  gradient.addColorStop(0.55, "#ff4d8d");
+  gradient.addColorStop(0, "#ff4d2d");
+  gradient.addColorStop(0.55, "#ff7a5c");
   gradient.addColorStop(1, "#c8004a");
   ctx.fillStyle = gradient;
   ctx.fillRect(0, 0, rect.width, rect.height);

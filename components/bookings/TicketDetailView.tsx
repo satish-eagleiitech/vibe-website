@@ -161,7 +161,7 @@ export function TicketDetailView({ id }: { id: string }) {
     const url = window.location.href;
     try {
       if (navigator.share) {
-        await navigator.share({ title: current.title, text: `My VYBE ticket for ${current.title}`, url });
+        await navigator.share({ title: current.title, text: `My VYBZ ticket for ${current.title}`, url });
       } else {
         await navigator.clipboard.writeText(url);
       }
@@ -326,7 +326,7 @@ export function TicketDetailView({ id }: { id: string }) {
               type="button"
               onClick={share}
               disabled={cancelled}
-              className="flex flex-col items-center gap-1.5 rounded-[20px] bg-accent px-3 py-3.5 text-[12px] font-extrabold text-white shadow-[0_10px_24px_rgba(255,0,91,0.25)] transition-opacity hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-40 xl:flex-row xl:justify-center xl:gap-2 xl:text-[13px]"
+              className="flex flex-col items-center gap-1.5 rounded-[20px] bg-accent px-3 py-3.5 text-[12px] font-extrabold text-white shadow-[0_10px_24px_rgba(255,77,45,0.25)] transition-opacity hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-40 xl:flex-row xl:justify-center xl:gap-2 xl:text-[13px]"
             >
               {shared ? <Check className="size-4" /> : <Share2 className="size-4" />}
               {shared ? "Shared" : "Share ticket"}

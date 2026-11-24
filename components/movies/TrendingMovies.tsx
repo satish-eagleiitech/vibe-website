@@ -24,7 +24,7 @@ export function TrendingMovies({
             <h2 className="text-[28px] font-extrabold tracking-tight text-text md:text-[34px]">
               Movies
             </h2>
-            <p className="mt-1 text-[15px] text-text-secondary">
+            <p className="mt-1 text-[15px] text-accent">
               Cinemas near you
             </p>
           </div>

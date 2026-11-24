@@ -63,7 +63,7 @@ export function ActivitiesForYouSection() {
         <h2 className="text-[clamp(2.4rem,4.6vw,3.7rem)] leading-[0.95] font-extrabold tracking-[-0.035em] text-[#1c2a44] uppercase dark:text-text">
           Activities for you
         </h2>
-        <p className="mt-3.5 text-[16.5px] leading-[1.4] font-medium text-[#8d929a] dark:text-text-muted">
+        <p className="mt-3.5 text-[16.5px] leading-[1.4] font-medium text-accent">
           Go-karts, bowling, parks and a day out with the kids.
         </p>
       </header>

@@ -85,7 +85,7 @@ function uniqueTiles(activities: Activity[]): Omit<GridTile, "height">[] {
     seen.add(src);
     tiles.push({
       src,
-      alt: "Activity on VYBE",
+      alt: "Activity on VYBZ",
       href: "/activities#all-activities",
     });
   }
@@ -117,13 +117,13 @@ export function ActivitiesHero({ activities }: ActivitiesHeroProps) {
     >
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_80%_60%_at_15%_40%,rgb(255_0_91_/_0.12)_0%,transparent_55%)] dark:bg-[radial-gradient(ellipse_80%_60%_at_15%_40%,rgb(255_0_91_/_0.22)_0%,transparent_55%)]"
+        className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_80%_60%_at_15%_40%,rgb(255_77_45_/_0.12)_0%,transparent_55%)] dark:bg-[radial-gradient(ellipse_80%_60%_at_15%_40%,rgb(255_77_45_/_0.22)_0%,transparent_55%)]"
       />
 
       <div className="relative z-10 mx-auto grid w-full max-w-[1400px] items-start gap-10 px-5 pt-6 pb-10 sm:px-8 md:grid-cols-[minmax(0,42%)_minmax(0,58%)] md:gap-8 md:px-10 md:pt-10 md:pb-14 lg:gap-10 lg:px-14 xl:px-16">
         <div className="max-w-[520px] md:pt-4">
           <p className="text-[12px] font-bold tracking-[0.16em] text-accent uppercase">
-            Activities on VYBE
+            Activities on VYBZ
           </p>
           <h1 id="activities-hero-heading" className="sr-only">
             Explore activities in Hyderabad
@@ -149,7 +149,7 @@ export function ActivitiesHero({ activities }: ActivitiesHeroProps) {
           <div className="mt-8 flex flex-wrap items-center gap-4">
             <Link
               href="/activities#all-activities"
-              className="inline-flex items-center gap-2 rounded-xl bg-accent px-6 py-3.5 text-[15px] font-extrabold text-white shadow-[0_12px_36px_rgba(255,0,91,0.35)]"
+              className="inline-flex items-center gap-2 rounded-xl bg-accent px-6 py-3.5 text-[15px] font-extrabold text-white shadow-[0_12px_36px_rgba(255,77,45,0.35)]"
             >
               Browse activities
             </Link>

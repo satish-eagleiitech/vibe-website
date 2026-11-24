@@ -99,7 +99,7 @@ export function LocationGate() {
     <div className="fixed inset-0 z-[90] flex items-end justify-center bg-black/45 p-0 sm:items-center sm:p-6">
       <div className="w-full max-w-[440px] rounded-t-[28px] bg-white px-6 pt-8 pb-7 text-center shadow-2xl sm:rounded-[28px]">
         <Image
-          src="/images/location-pin.jpg"
+          src="/images/location-pin-v2.jpg"
           alt=""
           width={280}
           height={220}

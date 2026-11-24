@@ -144,7 +144,7 @@ export function PosterDetailLayout({
               {bookLabel}
             </Link>
             <p className="mt-2.5 text-center text-[12px] text-text-muted">
-              Instant confirmation on VYBE
+              Instant confirmation on VYBZ
             </p>
           </div>
         </div>

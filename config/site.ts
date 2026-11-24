@@ -1,13 +1,13 @@
 export const siteConfig = {
-  name: "VYBE",
+  name: "vybz",
   tagline: "Plans • Events • Experiences",
-  title: "VYBE — Plans • Events • Experiences",
+  title: "vybz — Plans • Events • Experiences",
   description:
-    "Discover movies, events, activities and play near you with VYBE.",
+    "Discover movies, events, activities and play near you with vybz.",
   defaultCity: "Hyderabad",
   availableCities: ["Hyderabad", "Bengaluru", "Mumbai", "Delhi NCR"] as const,
   contact: {
-    email: "hello@vybe.app",
+    email: "hello@vybz.app",
     phone: "+91 40 4567 8900",
     addressLines: [
       "Raidurg Metro Pillar, HITEC City",

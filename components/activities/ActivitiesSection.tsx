@@ -18,7 +18,7 @@ export function ActivitiesSection({ activities }: ActivitiesSectionProps) {
             <h2 className="text-[28px] font-extrabold tracking-tight text-text md:text-[34px]">
               Activities
             </h2>
-            <p className="mt-1 text-[15px] text-text-secondary">
+            <p className="mt-1 text-[15px] text-accent">
               Try fun experiences near you
             </p>
           </div>

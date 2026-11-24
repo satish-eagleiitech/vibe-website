@@ -93,7 +93,7 @@ export default async function Home({
 
       {/* 8. Moments */}
       <VideoRailSection
-        title="Moments on VYBE"
+        title="Moments on VYBZ"
         description="comedy, club scenes and play drops around you"
         href="/events"
         items={landingMomentsVideos}

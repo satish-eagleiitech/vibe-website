@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useRef, useState, useSyncExternalStore } from "react";
@@ -161,14 +160,16 @@ export function MobileNavMenu({ chrome }: { chrome: string }) {
                       aria-current={active ? "page" : undefined}
                       onClick={() => setOpen(false)}
                       className={`${rowClass} ${
-                        active ? "bg-surface-muted text-accent dark:bg-white/8" : idleRow
+                        active
+                          ? "bg-surface-muted text-accent dark:bg-white/8"
+                          : `${idleRow} hover:text-accent`
                       }`}
                     >
                       <span
                         className={`${iconTile} ${
                           active
                             ? "bg-accent-soft text-accent"
-                            : "bg-surface-muted text-text group-hover:bg-bg dark:bg-white/8 dark:text-white"
+                            : "bg-surface-muted text-text group-hover:bg-accent-soft group-hover:text-accent dark:bg-white/8 dark:text-white"
                         }`}
                       >
                         <TabIcon src={TAB_ICONS[link.href]} />
@@ -257,12 +258,11 @@ export function MobileNavMenu({ chrome }: { chrome: string }) {
             }}
             className="flex w-full items-center gap-3 rounded-2xl bg-surface-muted px-3 py-3 text-left transition-colors hover:bg-border dark:bg-white/8 dark:hover:bg-white/12"
           >
-            <span className="size-11 shrink-0 overflow-hidden rounded-full shadow-[0_4px_10px_rgba(0,0,0,0.22)]">
-              <Image
-                src="/images/profile-avatar-3d.png"
+            <span className="inline-flex size-11 shrink-0 items-center justify-center overflow-hidden rounded-full bg-accent-soft ring-1 ring-black/10 dark:ring-white/15">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="/images/profile-avatar.png"
                 alt=""
-                width={88}
-                height={88}
                 className="size-full object-cover"
               />
             </span>

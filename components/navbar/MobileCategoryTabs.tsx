@@ -71,7 +71,7 @@ export function MobileCategoryTabs() {
               } ${
                 active
                   ? "bg-accent-soft text-accent"
-                  : "text-text-secondary hover:bg-surface-muted hover:text-text"
+                  : "text-text-secondary hover:bg-accent-soft hover:text-accent"
               }`}
             >
               {showIcons ? (

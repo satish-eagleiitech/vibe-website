@@ -30,7 +30,7 @@ function NavTab({
       className={`inline-flex shrink-0 items-center gap-1.5 px-1.5 py-1 text-[13px] font-semibold transition-colors sm:px-2 ${
         active
           ? "text-accent"
-          : "text-text/75 hover:text-text dark:text-white/70 dark:hover:text-white"
+          : "text-text/75 hover:text-accent dark:text-white/70 dark:hover:text-accent"
       }`}
     >
       <TabIcon src={icon} />
@@ -55,17 +55,16 @@ export function TopDock() {
     ? "bg-(--vybe-nav) shadow-[0_8px_18px_rgba(0,0,0,0.12)] backdrop-blur-none dark:shadow-[0_10px_22px_rgba(0,0,0,0.45)]"
     : "bg-white/40 shadow-none backdrop-blur-xl dark:bg-black/35";
 
+  const iconChrome = `grid size-9 place-items-center rounded-full ring-1 ring-black/10 transition-[background-color,box-shadow,backdrop-filter] duration-300 dark:ring-white/15 ${chrome}`;
+
   return (
-    <div className="pointer-events-auto relative grid w-full grid-cols-[auto_minmax(0,1fr)_auto] items-start gap-3 px-3 sm:gap-4 sm:px-4">
-      <div className="relative z-10 flex min-w-0 items-center gap-1.5 self-stretch sm:gap-2">
+    <div className="pointer-events-auto relative grid w-full grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-3 px-3 sm:gap-4 sm:px-4">
+      <div className="relative z-10 flex h-11 min-w-0 items-center gap-1.5 sm:gap-2">
         <Logo priority />
         <LocationButton
           variant="dock"
           overlay={
-            (pathname === "/" ||
-              /^\/movies\/[^/]+$/.test(pathname) ||
-              /^\/movies\/[^/]+\/seats$/.test(pathname)) &&
-            !solid
+            (pathname === "/" || /^\/movies\/[^/]+$/.test(pathname)) && !solid
           }
         />
       </div>
@@ -74,7 +73,7 @@ export function TopDock() {
         <div
           className={`max-w-full overflow-hidden rounded-b-[28px] transition-[background-color,box-shadow,backdrop-filter] duration-300 ${chrome}`}
         >
-          <div className="flex min-w-0 items-center px-5 pt-2.5 pb-3 sm:px-6">
+          <div className="flex h-11 min-w-0 items-center px-5 sm:px-6">
             <nav
               aria-label="Primary"
               className="flex min-w-0 items-center justify-center gap-1 overflow-x-auto hide-scrollbar sm:gap-2"
@@ -97,19 +96,17 @@ export function TopDock() {
         </div>
       </div>
 
-      <div className="flex shrink-0 items-center gap-1.5 self-stretch">
+      <div className="flex h-11 shrink-0 items-center gap-1.5">
         <div className="flex items-center gap-1.5 max-[769px]:hidden">
-          <div
-            className={`grid size-9 place-items-center rounded-full ring-1 ring-black/10 transition-[background-color,box-shadow,backdrop-filter] duration-300 dark:ring-white/15 ${chrome}`}
-          >
+          <div className={iconChrome}>
             <SearchBar variant="dock" />
           </div>
-          <div
-            className={`grid size-9 place-items-center rounded-full ring-1 ring-black/10 transition-[background-color,box-shadow,backdrop-filter] duration-300 dark:ring-white/15 ${chrome}`}
-          >
+          <div className={iconChrome}>
             <ThemeToggle dock />
           </div>
-          <ProfileLink dock />
+          <div className={iconChrome}>
+            <ProfileLink dock />
+          </div>
         </div>
         <div className="min-[769px]:hidden">
           <MobileNavMenu chrome={chrome} />

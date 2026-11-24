@@ -201,7 +201,7 @@ export function ActivityDetailView({ activity, related }: ActivityDetailViewProp
             />
             <DetailHighlightCard
               title="Good to know"
-              text={`${activity.category} · Family friendly · Instant VYBE confirmation`}
+              text={`${activity.category} · Family friendly · Instant VYBZ confirmation`}
             />
           </div>
 
@@ -274,7 +274,7 @@ export function ActivityDetailView({ activity, related }: ActivityDetailViewProp
               Book tickets
             </button>
             <p className="mt-3 text-center text-[12px] text-text-muted">
-              Instant confirmation on VYBE
+              Instant confirmation on VYBZ
             </p>
           </div>
         </aside>

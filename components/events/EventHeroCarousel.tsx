@@ -30,7 +30,7 @@ function buildTiles(events: LiveEvent[]): GridTile[] {
     const event = withImages[index % Math.max(withImages.length, 1)];
     return {
       src: event?.imageUrl || "/images/events/event-1.jpg",
-      alt: event?.title || "Event on VYBE",
+      alt: event?.title || "Event on VYBZ",
       href: event ? `/events/${event.id}` : "/events#all-events",
       height: heights[index],
     };
@@ -47,16 +47,16 @@ export function EventHeroCarousel({ events }: EventHeroCarouselProps) {
   const col3 = [tiles[5], tiles[6]];
 
   return (
-    <section className="relative  w-full overflow-hidden bg-bg text-text md:-mt-[100px] dark:bg-[#0b0b0f] dark:text-white">
+    <section className="relative w-full overflow-hidden bg-bg text-text md:-mt-[100px] dark:bg-[#0b0b0f] dark:text-white">
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_80%_60%_at_15%_40%,rgb(255_0_91_/_0.12)_0%,transparent_55%)] dark:bg-[radial-gradient(ellipse_80%_60%_at_15%_40%,rgb(255_0_91_/_0.22)_0%,transparent_55%),linear-gradient(115deg,#09090b_0%,#121018_48%,#1a0f16_100%)]"
+        className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_80%_60%_at_15%_40%,rgb(255_77_45_/_0.12)_0%,transparent_55%)] dark:bg-[radial-gradient(ellipse_80%_60%_at_15%_40%,rgb(255_77_45_/_0.22)_0%,transparent_55%),linear-gradient(115deg,#09090b_0%,#121018_48%,#1a0f16_100%)]"
       />
 
       <div className="relative z-10 mx-auto grid min-h-[100dvh] w-full max-w-[1400px] items-center gap-10 px-5 pt-24 pb-12 sm:px-8 md:grid-cols-2 md:gap-8 md:px-10 md:pt-28 md:pb-16 lg:gap-12 lg:px-14 xl:px-16">
         <div className="max-w-[520px]">
           <p className="text-[12px] font-bold tracking-[0.16em] text-accent uppercase">
-            Events on VYBE
+            Events on VYBZ
           </p>
           <h1 className="mt-3 text-[40px] leading-[1.05] font-extrabold tracking-tight text-text sm:text-[48px] md:text-[52px] lg:text-[58px] dark:text-white">
             Event ticketing made simple
@@ -64,13 +64,13 @@ export function EventHeroCarousel({ events }: EventHeroCarouselProps) {
           <p className="mt-4 text-[15px] leading-7 text-text-secondary md:text-[16px] md:leading-7 dark:text-white/70">
             Discover concerts, comedy, nightlife, and city experiences near you.
             Fair prices, fast booking, and human support — all the tools you need
-            in one VYBE flow.
+            in one VYBZ flow.
           </p>
 
           <div className="mt-8 flex flex-wrap items-center gap-4">
             <Link
               href="/events#all-events"
-              className="inline-flex items-center gap-2 rounded-xl bg-accent px-6 py-3.5 text-[15px] font-extrabold text-white shadow-[0_12px_36px_rgba(255,0,91,0.35)] transition-transform hover:scale-[1.02]"
+              className="inline-flex items-center gap-2 rounded-xl bg-accent px-6 py-3.5 text-[15px] font-extrabold text-white shadow-[0_12px_36px_rgba(255,77,45,0.35)] transition-transform hover:scale-[1.02]"
             >
               <Ticket className="size-5" />
               Explore events
@@ -79,7 +79,7 @@ export function EventHeroCarousel({ events }: EventHeroCarouselProps) {
               href="/list-your-events"
               className="inline-flex items-center gap-1.5 text-[15px] font-bold text-text underline decoration-border underline-offset-4 transition-colors hover:text-accent hover:decoration-accent dark:text-white dark:decoration-white/40"
             >
-              Host on VYBE
+              Host on VYBZ
               <ArrowRight className="size-4" />
             </Link>
           </div>

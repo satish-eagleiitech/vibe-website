@@ -27,7 +27,7 @@ export const PROFILE_REWARD_PROMOS: ProfileRewardPromo[] = [
   {
     id: "member",
     title: "Member rewards",
-    subtitle: "Save more each time you book on VYBE",
+    subtitle: "Save more each time you book on VYBZ",
     href: "/rewards",
     background: "#FFD6CC",
     imageUrl: "/images/profile/rewards/member.png",

@@ -93,7 +93,7 @@ export function ProfileView() {
           <button
             type="button"
             onClick={() => setEditing(true)}
-            className="inline-flex w-fit shrink-0 items-center gap-2 self-start rounded-full bg-accent px-5 py-2.5 text-[13px] font-bold text-white shadow-[0_10px_24px_rgba(255,0,91,0.28)] transition-opacity hover:opacity-90 sm:self-center sm:px-6 sm:py-3 sm:text-[14px]"
+            className="inline-flex w-fit shrink-0 items-center gap-2 self-start rounded-full bg-accent px-5 py-2.5 text-[13px] font-bold text-white shadow-[0_10px_24px_rgba(255,77,45,0.28)] transition-opacity hover:opacity-90 sm:self-center sm:px-6 sm:py-3 sm:text-[14px]"
           >
             <Pencil className="size-4" />
             Edit profile
@@ -206,7 +206,7 @@ export function ProfileView() {
             </Link>
           </div>
         ) : (
-          <ul className="space-y-3">
+          <ul className="space-y-5">
             {recent.map((booking) => (
               <li key={booking.id}>
                 <BookingTicketStub booking={booking} />

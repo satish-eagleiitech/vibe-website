@@ -92,7 +92,7 @@ export const fallbackCategories: CategoryCardData[] = [
     title: "Events",
     subtitle: "Live nights worth going out",
     href: "/events",
-    imageUrl: "/images/profile/categories/events-card.png",
+    imageUrl: "/images/profile/categories/events-card.png?v=6",
     gradientFrom: categoryColors.events.from,
     gradientTo: categoryColors.events.to,
   },

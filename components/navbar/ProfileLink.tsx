@@ -1,6 +1,6 @@
 "use client";
 
-import Image from "next/image";
+import { User } from "lucide-react";
 import { useRouter } from "next/navigation";
 import type { ReactNode } from "react";
 import { useLoginGate } from "@/components/auth/useLoginGate";
@@ -30,7 +30,7 @@ export function ProfileGateLink({
 }
 
 type ProfileLinkProps = {
-  /** Larger avatar that caps the top dock */
+  /** Match search / theme dock control style */
   dock?: boolean;
 };
 
@@ -44,19 +44,13 @@ export function ProfileLink({ dock = false }: ProfileLinkProps) {
         type="button"
         aria-label="Profile"
         onClick={() => gate(() => router.push("/profile"), true)}
-        className={`inline-flex shrink-0 items-center justify-center overflow-hidden rounded-full bg-transparent p-0 transition-opacity hover:opacity-90 ${
+        className={
           dock
-            ? "relative z-10 size-11 shadow-[0_8px_18px_rgba(0,0,0,0.28)]"
-            : "size-[34px] shadow-[0_4px_10px_rgba(0,0,0,0.22)]"
-        }`}
+            ? "focus-ring-none inline-flex size-9 shrink-0 items-center justify-center rounded-full text-text transition-colors hover:bg-black/[0.06] dark:text-white dark:hover:bg-white/10"
+            : "inline-flex size-9 shrink-0 items-center justify-center rounded-full text-text transition-colors hover:bg-black/[0.06] dark:hover:bg-white/10"
+        }
       >
-        <Image
-          src="/images/profile-avatar-3d.png"
-          alt=""
-          width={256}
-          height={256}
-          className="size-full object-cover"
-        />
+        <User className="size-[18px]" strokeWidth={1.8} />
       </button>
       {modal}
     </>

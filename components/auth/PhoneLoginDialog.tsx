@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { ChevronDown, X } from "lucide-react";
 import { useState } from "react";
@@ -56,7 +55,7 @@ export function PhoneLoginDialog({ open, onClose, onDone }: PhoneLoginDialogProp
   return (
     <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/55 px-4">
       <div className="w-full max-w-[420px] overflow-hidden rounded-[28px] bg-surface shadow-2xl">
-        <div className="relative bg-gradient-to-b from-[#2a0616] via-[#9d1248] to-accent px-6 pt-5 pb-8 text-center text-white">
+        <div className="relative bg-gradient-to-b from-[#2a0e08] via-[#c2410c] to-[#FF4D2D] px-6 pt-5 pb-8 text-center text-white">
           <button
             type="button"
             aria-label="Close"
@@ -65,14 +64,9 @@ export function PhoneLoginDialog({ open, onClose, onDone }: PhoneLoginDialogProp
           >
             <X className="size-5" />
           </button>
-          <Image
-            src="/logos/vybe-logo-dark.png?v=24"
-            alt="VYBE"
-            width={168}
-            height={64}
-            unoptimized
-            className="mx-auto h-12 w-auto"
-          />
+          <span className="font-heading mx-auto block text-center text-[36px] leading-none font-bold tracking-tight text-white lowercase">
+            vybz
+          </span>
           <p className="mx-auto mt-4 max-w-[260px] text-[13px] leading-relaxed text-white/90">
             Experience the best in Movies, Events, Activities, and Play.
           </p>

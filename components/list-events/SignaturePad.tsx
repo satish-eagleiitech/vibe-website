@@ -73,7 +73,7 @@ export function SignaturePad({ onClose, onSave }: SignaturePadProps) {
     <div className="fixed inset-0 z-[80] flex items-end justify-center bg-black/50 p-4 sm:items-center">
       <div className="w-full max-w-lg rounded-[24px] bg-surface p-5 shadow-2xl sm:p-6">
         <div className="flex items-center justify-between">
-          <p className="text-[13px] font-extrabold tracking-wide text-text">VYBE</p>
+          <p className="text-[13px] font-extrabold tracking-wide text-text">VYBZ</p>
           <button type="button" onClick={onClose} className="text-[13px] font-bold text-text-secondary">
             Close
           </button>
@@ -99,7 +99,7 @@ export function SignaturePad({ onClose, onSave }: SignaturePadProps) {
           onPointerLeave={end}
         />
         <p className="mt-3 text-center text-[12px] leading-relaxed text-text-secondary">
-          All the information will be used to create your digital signature on VYBE, against your VYBE account.
+          All the information will be used to create your digital signature on VYBZ, against your VYBZ account.
         </p>
         <button
           type="button"

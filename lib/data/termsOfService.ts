@@ -23,27 +23,27 @@ export const faqNav: PolicyNavItem[] = [{ href: "/faq", label: "FAQ" }];
 
 
 export const termsIntro =
-  "Thank you for using VYBE. These Terms of Service explain your rights and responsibilities when you access or use the VYBE website and related applications (collectively, the \"Platform\").";
+  "Thank you for using VYBZ. These Terms of Service explain your rights and responsibilities when you access or use the VYBZ website and related applications (collectively, the \"Platform\").";
 
 export const termsSections: PolicySection[] = [
   {
     id: "acceptance",
     heading: "Acceptance of Terms",
     paragraphs: [
-      "These Terms of Service (the \"Terms\") are intended to make you aware of your legal rights and responsibilities with respect to your access to and use of the VYBE Platform under the brand name \"VYBE\".",
-      "Please read these Terms carefully. By accessing or using the Platform, you agree to these Terms and enter into a legally binding contract with VYBE (\"VYBE\" / \"We\" / \"Us\" / \"Our\"). You may not use the Platform and/or its Services if you do not accept the Terms or are unable to be bound by them.",
+      "These Terms of Service (the \"Terms\") are intended to make you aware of your legal rights and responsibilities with respect to your access to and use of the VYBZ Platform under the brand name \"VYBZ\".",
+      "Please read these Terms carefully. By accessing or using the Platform, you agree to these Terms and enter into a legally binding contract with VYBZ (\"VYBZ\" / \"We\" / \"Us\" / \"Our\"). You may not use the Platform and/or its Services if you do not accept the Terms or are unable to be bound by them.",
       "By visiting our Platform and/or purchasing something from us, you engage in our Services and agree to be bound by these Terms, including any additional terms and policies referenced herein and/or available by hyperlink on the Platform. These Terms apply to all users of the Platform, including browsers, customers, merchants, and contributors of content.",
       "Your use of the Platform is also governed by our Privacy Policy available on the Platform (\"Privacy Policy\").",
       "These Terms may be updated from time to time. It is recommended that you review them each time you access the Platform. If there is any conflict between these Terms and any other terms on the Platform, these Terms will prevail.",
       "For the purposes of these Terms: \"Customer\" or \"You\" or \"Your\" refers to you as a customer of the Services — someone who accesses or uses the Services for sharing, displaying, hosting, publishing, transacting, or uploading information, views or pictures, including persons jointly participating in the Services.",
-      "\"Merchant\" means cinema/theatre partners, event organisers, activity operators, sports facilities/venues, or any other third party onboarded with VYBE.",
+      "\"Merchant\" means cinema/theatre partners, event organisers, activity operators, sports facilities/venues, or any other third party onboarded with VYBZ.",
     ],
   },
   {
     id: "services-overview",
     heading: "Services Overview",
     paragraphs: [
-      "VYBE is a platform for Customers to discover and book movies, events, activities, play (sports and recreational venues), and related ticketing listed by Merchants on the Platform from time to time (\"Services\"). Services on the Platform are available in select geographies in India.",
+      "VYBZ is a platform for Customers to discover and book movies, events, activities, play (sports and recreational venues), and related ticketing listed by Merchants on the Platform from time to time (\"Services\"). Services on the Platform are available in select geographies in India.",
     ],
   },
   {
@@ -70,16 +70,16 @@ export const termsSections: PolicySection[] = [
     paragraphs: [
       "\"Content\" includes (but is not limited to) reviews, images, photos, audio, video, location data, nearby places, and all other forms of information or data.",
       "\"Your Content\" or \"Customer Content\" means content that you upload, share or transmit in connection with the Services, such as likes, ratings, reviews, images, messages, profile information, or other materials displayed in your account.",
-      "\"Our Content\" means content that VYBE creates and makes available in connection with the Services, including visual interfaces, interactive features, graphics, design, compilation, software, aggregate ratings, reports and usage-related data, excluding Your Content and Third Party Content.",
-      "\"Third Party Content\" means content from parties other than VYBE or its customers, such as Merchants' content.",
+      "\"Our Content\" means content that VYBZ creates and makes available in connection with the Services, including visual interfaces, interactive features, graphics, design, compilation, software, aggregate ratings, reports and usage-related data, excluding Your Content and Third Party Content.",
+      "\"Third Party Content\" means content from parties other than VYBZ or its customers, such as Merchants' content.",
     ],
     subsections: [
       {
         heading: "Ownership of Our Content and Proprietary Rights",
         paragraphs: [
           "We are the sole and exclusive copyright owners of the Services and Our Content. We also exclusively own the copyrights, trademarks, service marks, logos, trade names, trade dress and other intellectual and proprietary rights (\"IP Rights\") associated with the Services and Our Content. You acknowledge that the Services contain original works developed through substantial time, effort and money and constitute valuable intellectual property for us.",
-          "You agree to protect VYBE's proprietary rights and to comply with reasonable written requests made by us or our licensors. Nothing in these Terms gives you a right to use any of VYBE's trade names, trademarks, logos, domain names or other brand features unless agreed otherwise in writing.",
-          "You agree not to use framing techniques to enclose any trademark or logo of VYBE, or remove, conceal or obliterate any copyright or proprietary notice. Infringement may lead to legal proceedings. You may not modify, reproduce, publicly display or exploit Our Content except as expressly authorised by VYBE.",
+          "You agree to protect VYBZ's proprietary rights and to comply with reasonable written requests made by us or our licensors. Nothing in these Terms gives you a right to use any of VYBZ's trade names, trademarks, logos, domain names or other brand features unless agreed otherwise in writing.",
+          "You agree not to use framing techniques to enclose any trademark or logo of VYBZ, or remove, conceal or obliterate any copyright or proprietary notice. Infringement may lead to legal proceedings. You may not modify, reproduce, publicly display or exploit Our Content except as expressly authorised by VYBZ.",
           "To the fullest extent permitted by law, we neither warrant nor represent that your use of materials on the Services will not infringe rights of third parties. Notify us promptly if you become aware of any claim that the Services infringe any rights.",
         ],
       },
@@ -91,9 +91,9 @@ export const termsSections: PolicySection[] = [
         ],
       },
       {
-        heading: "VYBE's License to Your Content",
+        heading: "VYBZ's License to Your Content",
         paragraphs: [
-          "By submitting Your Content, you irrevocably grant VYBE a perpetual, irrevocable, worldwide, non-exclusive, fully paid and royalty-free, assignable, sub-licensable and transferable license to use Your Content and all IP Rights therein for any purpose including API partnerships with third parties and in any media existing now or in future. \"Use\" includes copy, display, distribute, modify, translate, reformat, incorporate into advertisements and other works, analyse, promote, commercialise and create derivative works. You grant us the right to use the name or username you submit with Your Content, and you waive moral rights or attribution claims with respect to Your Content against VYBE, Customers and third-party services.",
+          "By submitting Your Content, you irrevocably grant VYBZ a perpetual, irrevocable, worldwide, non-exclusive, fully paid and royalty-free, assignable, sub-licensable and transferable license to use Your Content and all IP Rights therein for any purpose including API partnerships with third parties and in any media existing now or in future. \"Use\" includes copy, display, distribute, modify, translate, reformat, incorporate into advertisements and other works, analyse, promote, commercialise and create derivative works. You grant us the right to use the name or username you submit with Your Content, and you waive moral rights or attribution claims with respect to Your Content against VYBZ, Customers and third-party services.",
         ],
       },
       {
@@ -169,15 +169,15 @@ export const termsSections: PolicySection[] = [
     id: "feedback",
     heading: "Customer Feedback",
     paragraphs: [
-      "If you share ideas, suggestions, changes or documents regarding VYBE's existing business (\"Feedback\"), you agree that: (i) your Feedback does not contain confidential or proprietary information of third parties; (ii) VYBE has no obligation of confidentiality and may use Feedback on an unrestricted basis; (iii) VYBE may already have similar Feedback under consideration; and (iv) you grant us a binding, non-exclusive, royalty-free, perpetual, global license to use, modify, develop, publish, distribute and sublicense the Feedback, and you waive related claims against VYBE and Customers.",
-      "Please provide only specific Feedback on VYBE's existing services or marketing strategies. We do not accept unsolicited ideas for new campaigns, promotions, technologies or service names. If you still submit such materials (\"Submissions\"), they automatically become the property of VYBE without compensation; we may use or redistribute them for any purpose; there is no obligation to review them or keep them confidential.",
+      "If you share ideas, suggestions, changes or documents regarding VYBZ's existing business (\"Feedback\"), you agree that: (i) your Feedback does not contain confidential or proprietary information of third parties; (ii) VYBZ has no obligation of confidentiality and may use Feedback on an unrestricted basis; (iii) VYBZ may already have similar Feedback under consideration; and (iv) you grant us a binding, non-exclusive, royalty-free, perpetual, global license to use, modify, develop, publish, distribute and sublicense the Feedback, and you waive related claims against VYBZ and Customers.",
+      "Please provide only specific Feedback on VYBZ's existing services or marketing strategies. We do not accept unsolicited ideas for new campaigns, promotions, technologies or service names. If you still submit such materials (\"Submissions\"), they automatically become the property of VYBZ without compensation; we may use or redistribute them for any purpose; there is no obligation to review them or keep them confidential.",
     ],
   },
   {
     id: "events",
     heading: "Event Terms",
     paragraphs: [
-      "VYBE facilitates the sale and purchase of event tickets between Merchants and Customers. By purchasing tickets for an Event you agree to the Event Terms.",
+      "VYBZ facilitates the sale and purchase of event tickets between Merchants and Customers. By purchasing tickets for an Event you agree to the Event Terms.",
       "The complete Event Terms — including payment methods, cancellations, refund policy, ticket delivery, RNPL (Pay XX% and reserve), and Refund Guarantee Terms — are published on the Events policy page and form part of these Terms.",
     ],
     points: [
@@ -191,14 +191,14 @@ export const termsSections: PolicySection[] = [
     id: "movies",
     heading: "Movies",
     paragraphs: [
-      "VYBE facilitates the sale and purchase of movie tickets between Merchants (cinemas/theatres) and Customers through the Platform.",
+      "VYBZ facilitates the sale and purchase of movie tickets between Merchants (cinemas/theatres) and Customers through the Platform.",
       "The complete Movies booking terms — including entry rules, charges, cinema cancellation policy and food vouchers — are published on the Movies policy page and form part of these Terms.",
     ],
     points: [
       "Bookings once made cannot be cancelled, modified, exchanged or refunded unless such policies are provided at the cinema or Platform and opted-in by you while booking.",
       "Booking charges and/or internet handling charges are levied on all tickets booked online and are non-refundable.",
       "Before purchasing, check age restrictions. Individuals under 18 shall not enter for A-rated movies.",
-      "If the merchant cancels or reschedules a show, VYBE will notify you on a best-effort basis and refund according to the cinema/theatre's policy.",
+      "If the merchant cancels or reschedules a show, VYBZ will notify you on a best-effort basis and refund according to the cinema/theatre's policy.",
       "Cinema cancellation refunds follow the partner policy communicated at booking. Partial cancellation is not allowed; promocode benefits are considered redeemed if tickets are cancelled.",
       "Open Policies → Movies for the full Movies booking terms and cinema cancellation table.",
     ],
@@ -207,8 +207,8 @@ export const termsSections: PolicySection[] = [
     id: "activities",
     heading: "Activities",
     paragraphs: [
-      "VYBE facilitates booking of activities and experiences listed by Merchants on the Platform (\"Activities\"), including recreational experiences, workshops, outdoor sessions and similar offerings (excluding dining reservations, gift cards and retail stores, which are not offered on VYBE).",
-      "By booking an Activity, you agree that availability, pricing and fulfilment are controlled by the Merchant. VYBE provides information and payment facilitation on a best-effort basis.",
+      "VYBZ facilitates booking of activities and experiences listed by Merchants on the Platform (\"Activities\"), including recreational experiences, workshops, outdoor sessions and similar offerings (excluding dining reservations, gift cards and retail stores, which are not offered on VYBZ).",
+      "By booking an Activity, you agree that availability, pricing and fulfilment are controlled by the Merchant. VYBZ provides information and payment facilitation on a best-effort basis.",
       "Activity-specific terms on the Activity page prevail in case of conflict with these Terms.",
     ],
     subsections: [
@@ -217,21 +217,21 @@ export const termsSections: PolicySection[] = [
         points: [
           "Provide accurate booking details. By submitting a booking you accept these Terms and the Privacy Policy, and agree to receive confirmations by email, SMS and/or in-app notification.",
           "After payment you will receive a confirmation that must be shown at the venue or as directed by the Merchant.",
-          "If confirmation is not received after payment, contact customer care to verify order status. VYBE is not liable for losses due to banks or payment aggregators.",
+          "If confirmation is not received after payment, contact customer care to verify order status. VYBZ is not liable for losses due to banks or payment aggregators.",
         ],
       },
       {
         heading: "Fees, modifications and cancellations",
         points: [
-          "VYBE may charge a convenience or cover charge communicated at checkout. Convenience fees are generally non-refundable except where the Merchant cancels the Activity.",
+          "VYBZ may charge a convenience or cover charge communicated at checkout. Convenience fees are generally non-refundable except where the Merchant cancels the Activity.",
           "Modification of a confirmed booking is subject to Merchant acceptance. Cancellation and refund windows follow the policy shown before payment and in our Cancellation & Refund Policy.",
-          "If the Merchant fails to honour a confirmed booking, raise the dispute through Platform support promptly. VYBE will make reasonable efforts to verify facts and may initiate a refund at its discretion in line with Merchant confirmation.",
+          "If the Merchant fails to honour a confirmed booking, raise the dispute through Platform support promptly. VYBZ will make reasonable efforts to verify facts and may initiate a refund at its discretion in line with Merchant confirmation.",
         ],
       },
       {
         heading: "Liability",
         paragraphs: [
-          "VYBE is not liable for in-person interactions with the Merchant, the quality of the Activity experience, injuries or mishaps at the Merchant's premises, or a Merchant's failure to honour additional requests. Personal information shared for fulfilment will be used as described in the Privacy Policy; VYBE is not liable for a Merchant's subsequent use of that information.",
+          "VYBZ is not liable for in-person interactions with the Merchant, the quality of the Activity experience, injuries or mishaps at the Merchant's premises, or a Merchant's failure to honour additional requests. Personal information shared for fulfilment will be used as described in the Privacy Policy; VYBZ is not liable for a Merchant's subsequent use of that information.",
         ],
       },
     ],
@@ -240,7 +240,7 @@ export const termsSections: PolicySection[] = [
     id: "play",
     heading: "Play",
     paragraphs: [
-      "VYBE facilitates booking of time-bound slots at Facilities (sports venues, courts, grounds, gyms and similar premises) for Activities offered by Merchants. By booking a slot you agree to the Play Facility Terms.",
+      "VYBZ facilitates booking of time-bound slots at Facilities (sports venues, courts, grounds, gyms and similar premises) for Activities offered by Merchants. By booking a slot you agree to the Play Facility Terms.",
       "The complete Play booking terms — including payment methods, pricing and confirmation rules, the cancellation refund table, and additional liability terms — are published on the Play policy page and form part of these Terms.",
     ],
     points: [
@@ -254,31 +254,31 @@ export const termsSections: PolicySection[] = [
     id: "general",
     heading: "General Terms and Conditions",
     paragraphs: [
-      "You are solely responsible for providing correct details and making payments for bookings through your account. VYBE has no liability for incorrect details you provide.",
-      "VYBE may charge subscription, membership, convenience/platform or other fees communicated at checkout. By completing a transaction you agree to pay such charges. Credits, discounts, promo codes or vouchers may be offered and may be modified or discontinued by VYBE or the Merchant.",
-      "Provide authentic information. If information is found false or inaccurate, VYBE may reject registration, cancel orders and debar you from Services without prior notice or liability.",
-      "VYBE may suspend, cancel or discontinue Services, or modify contents and offerings, without prior notice as the Platform evolves.",
+      "You are solely responsible for providing correct details and making payments for bookings through your account. VYBZ has no liability for incorrect details you provide.",
+      "VYBZ may charge subscription, membership, convenience/platform or other fees communicated at checkout. By completing a transaction you agree to pay such charges. Credits, discounts, promo codes or vouchers may be offered and may be modified or discontinued by VYBZ or the Merchant.",
+      "Provide authentic information. If information is found false or inaccurate, VYBZ may reject registration, cancel orders and debar you from Services without prior notice or liability.",
+      "VYBZ may suspend, cancel or discontinue Services, or modify contents and offerings, without prior notice as the Platform evolves.",
       "Software updates may be pushed automatically. You may need to install updates to continue using the Services.",
       "If access to your account is disabled, you may be prevented from accessing Services, account details or content in the account.",
-      "VYBE may set upper limits on transmissions through the Services and will communicate them on the Platform.",
+      "VYBZ may set upper limits on transmissions through the Services and will communicate them on the Platform.",
       "We may run experiments so some Customers experience features differently. Referral or incentive programmes are governed by their own terms; abuse may lead to suspension.",
-      "Third-party add-on services opted via the Platform are provided solely by those third parties under their terms; VYBE has no control over fulfilment. Opting in consents to sharing relevant personal and transaction details with that provider.",
+      "Third-party add-on services opted via the Platform are provided solely by those third parties under their terms; VYBZ has no control over fulfilment. Opting in consents to sharing relevant personal and transaction details with that provider.",
     ],
   },
   {
     id: "ip",
     heading: "Intellectual Property",
     paragraphs: [
-      "VYBE expressly reserves all intellectual property rights in text, programs, services, processes, technology, images, content and other materials on the Platform. Access does not confer any license to IP rights. Copying or storing Platform contents in whole or part without prior written consent is prohibited.",
-      "Names, logos and related marks are trademarks/service marks of VYBE, its affiliates, partners or suppliers. No trademark license is granted by access. Third-party references or links are for convenience and do not imply endorsement.",
-      "If you believe your IP rights have been infringed, inform us at the contact details below. Reporting false information may result in civil and/or criminal liability. You agree to indemnify VYBE for claims arising from such submissions.",
+      "VYBZ expressly reserves all intellectual property rights in text, programs, services, processes, technology, images, content and other materials on the Platform. Access does not confer any license to IP rights. Copying or storing Platform contents in whole or part without prior written consent is prohibited.",
+      "Names, logos and related marks are trademarks/service marks of VYBZ, its affiliates, partners or suppliers. No trademark license is granted by access. Third-party references or links are for convenience and do not imply endorsement.",
+      "If you believe your IP rights have been infringed, inform us at the contact details below. Reporting false information may result in civil and/or criminal liability. You agree to indemnify VYBZ for claims arising from such submissions.",
     ],
   },
   {
     id: "information-disclosure",
     heading: "Information Disclosure",
     paragraphs: [
-      "VYBE maintains physical, electronic and managerial procedures to protect information under its control. Servers are accessible only to authorised personnel on a need-to-know basis. Internet transmissions cannot be fully secure; by using the Platform you agree VYBE has no liability for disclosure due to transmission errors or unauthorised acts of third parties.",
+      "VYBZ maintains physical, electronic and managerial procedures to protect information under its control. Servers are accessible only to authorised personnel on a need-to-know basis. Internet transmissions cannot be fully secure; by using the Platform you agree VYBZ has no liability for disclosure due to transmission errors or unauthorised acts of third parties.",
       "Call recording: Calls between you and us (directly or through a third party) may be recorded for training and quality. You permit recording and sharing with authorised personnel, and sharing with group companies/affiliates or authorities if required by law.",
     ],
   },
@@ -286,7 +286,7 @@ export const termsSections: PolicySection[] = [
     id: "misrepresentation",
     heading: "Misrepresentation",
     paragraphs: [
-      "VYBE assumes no responsibility for communication not authorised by VYBE regarding offers, promotions or sales. We do not solicit confidential information such as OTP, CVV, PIN or card number by call, mail or other means. If you receive such a request, do not respond. Report suspicious activity to hello@vybe.app.",
+      "VYBZ assumes no responsibility for communication not authorised by VYBZ regarding offers, promotions or sales. We do not solicit confidential information such as OTP, CVV, PIN or card number by call, mail or other means. If you receive such a request, do not respond. Report suspicious activity to hello@vybz.app.",
     ],
   },
   {
@@ -297,21 +297,21 @@ export const termsSections: PolicySection[] = [
         heading: "Disclaimers",
         paragraphs: [
           "You access the Services and transact at your own risk using your best judgment. Depictions of services (colour, size, appearance) are representative and may vary on your display.",
-          "VYBE does not make warranties regarding services on the Platform and does not endorse Merchant supply. VYBE accepts no liability for errors or omissions of third parties or information received from third parties.",
+          "VYBZ does not make warranties regarding services on the Platform and does not endorse Merchant supply. VYBZ accepts no liability for errors or omissions of third parties or information received from third parties.",
         ],
       },
       {
         heading: "Indemnity",
         paragraphs: [
-          "You agree to indemnify, defend and hold harmless VYBE from third-party claims, damages, actions, losses, liabilities, costs and expenses (including reasonable legal fees) arising from: (a) your Feedback and/or Content; (b) unauthorised use of the Platform/Services; (c) your access to and use of the Services; (d) violation of third-party rights; or (e) breach of these Terms (including Privacy Policy) and/or applicable law. We may assume exclusive defence of matters for which you must indemnify us; you agree to cooperate and not settle such matters without our prior written consent.",
+          "You agree to indemnify, defend and hold harmless VYBZ from third-party claims, damages, actions, losses, liabilities, costs and expenses (including reasonable legal fees) arising from: (a) your Feedback and/or Content; (b) unauthorised use of the Platform/Services; (c) your access to and use of the Services; (d) violation of third-party rights; or (e) breach of these Terms (including Privacy Policy) and/or applicable law. We may assume exclusive defence of matters for which you must indemnify us; you agree to cooperate and not settle such matters without our prior written consent.",
         ],
       },
       {
         heading: "Limitation of Liability",
         points: [
-          "VYBE shall not be liable for claims, damages or losses other than as established by a non-appealable order of a court of competent jurisdiction.",
-          "Subject to the above, maximum aggregate liability of VYBE shall not exceed ₹5,000 (Indian Rupees Five Thousand Only) for any claim under these Terms.",
-          "VYBE shall not be liable for indirect, special, consequential, exemplary, punitive or incidental losses, including loss of profit, reputation or business opportunities.",
+          "VYBZ shall not be liable for claims, damages or losses other than as established by a non-appealable order of a court of competent jurisdiction.",
+          "Subject to the above, maximum aggregate liability of VYBZ shall not exceed ₹5,000 (Indian Rupees Five Thousand Only) for any claim under these Terms.",
+          "VYBZ shall not be liable for indirect, special, consequential, exemplary, punitive or incidental losses, including loss of profit, reputation or business opportunities.",
         ],
       },
     ],
@@ -320,7 +320,7 @@ export const termsSections: PolicySection[] = [
     id: "termination",
     heading: "Termination of Your Access to the Platform/Services",
     paragraphs: [
-      "VYBE may, without liability, terminate or refuse registration, terminate use of the Platform/Services, or restrict access, without notice, if you do not meet eligibility criteria or may breach these Terms (including Privacy Policy). We may deactivate or delete your account and related information. If you violate these Terms, we may retain data collected from your use. We are not liable to you or third parties for discontinuation of access.",
+      "VYBZ may, without liability, terminate or refuse registration, terminate use of the Platform/Services, or restrict access, without notice, if you do not meet eligibility criteria or may breach these Terms (including Privacy Policy). We may deactivate or delete your account and related information. If you violate these Terms, we may retain data collected from your use. We are not liable to you or third parties for discontinuation of access.",
       "You may delete your account using the option on the Platform and cease use. Personal data is processed per the Privacy Policy.",
       "Rights to Feedback, indemnification, and Governing Law survive termination. Termination does not waive payment obligations for services already ordered or liability arising before termination.",
     ],
@@ -339,7 +339,7 @@ export const termsSections: PolicySection[] = [
       "Interpretation: Section headings are for reference only and shall not affect interpretation.",
       "Entire Agreement and Waiver: These Terms together with the Privacy Policy constitute the entire agreement concerning the Services. Failure to enforce a right is not a waiver.",
       "Severability: If any provision is unlawful or unenforceable, it is severed and the remainder continues in effect.",
-      "Partnership or Agency: Nothing in these Terms creates a partnership or agency; you have no authority to bind VYBE.",
+      "Partnership or Agency: Nothing in these Terms creates a partnership or agency; you have no authority to bind VYBZ.",
       "Carrier Rates: Accessing Services via mobile may incur carrier charges for which you are solely responsible.",
       "Linking and Framing: You may not frame the Services. You may link to the Services only if the linking site does not contain inappropriate or unlawful material; violation may result in immediate termination of access.",
     ],
@@ -348,10 +348,10 @@ export const termsSections: PolicySection[] = [
     id: "contact",
     heading: "Contact Us",
     paragraphs: [
-      "Brand: VYBE",
+      "Brand: VYBZ",
       "Address: Raidurg Metro Pillar, HITEC City, Hyderabad, Telangana 500081",
-      "Contact: hello@vybe.app · +91 40 4567 8900",
-      "For order-related issues, first use in-Platform support where available. For grievances, write to hello@vybe.app with your booking ID and details. We aim to respond within the timelines required under applicable consumer protection laws.",
+      "Contact: hello@vybz.app · +91 40 4567 8900",
+      "For order-related issues, first use in-Platform support where available. For grievances, write to hello@vybz.app with your booking ID and details. We aim to respond within the timelines required under applicable consumer protection laws.",
     ],
   },
 ];

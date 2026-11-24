@@ -149,7 +149,7 @@ export function SearchOverlay({ open, onClose }: SearchOverlayProps) {
       <div
         role="dialog"
         aria-modal="true"
-        aria-label="Search VYBE"
+        aria-label="Search VYBZ"
         onClick={(event) => event.stopPropagation()}
         className="relative max-h-[88vh] w-full max-w-4xl overflow-hidden rounded-3xl border border-border bg-surface shadow-2xl dark:border-white/10 dark:bg-sheet dark:shadow-[0_24px_80px_rgba(0,0,0,0.65)]"
       >
@@ -185,7 +185,7 @@ export function SearchOverlay({ open, onClose }: SearchOverlayProps) {
                   onClick={() => setFilter(item.id)}
                   className={`shrink-0 rounded-full px-4 py-2 text-[13px] font-bold transition-colors ${
                     active
-                      ? "bg-accent text-white shadow-[0_6px_16px_rgba(255,0,91,0.28)]"
+                      ? "bg-accent text-white shadow-[0_6px_16px_rgba(255,77,45,0.28)]"
                       : "bg-surface-muted text-text hover:bg-border dark:bg-white/8 dark:hover:bg-white/14"
                   }`}
                 >

@@ -194,7 +194,7 @@ export function MovieBrowser({ latest, catalogs }: MovieBrowserProps) {
 
   function tabClass(active: boolean) {
     return `relative shrink-0 py-4 text-[14px] font-semibold transition-colors ${
-      active ? "text-text" : "text-text-secondary hover:text-text"
+      active ? "text-accent" : "text-text-secondary hover:text-accent"
     }`;
   }
 
@@ -234,7 +234,7 @@ export function MovieBrowser({ latest, catalogs }: MovieBrowserProps) {
         className={`inline-flex shrink-0 items-center gap-1 rounded-full border px-2.5 py-1.5 text-[12px] font-bold transition-colors ${
           filterActive
             ? "border-accent bg-accent-soft text-accent"
-            : "border-border bg-surface text-text hover:border-accent/50"
+            : "border-border bg-surface text-text hover:border-accent hover:text-accent"
         }`}
       >
         <SlidersHorizontal className="size-3.5" />
@@ -305,7 +305,7 @@ export function MovieBrowser({ latest, catalogs }: MovieBrowserProps) {
                 <h2 className="text-[20px] font-extrabold tracking-tight text-text md:text-[24px]">
                   Latest added
                 </h2>
-                <p className="mt-0.5 text-[13px] text-text-secondary">
+                <p className="mt-0.5 text-[13px] text-accent">
                   Fresh titles hitting cinemas near you
                 </p>
               </div>
@@ -367,7 +367,7 @@ export function MovieBrowser({ latest, catalogs }: MovieBrowserProps) {
                   </span>
                 ))}
               </h2>
-              <p className="max-w-md text-[14px] leading-[1.4] font-semibold text-text-muted">
+              <p className="max-w-md text-[14px] leading-[1.4] font-semibold text-accent">
                 Grab best seats at theatres around you
               </p>
             </div>

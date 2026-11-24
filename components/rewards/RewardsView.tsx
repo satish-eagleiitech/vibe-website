@@ -97,7 +97,7 @@ export function RewardsView() {
           ) : null}
 
           <p className="mt-6 rounded-2xl bg-surface-muted px-4 py-3 text-center text-[12px] font-semibold text-text-secondary">
-            Every booking on VYBE unlocks a new scratch card.
+            Every booking on VYBZ unlocks a new scratch card.
           </p>
         </>
       )}

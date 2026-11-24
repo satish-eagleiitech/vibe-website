@@ -35,7 +35,7 @@ export function SectionHeader({
           {title}
         </h2>
         {description ? (
-          <p className="mt-1 text-[15px] text-text-secondary">{description}</p>
+          <p className="mt-1 text-[15px] text-accent">{description}</p>
         ) : null}
       </div>
       {action}

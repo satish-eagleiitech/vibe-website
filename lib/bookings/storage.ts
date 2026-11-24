@@ -95,7 +95,7 @@ export function cancelBooking(
 }
 
 export function createBookingId() {
-  return `VYBE${Date.now().toString().slice(-10)}${Math.floor(Math.random() * 90 + 10)}`;
+  return `VYBZ${Date.now().toString().slice(-10)}${Math.floor(Math.random() * 90 + 10)}`;
 }
 
 export function createBookingCode() {

@@ -180,7 +180,7 @@ export function OrganiserForm() {
         <p className="text-[12px] font-extrabold tracking-[0.16em] text-accent uppercase">Creator home</p>
         <h1 className="mt-4 text-[36px] font-extrabold tracking-tight text-text">Under review</h1>
         <p className="mt-2 text-[15px] leading-relaxed text-text-secondary">
-          Your registration is under review. Once approved, you’ll get the full VYBE Publisher desk.
+          Your registration is under review. Once approved, you’ll get the full VYBZ Publisher desk.
         </p>
         <div className="mt-6 rounded-[22px] border border-border bg-surface p-5">
           <p className="text-[12px] font-semibold text-text-muted">Organiser</p>
@@ -268,7 +268,7 @@ export function OrganiserForm() {
 
       {step === 2 ? (
         <div className="space-y-5">
-          <p className="text-[13px] font-semibold text-text-secondary">Set up your VYBE account</p>
+          <p className="text-[13px] font-semibold text-text-secondary">Set up your VYBZ account</p>
           <h1 className="text-[30px] font-extrabold tracking-tight text-text">PAN details</h1>
           <Field label="Organiser display name">
             <input className={inputClass} placeholder="OneAD Communication Pvt. Ltd." value={draft.displayName} onChange={(e) => set("displayName", e.target.value)} />
@@ -374,7 +374,7 @@ export function OrganiserForm() {
           <p className="text-[13px] font-semibold text-text-muted">Address added</p>
           <h1 className="text-[30px] font-extrabold tracking-tight text-text">Bank details</h1>
           <Field label="Account holder name">
-            <input className={inputClass} placeholder="e.g. Vybe Entertainment Pvt Ltd" value={draft.accountName} onChange={(e) => set("accountName", e.target.value)} />
+            <input className={inputClass} placeholder="e.g. Vybz Entertainment Pvt Ltd" value={draft.accountName} onChange={(e) => set("accountName", e.target.value)} />
           </Field>
           <Field label="Account number">
             <input className={inputClass} placeholder="eg. 012345678901" value={draft.accountNumber} onChange={(e) => set("accountNumber", e.target.value)} />
@@ -401,7 +401,7 @@ export function OrganiserForm() {
           <p className="text-[13px] font-semibold text-text-muted">1 bank account added</p>
           <h1 className="text-[30px] font-extrabold tracking-tight text-text">Sign your agreement</h1>
           <p className="max-w-lg text-[14px] leading-relaxed text-text-secondary">
-            Review and sign your publisher agreement to activate your VYBE account. Read it fully before signing — you’ll be taken to the agreement on this page.
+            Review and sign your publisher agreement to activate your VYBZ account. Read it fully before signing — you’ll be taken to the agreement on this page.
           </p>
           <button
             type="button"

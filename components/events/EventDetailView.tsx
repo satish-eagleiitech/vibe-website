@@ -65,7 +65,7 @@ export function EventDetailView({ event, related }: EventDetailViewProps) {
       text: `${event.category} fans · Live experiences`,
     },
     { icon: UsersRound, title: "Great with", text: "Friends, groups & date nights" },
-    { icon: BadgeCheck, title: "On VYBE", text: "Instant confirmation · mobile tickets" },
+    { icon: BadgeCheck, title: "On VYBZ", text: "Instant confirmation · mobile tickets" },
   ];
 
   return (

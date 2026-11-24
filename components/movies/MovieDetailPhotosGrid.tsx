@@ -42,7 +42,7 @@ export function MovieDetailPhotosGrid({
           ))}
         </div>
         <p className="mt-8 text-center font-serif text-[18px] italic text-text-secondary md:text-[20px]">
-          Now showing on VYBE — book your seats.
+          Now showing on VYBZ — book your seats.
         </p>
       </Container>
     </section>

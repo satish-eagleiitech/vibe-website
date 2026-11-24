@@ -87,7 +87,7 @@ export function PlayHeroCarousel({ items }: PlayHeroCarouselProps) {
             <div className="mt-7 flex items-center gap-3">
               <Link
                 href={`/play/${slide.id}/book`}
-                className="inline-flex min-w-0 flex-1 items-center justify-center gap-2 rounded-xl bg-accent px-6 py-3.5 sm:min-w-[220px] sm:flex-none sm:px-8 text-[15px] font-extrabold text-white shadow-[0_12px_36px_rgba(255,0,91,0.35)] transition-transform hover:scale-[1.02]"
+                className="inline-flex min-w-0 flex-1 items-center justify-center gap-2 rounded-xl bg-accent px-6 py-3.5 sm:min-w-[220px] sm:flex-none sm:px-8 text-[15px] font-extrabold text-white shadow-[0_12px_36px_rgba(255,77,45,0.35)] transition-transform hover:scale-[1.02]"
               >
                 <CalendarDays className="size-5" />
                 {slide.kind === "event" ? "Book tickets" : "Book a slot"}

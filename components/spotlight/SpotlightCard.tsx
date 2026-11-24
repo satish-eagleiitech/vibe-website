@@ -46,7 +46,7 @@ export function SpotlightCard({ movie }: SpotlightCardProps) {
       </div>
 
       <div className="relative z-10 flex flex-col gap-1 p-4 text-white">
-        <div className="flex flex-wrap items-center gap-2 text-[11px] font-semibold text-[#FFB2BA]">
+        <div className="flex flex-wrap items-center gap-2 text-[11px] font-semibold text-[#FFB39F]">
           {movie.rating ? (
             <span className="inline-flex items-center font-bold text-amber-400">
               <Star className="mr-0.5 size-4 fill-current" />

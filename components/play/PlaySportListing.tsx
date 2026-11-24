@@ -33,7 +33,7 @@ export function PlaySportListing({ sport, venues, city = "Hyderabad" }: PlaySpor
 
   const chip =
     "inline-flex shrink-0 items-center gap-1.5 rounded-full border px-3.5 py-2 text-[13px] font-bold transition-colors";
-  const chipIdle = "border-border bg-surface text-text hover:border-accent/40";
+  const chipIdle = "border-border bg-surface text-text hover:border-accent hover:text-accent";
   const chipOn = "border-accent bg-accent-soft text-accent";
 
   return (
@@ -49,7 +49,7 @@ export function PlaySportListing({ sport, venues, city = "Hyderabad" }: PlaySpor
         <h1 className="mt-2 text-[26px] font-extrabold tracking-tight text-text md:text-[32px]">
           {sport.listingTitle} in {city}
         </h1>
-        <p className="mt-1 text-[14px] text-text-secondary">
+        <p className="mt-1 text-[14px] text-accent">
           Book {sport.label.toLowerCase()} near you
         </p>
       </Container>

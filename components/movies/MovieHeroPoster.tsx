@@ -50,7 +50,7 @@ export function MovieHeroPoster({ title, posterUrl, trailer }: MovieHeroPosterPr
     <>
       <span className="absolute inset-0 bg-black/0 transition-colors duration-300 group-hover:bg-black/35 group-focus-visible:bg-black/35" />
       <span className="absolute inset-0 flex flex-col items-center justify-center gap-2.5">
-        <span className="grid size-12 scale-75 place-items-center rounded-full bg-white/95 text-black opacity-0 shadow-[0_10px_30px_rgba(0,0,0,0.45)] transition-[opacity,scale] duration-300 ease-out group-hover:scale-100 group-hover:opacity-100 group-focus-visible:scale-100 group-focus-visible:opacity-100 sm:size-14 md:size-16 [@media(hover:none)]:scale-90 [@media(hover:none)]:opacity-90">
+        <span className="grid size-12 scale-75 place-items-center rounded-full bg-[#FF4D2D] text-white opacity-0 shadow-[0_10px_30px_rgba(255,77,45,0.45)] transition-[opacity,scale] duration-300 ease-out group-hover:scale-100 group-hover:opacity-100 group-focus-visible:scale-100 group-focus-visible:opacity-100 sm:size-14 md:size-16 [@media(hover:none)]:scale-90 [@media(hover:none)]:opacity-90">
           <Play className="ml-0.5 size-5 fill-current sm:size-6 md:size-7" />
         </span>
         <span className="translate-y-1 text-[12px] font-bold tracking-wide text-white opacity-0 drop-shadow transition-[opacity,translate] duration-300 group-hover:translate-y-0 group-hover:opacity-100 group-focus-visible:translate-y-0 group-focus-visible:opacity-100 md:text-[13px]">

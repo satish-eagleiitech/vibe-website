@@ -147,7 +147,7 @@ export function SettingsView() {
           href="/profile"
           icon={User}
           title="Dashboard"
-          subtitle="Your home on VYBE"
+          subtitle="Your home on VYBZ"
         />
         <div className="h-px bg-border" />
         <SettingsLinkRow

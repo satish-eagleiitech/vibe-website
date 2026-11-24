@@ -279,7 +279,7 @@ export function VenueForm() {
         <p className="text-[12px] font-extrabold tracking-[0.16em] text-accent uppercase">List your venue</p>
         <h1 className="mt-3 text-[36px] font-extrabold tracking-tight text-text">Sent for review</h1>
         <p className="mt-2 text-[15px] leading-relaxed text-text-secondary">
-          {draft.venueName || "Your venue"} is with the VYBE team. We’ll use the owner details below if we need anything else.
+          {draft.venueName || "Your venue"} is with the VYBZ team. We’ll use the owner details below if we need anything else.
         </p>
         <div className="mt-6 rounded-[22px] border border-border bg-surface p-5">
           <p className="text-[20px] font-extrabold text-text">{draft.venueName}</p>
@@ -693,7 +693,7 @@ export function VenueForm() {
           <div className="space-y-5">
             <h1 className="text-[32px] font-extrabold tracking-tight text-text">Bank details</h1>
             <Field label="Account holder name">
-              <input className={inputClass} placeholder="e.g. Vybe Entertainment Pvt Ltd" value={draft.accountName} onChange={(e) => set("accountName", e.target.value)} />
+              <input className={inputClass} placeholder="e.g. Vybz Entertainment Pvt Ltd" value={draft.accountName} onChange={(e) => set("accountName", e.target.value)} />
             </Field>
             <Field label="Account number">
               <input className={inputClass} placeholder="eg. 012345678901" value={draft.accountNumber} onChange={(e) => set("accountNumber", e.target.value)} />

@@ -197,7 +197,7 @@ export function VybeIntro() {
         ))}
 
         <div className="vybe-intro-brand">
-          <h1 className="vybe-intro-title">Vybe</h1>
+          <h1 className="vybe-intro-title">Vybz</h1>
           <div className="vybe-intro-count">
             <p>000</p>
           </div>

@@ -18,13 +18,13 @@ const FEATURED_QUERIES: Array<{
   query: string;
   tone: string;
 }> = [
-  { id: "artist-arijit", name: "Arijit Singh", query: "Arijit Singh", tone: "#ff005b" },
+  { id: "artist-arijit", name: "Arijit Singh", query: "Arijit Singh", tone: "#ff4d2d" },
   { id: "artist-shreya", name: "Shreya Ghoshal", query: "Shreya Ghoshal", tone: "#111827" },
   { id: "artist-diljit", name: "Diljit Dosanjh", query: "Diljit Dosanjh", tone: "#e11d48" },
   { id: "artist-sunidhi", name: "Sunidhi Chauhan", query: "Sunidhi Chauhan", tone: "#9f1239" },
   { id: "artist-anirudh", name: "Anirudh Ravichander", query: "Anirudh Ravichander", tone: "#fb7185" },
   { id: "artist-kailash", name: "Kailash Kher", query: "Kailash Kher", tone: "#be185d" },
-  { id: "artist-neha", name: "Neha Kakkar", query: "Neha Kakkar", tone: "#ff005b" },
+  { id: "artist-neha", name: "Neha Kakkar", query: "Neha Kakkar", tone: "#ff4d2d" },
   { id: "artist-prateek", name: "Prateek Kuhad", query: "Prateek Kuhad", tone: "#1e1e26" },
 ];
 

@@ -356,7 +356,7 @@ export function MovieHeroCarousel({ movies }: MovieHeroCarouselProps) {
                     {meta}
                   </p>
                   <p className="mt-2 line-clamp-2 max-w-[40ch] text-[12px] leading-5 font-light text-white/90 sm:mt-2.5 sm:text-[13px] lg:mt-4 lg:line-clamp-3 lg:text-[15px] lg:leading-6">
-                    {item.description || "Discover this title in theatres near you on VYBE."}
+                    {item.description || "Discover this title in theatres near you on VYBZ."}
                   </p>
 
                   {shownCast.length ? (
@@ -417,7 +417,7 @@ export function MovieHeroCarousel({ movies }: MovieHeroCarouselProps) {
                       certification={item.certification}
                       title={item.title}
                       languages={item.languages}
-                      className="inline-flex min-w-0 flex-1 items-center justify-center gap-2 rounded-xl bg-accent px-5 py-3 text-[14px] font-extrabold text-white shadow-[0_12px_36px_rgba(255,0,91,0.35)] transition-transform hover:scale-[1.02] sm:min-w-[200px] sm:flex-none sm:px-7 lg:min-w-[220px] lg:px-8 lg:py-3.5 lg:text-[15px]"
+                      className="inline-flex min-w-0 flex-1 items-center justify-center gap-2 rounded-xl bg-accent px-5 py-3 text-[14px] font-extrabold text-white shadow-[0_12px_36px_rgba(255,77,45,0.35)] transition-transform hover:scale-[1.02] sm:min-w-[200px] sm:flex-none sm:px-7 lg:min-w-[220px] lg:px-8 lg:py-3.5 lg:text-[15px]"
                     >
                       <span
                         aria-hidden

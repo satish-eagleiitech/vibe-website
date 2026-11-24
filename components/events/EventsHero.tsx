@@ -28,7 +28,7 @@ function uniqueTiles(events: LiveEvent[]): MarqueeHeroTile[] {
   for (const src of FALLBACK_IMAGES) {
     if (seen.has(src)) continue;
     seen.add(src);
-    tiles.push({ src, alt: "Events on VYBE", href: "/events#all-events" });
+    tiles.push({ src, alt: "Events on VYBZ", href: "/events#all-events" });
   }
 
   return tiles;
@@ -37,7 +37,7 @@ function uniqueTiles(events: LiveEvent[]): MarqueeHeroTile[] {
 export function EventsHero({ events }: EventsHeroProps) {
   return (
     <MarqueeHero
-      eyebrow="Events on VYBE"
+      eyebrow="Events on VYBZ"
       title="Nights worth showing up for"
       description={
         <>

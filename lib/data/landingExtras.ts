@@ -3,7 +3,7 @@ export type LandingArtist = {
   name: string;
   imageUrl: string;
   href: string;
-  /** Solid card fill — VYBE accent family */
+  /** Solid card fill — VYBZ accent family */
   tone: string;
   /** Short badge under the name on showcase cards */
   tag?: string;
@@ -40,7 +40,7 @@ export const landingArtists: LandingArtist[] = [
     name: "Arijit Singh",
     imageUrl: "/images/artists/artist-7.jpg",
     href: "/events",
-    tone: "#ff005b",
+    tone: "#ff4d2d",
     tag: "TOP SELLER",
     viewsLabel: "892 K",
   },
@@ -77,7 +77,7 @@ export const landingArtists: LandingArtist[] = [
     imageUrl: "/images/artists/artist-3.jpg",
     href: "/events",
     tone: "#fb7185",
-    tag: "NEW ON VYBE",
+    tag: "NEW ON VYBZ",
     viewsLabel: "615 K",
   },
   {
@@ -94,7 +94,7 @@ export const landingArtists: LandingArtist[] = [
     name: "Neha Kakkar",
     imageUrl: "/images/artists/artist-8.jpg",
     href: "/events",
-    tone: "#ff005b",
+    tone: "#ff4d2d",
     tag: "LIVE THIS WEEK",
     viewsLabel: "577 K",
   },

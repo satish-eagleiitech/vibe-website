@@ -77,7 +77,7 @@ const groups: { title: string; items: { q: string; a: string }[] }[] = [
       },
       {
         q: "How do I delete my account?",
-        a: "Write to hello@vybe.app from your registered email. Your account and personal data are deleted within 30 days, except records we must keep by law.",
+        a: "Write to hello@vybz.app from your registered email. Your account and personal data are deleted within 30 days, except records we must keep by law.",
       },
     ],
   },
@@ -85,7 +85,7 @@ const groups: { title: string; items: { q: string; a: string }[] }[] = [
     title: "Venues & partners",
     items: [
       {
-        q: "How can I list my event or venue on VYBE?",
+        q: "How can I list my event or venue on VYBZ?",
         a: "Use List your events or List your venue in the footer. Our partner team will get in touch within 2 working days.",
       },
       {
@@ -101,7 +101,7 @@ export default function FaqPage() {
     <PolicyPage
       title="Frequently Asked Questions"
       updated="12 November 2026"
-      intro="Quick answers about booking, tickets, cancellations, payments and your VYBE account."
+      intro="Quick answers about booking, tickets, cancellations, payments and your VYBZ account."
       current="/faq"
       nav={faqNav}
     >

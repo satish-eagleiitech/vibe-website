@@ -16,8 +16,8 @@ const contact = [
   {
     icon: Mail,
     title: "Email support",
-    body: "hello@vybe.app",
-    href: "mailto:hello@vybe.app",
+    body: "hello@vybz.app",
+    href: "mailto:hello@vybz.app",
   },
   {
     icon: Phone,
@@ -63,10 +63,10 @@ const faqs = [
 ];
 
 const safetyTips = [
-  "VYBE will never ask for your OTP, UPI PIN or card CVV over call or chat.",
+  "VYBZ will never ask for your OTP, UPI PIN or card CVV over call or chat.",
   "Only share your ticket QR at the venue entry gate.",
   "Meeting new people at an event? Share your plan with a friend.",
-  "Report suspicious listings to hello@vybe.app and we'll act within 24 hours.",
+  "Report suspicious listings to hello@vybz.app and we'll act within 24 hours.",
 ];
 
 export default function HelpPage() {
@@ -116,7 +116,7 @@ export default function HelpPage() {
           <span className="inline-flex size-11 items-center justify-center rounded-2xl bg-accent">
             <ShieldCheck className="size-5" />
           </span>
-          <h2 className="mt-3 text-[16px] font-extrabold">Stay safe on VYBE</h2>
+          <h2 className="mt-3 text-[16px] font-extrabold">Stay safe on VYBZ</h2>
           <ul className="mt-3 space-y-3">
             {safetyTips.map((tip) => (
               <li key={tip} className="flex gap-2.5 text-[13px] leading-snug text-white/75">

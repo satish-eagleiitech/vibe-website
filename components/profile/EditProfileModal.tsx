@@ -101,7 +101,7 @@ export function EditProfileModal({
 
         <h2 className="text-[22px] font-extrabold text-text">Edit profile</h2>
         <p className="mt-1 text-[14px] text-text-secondary">
-          Update the details shown on your VYBE account
+          Update the details shown on your VYBZ account
         </p>
 
         <div className="mt-6 flex items-center gap-4">

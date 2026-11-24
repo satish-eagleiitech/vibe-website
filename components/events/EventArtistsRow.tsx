@@ -24,7 +24,7 @@ export function EventArtistsRow({ artists }: EventArtistsRowProps) {
     <section className="w-full py-6 md:py-8">
       <Container>
         <h2 className="mb-5 text-[26px] font-extrabold tracking-tight text-text md:text-[30px]">
-          Artists on VYBE
+          Artists on VYBZ
         </h2>
         <div className="flex items-start gap-3">
           <button

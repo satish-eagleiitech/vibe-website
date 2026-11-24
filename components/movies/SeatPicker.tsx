@@ -165,30 +165,44 @@ export function SeatPicker({
       <div className="relative mx-auto grid w-full max-w-[1280px] lg:grid-cols-[280px_minmax(0,1fr)]">
         <aside className="hidden px-6 py-8 lg:block lg:px-8 lg:py-10">
           <div className="relative mx-auto w-full max-w-[240px]">
-            <div className="relative aspect-[2/3] overflow-hidden rounded-md bg-black/40">
-              <Image
-                src={movie.posterUrl}
-                alt=""
-                fill
-                className="object-cover"
-                sizes="240px"
-                priority
-              />
-            </div>
             {trailer ? (
               <a
                 href={trailer}
                 target="_blank"
                 rel="noreferrer"
                 aria-label="Watch trailer"
-                className="absolute -bottom-5 left-1/2 grid size-12 -translate-x-1/2 place-items-center rounded-full bg-[#ff3b4a] shadow-[0_0_28px_rgba(255,59,74,0.55)]"
+                className="group relative block aspect-[2/3] overflow-hidden rounded-md bg-black/40"
               >
-                <Play className="ml-0.5 size-5 fill-white text-white" />
+                <Image
+                  src={movie.posterUrl}
+                  alt=""
+                  fill
+                  className="object-cover transition-transform duration-300 group-hover:scale-105"
+                  sizes="240px"
+                  priority
+                />
+                <span className="absolute inset-0 bg-black/0 transition-colors duration-300 group-hover:bg-black/35" />
+                <span className="absolute inset-0 grid place-items-center">
+                  <span className="grid size-12 scale-90 place-items-center rounded-full bg-[#FF4D2D] text-white opacity-0 shadow-[0_10px_28px_rgba(255,77,45,0.5)] transition-[opacity,scale] duration-300 group-hover:scale-100 group-hover:opacity-100">
+                    <Play className="ml-0.5 size-5 fill-white text-white" />
+                  </span>
+                </span>
               </a>
-            ) : null}
+            ) : (
+              <div className="relative aspect-[2/3] overflow-hidden rounded-md bg-black/40">
+                <Image
+                  src={movie.posterUrl}
+                  alt=""
+                  fill
+                  className="object-cover"
+                  sizes="240px"
+                  priority
+                />
+              </div>
+            )}
           </div>
 
-          <dl className="mx-auto mt-12 max-w-[240px] space-y-4 text-[13px] leading-snug">
+          <dl className="mx-auto mt-6 max-w-[240px] space-y-4 text-[13px] leading-snug">
             <div>
               <dt className="font-semibold">Director</dt>
               <dd className="text-text-secondary">{director || "—"}</dd>
@@ -251,7 +265,7 @@ export function SeatPicker({
                         <span
                           className={`grid size-8 place-items-center rounded-full text-[14px] ${
                             active
-                              ? "bg-[#2ee6a8] font-semibold text-[#10241c]"
+                              ? "bg-[#ff9a5c] font-semibold text-[#4a1f0a]"
                               : "text-text hover:bg-surface-muted"
                           }`}
                         >
@@ -357,9 +371,17 @@ export function SeatPicker({
 
             <div className="mt-8 flex flex-wrap items-center justify-between gap-4">
               <div className="flex flex-wrap items-center gap-4 text-[12px] text-text-secondary">
-                <Legend swatch="bg-[#2ee6a8]" label="Selected" />
-                <Legend swatch="bg-[#d5d8de] dark:bg-[#3c4650]" label="Available" />
-                <Legend swatch="bg-[#ff4d62]" label="Taken" />
+                <Legend
+                  swatch="border border-[#ff4d2d] bg-white dark:bg-transparent"
+                  label="Available"
+                />
+                <span className="inline-flex items-center gap-2">
+                  <span className="inline-flex h-3.5 w-3.5 items-center justify-center rounded-[3px] border border-[#c4c8d0] bg-white text-[11px] font-bold leading-none text-[#6b7280] dark:border-[#5a6570] dark:bg-transparent dark:text-[#9ca3af]">
+                    X
+                  </span>
+                  Taken
+                </span>
+                <Legend swatch="bg-[#ff4d2d]" label="Selected" />
                 <span className="text-text-muted">
                   {selected.length
                     ? `${selected.join(", ")} · ${formatInr(total)}`
@@ -371,7 +393,7 @@ export function SeatPicker({
                 aria-label="Continue to purchase"
                 disabled={!selected.length || secondsLeft === 0}
                 onClick={continueCheckout}
-                className="grid size-12 place-items-center rounded-full bg-[#2ee6a8] text-[#10241c] shadow-[0_8px_24px_rgba(46,230,168,0.35)] transition-transform hover:scale-105 disabled:cursor-not-allowed disabled:opacity-35"
+                className="grid size-12 place-items-center rounded-full bg-[#ff4d2d] text-white shadow-[0_8px_24px_rgba(255,77,45,0.4)] transition-transform hover:scale-105 disabled:cursor-not-allowed disabled:opacity-35"
               >
                 <ArrowRight className="size-5" />
               </button>
@@ -400,21 +422,23 @@ function SeatButton({
       onClick={onToggle}
       aria-label={`${occupied ? "Taken" : selected ? "Selected" : "Available"} seat ${seat.id}${occupied ? "" : `, ${formatInr(seat.price)}`}`}
       title={`${seat.id} · ${formatInr(seat.price)}`}
-      className={`h-3.5 w-5 rounded-[3px] transition-colors sm:h-4 sm:w-6 ${
+      className={`inline-flex h-7 w-7 items-center justify-center rounded-[4px] font-bold transition-colors sm:h-8 sm:w-8 ${
         occupied
-          ? "cursor-not-allowed bg-[#ff4d62]"
+          ? "cursor-not-allowed border border-[#c4c8d0] bg-white text-[13px] leading-none text-[#6b7280] sm:text-[14px] dark:border-[#5a6570] dark:bg-transparent dark:text-[#9ca3af]"
           : selected
-            ? "bg-[#2ee6a8]"
-            : "bg-[#d5d8de] hover:bg-[#c5c9d1] dark:bg-[#3c4650] dark:hover:bg-[#52606c]"
+            ? "bg-[#ff4d2d] text-[10px] text-white sm:text-[11px]"
+            : "border border-[#ff4d2d] bg-white text-[10px] text-[#ff4d2d] hover:bg-[#fff1ec] sm:text-[11px] dark:bg-transparent dark:text-white dark:hover:bg-[#ff4d2d]/15"
       }`}
-    />
+    >
+      {occupied ? "X" : seat.number}
+    </button>
   );
 }
 
 function Legend({ swatch, label }: { swatch: string; label: string }) {
   return (
     <span className="inline-flex items-center gap-2">
-      <span className={`h-2.5 w-4 rounded-[2px] ${swatch}`} />
+      <span className={`h-3.5 w-3.5 rounded-[3px] ${swatch}`} />
       {label}
     </span>
   );

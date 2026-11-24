@@ -13,7 +13,7 @@ export function HostEventBanner() {
             </div>
             <div>
               <h3 className="text-[28px] font-extrabold tracking-tight text-text md:text-[32px]">
-                List your events on VYBE
+                List your events on VYBZ
               </h3>
               <p className="mt-1 text-[15px] text-text-secondary">
                 Host concerts, club nights, workshops, and sports matches with

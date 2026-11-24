@@ -161,7 +161,7 @@ export function VideoRailSection({
               {title}
             </h2>
             {description ? (
-              <p className="mt-1 text-[15px] text-text-secondary">
+              <p className="mt-1 text-[15px] text-accent">
                 {description}
               </p>
             ) : null}

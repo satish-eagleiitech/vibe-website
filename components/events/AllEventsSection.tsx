@@ -90,7 +90,7 @@ export function AllEventsSection({
     return `shrink-0 rounded-full border px-3 py-1.5 text-[12px] font-bold transition-colors ${
       selected
         ? "border-accent bg-accent-soft text-accent"
-        : "border-border bg-surface text-text hover:border-accent/40"
+        : "border-border bg-surface text-text hover:border-accent hover:text-accent"
     }`;
   }
 
@@ -106,7 +106,7 @@ export function AllEventsSection({
           <h2 className="text-[20px] font-extrabold tracking-tight text-text md:text-[24px]">
             All Events
           </h2>
-          <p className="mt-0.5 text-[13px] text-text-secondary">
+          <p className="mt-0.5 text-[13px] text-accent">
             Live nights worth going out for
           </p>
         </div>
@@ -119,7 +119,7 @@ export function AllEventsSection({
           className={`inline-flex shrink-0 items-center gap-1 rounded-full border px-2.5 py-1.5 text-[12px] font-bold transition-colors ${
             filterActive
               ? "border-accent bg-accent-soft text-accent"
-              : "border-border bg-surface text-text hover:border-accent/40"
+              : "border-border bg-surface text-text hover:border-accent hover:text-accent"
           }`}
         >
           <SlidersHorizontal className="size-3" />

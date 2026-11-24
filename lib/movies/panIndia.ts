@@ -1,4 +1,4 @@
-/** Known pan-India / multi-language releases on VYBE. */
+/** Known pan-India / multi-language releases on VYBZ. */
 const BY_ID: Record<string, string[]> = {
   "1003596": ["english", "telugu", "hindi", "tamil", "kannada"], // Avengers: Doomsday
   "1257973": ["telugu", "hindi", "tamil"], // Fauzi

@@ -70,7 +70,7 @@ export function MovieDetailPosterActions({
             href={trailerUrl}
             target="_blank"
             rel="noreferrer"
-            className="absolute inset-x-0 bottom-3 z-[1] mx-auto flex w-[min(86%,160px)] items-center justify-center gap-2 rounded-full bg-black/70 px-3 py-2 text-[13px] font-bold text-white backdrop-blur-sm transition-colors hover:bg-accent"
+            className="absolute inset-x-0 bottom-3 z-[1] mx-auto flex w-[min(86%,160px)] items-center justify-center gap-2 rounded-full bg-[#FF4D2D] px-3 py-2 text-[13px] font-bold text-white shadow-[0_8px_20px_rgba(255,77,45,0.35)] transition-colors hover:bg-[#e64428]"
           >
             <Play className="size-3.5 fill-white" />
             Trailer

@@ -1,4 +1,3 @@
-import Image from "next/image";
 import Link from "next/link";
 
 type LogoProps = {
@@ -8,52 +7,21 @@ type LogoProps = {
   overlay?: boolean;
 };
 
-const imgClass =
-  "h-8 w-auto max-w-[96px] bg-transparent object-contain object-left sm:h-9 sm:max-w-none md:h-10";
-
-export function Logo({
-  className = "",
-  priority = false,
-  overlay = false,
-}: LogoProps) {
+export function Logo({ className = "", overlay = false }: LogoProps) {
   return (
     <Link
       href="/"
-      className={`inline-flex shrink-0 items-center bg-transparent ${className}`}
-      aria-label="VYBE home"
+      className={`inline-flex h-9 shrink-0 items-center bg-transparent -translate-y-0.5 ${className}`}
+      aria-label="vybz home"
     >
-      {overlay ? (
-        <Image
-          src="/logos/vybe-logo-dark.png?v=24"
-          alt="VYBE"
-          width={180}
-          height={72}
-          priority={priority}
-          unoptimized
-          className={imgClass}
-        />
-      ) : (
-        <>
-          <Image
-            src="/logos/vybe-logo-light.png?v=26"
-            alt="VYBE"
-            width={180}
-            height={72}
-            priority={priority}
-            unoptimized
-            className={`${imgClass} dark:hidden`}
-          />
-          <Image
-            src="/logos/vybe-logo-dark.png?v=24"
-            alt="VYBE"
-            width={180}
-            height={72}
-            priority={priority}
-            unoptimized
-            className={`${imgClass} hidden dark:block`}
-          />
-        </>
-      )}
+      <span
+        className={`text-[22px] leading-none font-extrabold tracking-tight lowercase sm:text-[24px] ${
+          overlay ? "text-white" : "text-accent"
+        }`}
+        style={{ fontFamily: 'var(--font-plus-jakarta), "Plus Jakarta Sans", sans-serif' }}
+      >
+        vybz
+      </span>
     </Link>
   );
 }

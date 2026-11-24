@@ -475,7 +475,7 @@ export function LocationButton({
                       type="button"
                       onClick={() => selectPopular(item)}
                       className="flex flex-col items-center gap-2 rounded-2xl px-2 py-3 text-center transition-transform hover:scale-[1.03]"
-                      style={{ backgroundColor: item.tone ?? "#FFE4EF" }}
+                      style={{ backgroundColor: item.tone ?? "#FFE8E2" }}
                     >
                       <span className="relative inline-flex size-14 items-center justify-center overflow-hidden rounded-xl">
                         {item.image ? (

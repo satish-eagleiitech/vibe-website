@@ -7,7 +7,7 @@ const sections: PolicySection[] = [
   {
     heading: "Who sets the cancellation policy",
     paragraphs: [
-      "VYBE sells tickets and slots on behalf of cinemas, event organisers, activity operators and sports venues (our partners). Cancellations are subject to the policy set by the respective partner.",
+      "VYBZ sells tickets and slots on behalf of cinemas, event organisers, activity operators and sports venues (our partners). Cancellations are subject to the policy set by the respective partner.",
       "You can see the partner's cancellation policy on the movie, event, activity or venue page before you book. The same policy is also printed on your booking ticket under Profile → Bookings.",
     ],
   },
@@ -64,7 +64,7 @@ export default function RefundPage() {
     <PolicyPage
       title="Cancellation & Refund Policy"
       updated="12 November 2026"
-      intro="This policy explains when you can cancel a booking made on VYBE, how much is refunded, and when the money reaches you."
+      intro="This policy explains when you can cancel a booking made on VYBZ, how much is refunded, and when the money reaches you."
       sections={sections}
       current="/refund-policy"
       nav={termsNav}

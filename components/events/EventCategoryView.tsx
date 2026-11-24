@@ -24,7 +24,7 @@ export function EventCategoryView({
 }: EventCategoryViewProps) {
   const chip =
     "inline-flex shrink-0 items-center gap-1.5 rounded-full border px-3.5 py-2 text-[13px] font-bold transition-colors";
-  const chipIdle = "border-border bg-surface text-text hover:border-accent/40";
+  const chipIdle = "border-border bg-surface text-text hover:border-accent hover:text-accent";
   const chipOn = "border-accent bg-accent-soft text-accent";
 
   return (

@@ -72,7 +72,7 @@ export function LoginView({ onDone }: LoginViewProps) {
       setError("Enter the 6-digit code");
       return;
     }
-    const name = channel === "email" ? email.split("@")[0] : "VYBE host";
+    const name = channel === "email" ? email.split("@")[0] : "VYBZ host";
     finish({
       email: channel === "email" ? email.trim() : undefined,
       phone: channel === "phone" ? `${country.dial} ${phone}` : undefined,
@@ -92,15 +92,9 @@ export function LoginView({ onDone }: LoginViewProps) {
           sizes="(min-width: 1024px) 50vw, 100vw"
         />
         <div className="pointer-events-none absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-black/70 to-transparent" />
-        <Image
-          src="/logos/vybe-logo-dark.png?v=24"
-          alt="VYBE"
-          width={320}
-          height={128}
-          priority
-          unoptimized
-          className="absolute top-4 left-4 z-10 h-8 w-auto drop-shadow-[0_6px_16px_rgba(0,0,0,0.45)] sm:top-5 sm:left-5 sm:h-9"
-        />
+        <span className="font-heading absolute top-4 left-4 z-10 text-[24px] leading-none font-bold tracking-tight text-white lowercase drop-shadow-[0_6px_16px_rgba(0,0,0,0.45)] sm:top-5 sm:left-5 sm:text-[32px]">
+          vybz
+        </span>
       </section>
 
       <section className="flex flex-col px-6 py-8 sm:px-12 lg:min-h-screen">
@@ -255,8 +249,8 @@ export function LoginView({ onDone }: LoginViewProps) {
         </div>
         <p className="mt-8 text-center text-[12px] text-text-muted">
           In case of any queries, reach out at{" "}
-          <a href="mailto:hello@vybe.app" className="font-semibold text-accent">
-            hello@vybe.app
+          <a href="mailto:hello@vybz.app" className="font-semibold text-accent">
+            hello@vybz.app
           </a>
         </p>
       </section>

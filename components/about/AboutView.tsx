@@ -20,7 +20,7 @@ import { siteConfig } from "@/config/site";
 const featured = {
   tag: "Our story",
   title: "One app for every plan in the city",
-  body: "Movies, events, activities and play — discover what is on in your city, book in minutes, and keep every VYBE ticket ready as a QR.",
+  body: "Movies, events, activities and play — discover what is on in your city, book in minutes, and keep every VYBZ ticket ready as a QR.",
   image: "/images/about/vybe-story-hero.jpg",
   read: "Made for city plans",
 };
@@ -29,21 +29,21 @@ const storyCards = [
   {
     tag: "Movies",
     title: "Seats, snacks and offers in one flow",
-    body: "Choose a showtime, pick seats, add F&B, apply offers, and pay — all inside the VYBE movie booking flow.",
+    body: "Choose a showtime, pick seats, add F&B, apply offers, and pay — all inside the VYBZ movie booking flow.",
     image: "/images/about/lux-card-movies.jpg",
     href: "/movies",
   },
   {
     tag: "Events",
     title: "Nights worth dressing up for",
-    body: "Comedy, live music, workshops and fests listed on VYBE for your city — book passes and walk in with your ticket.",
+    body: "Comedy, live music, workshops and fests listed on VYBZ for your city — book passes and walk in with your ticket.",
     image: "/images/about/vybe-card-events.jpg",
     href: "/events",
   },
   {
     tag: "Play",
     title: "Book courts and game zones by the hour",
-    body: "Turfs, nets and play venues with clear slots, prices and cancellation windows on VYBE.",
+    body: "Turfs, nets and play venues with clear slots, prices and cancellation windows on VYBZ.",
     image: "/images/about/lux-card-play.jpg",
     href: "/play",
   },
@@ -52,7 +52,7 @@ const storyCards = [
 const pillars = [
   {
     title: "Movies",
-    body: "Showtimes, seats, food and offers — checkout finished on VYBE.",
+    body: "Showtimes, seats, food and offers — checkout finished on VYBZ.",
     href: "/movies",
     image: "/images/about/lux-pillar-movies.jpg",
   },
@@ -64,7 +64,7 @@ const pillars = [
   },
   {
     title: "Activities",
-    body: "Parks, fitness, adventures and day-out plans on VYBE.",
+    body: "Parks, fitness, adventures and day-out plans on VYBZ.",
     href: "/activities",
     image: "/images/about/lux-pillar-activities.jpg",
   },
@@ -79,12 +79,12 @@ const pillars = [
 const values = [
   {
     title: "Clear prices",
-    body: "Ticket totals, fees and refund rules are shown on VYBE before you pay.",
+    body: "Ticket totals, fees and refund rules are shown on VYBZ before you pay.",
     tone: "bg-[#F3E7C9] text-[#2a2110]",
   },
   {
     title: "City-first discovery",
-    body: "Movies, events, activities and play follow the city you pick on VYBE.",
+    body: "Movies, events, activities and play follow the city you pick on VYBZ.",
     tone: "bg-[#E4EDE6] text-[#1a2e24]",
   },
   {
@@ -95,10 +95,10 @@ const values = [
 ];
 
 const trusts = [
-  { icon: Ticket, title: "Instant tickets", body: "QR ready the moment you pay on VYBE" },
+  { icon: Ticket, title: "Instant tickets", body: "QR ready the moment you pay on VYBZ" },
   { icon: ShieldCheck, title: "Secure checkout", body: "Payments handled through trusted partners" },
   { icon: Zap, title: "Fast discovery", body: "Movies, events, activities and play in one place" },
-  { icon: QrCode, title: "Walk-in ready", body: "Show your VYBE QR at the venue entry" },
+  { icon: QrCode, title: "Walk-in ready", body: "Show your VYBZ QR at the venue entry" },
 ];
 
 export function AboutView() {
@@ -124,7 +124,7 @@ export function AboutView() {
           >
             Discover and book on{" "}
             <em className="font-[family-name:var(--font-fraunces)] font-semibold text-accent italic">
-              VYBE.
+              VYBZ.
             </em>
           </h1>
           <p
@@ -222,13 +222,13 @@ export function AboutView() {
               </div>
               <div className="p-6 md:p-8">
                 <p className="text-[11px] font-extrabold tracking-[0.16em] uppercase opacity-70">
-                  Why VYBE
+                  Why VYBZ
                 </p>
                 <h3 className="mt-2 text-[24px] leading-tight font-extrabold md:text-[28px]">
                   Discovery and booking in one place
                 </h3>
                 <p className="mt-3 text-[14px] leading-relaxed opacity-80">
-                  VYBE is built so you can find movies, events, activities and play near
+                  VYBZ is built so you can find movies, events, activities and play near
                   you, compare options, and confirm tickets without jumping between
                   different booking sites.
                 </p>
@@ -239,7 +239,7 @@ export function AboutView() {
               className="flex flex-col justify-center rounded-[28px] bg-surface p-6 shadow-[0_16px_40px_-28px_rgba(15,15,20,0.3)] ring-1 ring-[#D4AF37]/20 lg:p-7"
             >
               <p className="text-[20px] leading-snug font-extrabold text-text md:text-[22px]">
-                From browse to paid ticket — your VYBE QR is ready at entry.
+                From browse to paid ticket — your VYBZ QR is ready at entry.
               </p>
               <Link
                 href="/movies"
@@ -256,7 +256,7 @@ export function AboutView() {
           >
             <div className="flex flex-col justify-center rounded-[28px] bg-surface p-6 shadow-[0_16px_40px_-28px_rgba(15,15,20,0.3)] lg:p-7">
               <p className="text-[20px] leading-snug font-extrabold text-text md:text-[22px]">
-                Host on VYBE — list events or venues for people already browsing plans.
+                Host on VYBZ — list events or venues for people already browsing plans.
               </p>
               <Link
                 href="/partner-with-us"
@@ -273,7 +273,7 @@ export function AboutView() {
                 Events & venues on the same network
               </h3>
               <p className="mt-3 text-[14px] leading-relaxed text-white/70">
-                Sell event tickets or open sports venue slots on VYBE. Cinema and
+                Sell event tickets or open sports venue slots on VYBZ. Cinema and
                 activity partners can also connect inventory through our partnerships
                 team.
               </p>
@@ -405,10 +405,10 @@ export function AboutView() {
         >
           <div className="max-w-[520px]">
             <h2 className="text-[26px] font-extrabold tracking-tight md:text-[32px]">
-              List on VYBE
+              List on VYBZ
             </h2>
             <p className="mt-2 text-[14px] text-white/85 md:text-[15px]">
-              Publish events and venues for the VYBE crowd, or contact us for cinema
+              Publish events and venues for the VYBZ crowd, or contact us for cinema
               and activity inventory partnerships.
             </p>
           </div>

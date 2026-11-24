@@ -69,7 +69,7 @@ const OFFERS: Offer[] = [
   },
   {
     id: "vybe",
-    brand: "VYBE",
+    brand: "VYBZ",
     mark: "★",
     title: "Scratch card boost",
     detail: "Book now and unlock an extra Rewards scratch.",
@@ -328,7 +328,7 @@ export function CheckoutPanel({
                 <button
                   type="button"
                   onClick={() => setOffersOpen(true)}
-                  className="flex items-center justify-center gap-3 rounded-full border border-border bg-gradient-to-r from-[#fff0f6] via-white to-[#eef6ff] px-4 py-3 text-left shadow-[0_4px_16px_rgba(255,0,91,0.08)] transition-transform hover:scale-[1.01] dark:from-[#2a1220] dark:via-surface dark:to-[#122033]"
+                  className="flex items-center justify-center gap-3 rounded-full border border-border bg-gradient-to-r from-[#fff1ec] via-white to-[#fff8f5] px-4 py-3 text-left shadow-[0_4px_16px_rgba(255,77,45,0.08)] transition-transform hover:scale-[1.01] dark:from-[#2a1612] dark:via-surface dark:to-[#1a120f]"
                 >
                   <span className="flex -space-x-2.5">
                     {OFFERS.map((offer) => (

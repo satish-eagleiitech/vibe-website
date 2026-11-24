@@ -1,5 +1,5 @@
 /**
- * Domain models used by VYBE UI.
+ * Domain models used by VYBZ UI.
  * Mapped from TMDB v3 in `lib/api/movies.ts` (`types/tmdb.ts`).
  */
 export type MovieLanguage = "telugu" | "hindi" | "english" | "tamil" | string;

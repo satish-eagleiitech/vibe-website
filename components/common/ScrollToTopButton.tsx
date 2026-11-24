@@ -9,7 +9,7 @@ export function ScrollToTopButton() {
       type="button"
       aria-label="Back to top"
       onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-      className="inline-flex size-12 items-center justify-center rounded-full bg-accent text-white shadow-[0_8px_24px_rgba(255,0,91,0.35)] transition-transform hover:scale-105"
+      className="inline-flex size-12 items-center justify-center rounded-full bg-accent text-white shadow-[0_8px_24px_rgba(255,77,45,0.35)] transition-transform hover:scale-105"
     >
       <ArrowUp className="size-5" strokeWidth={2.5} />
     </button>

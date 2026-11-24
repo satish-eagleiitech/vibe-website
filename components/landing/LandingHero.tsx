@@ -233,7 +233,7 @@ export function LandingHero({ movies }: LandingHeroProps) {
                             category: "movies",
                           })
                         }
-                        className="inline-flex shrink-0 items-center gap-1.5 whitespace-nowrap rounded-full bg-accent px-3 py-2 text-[12px] font-extrabold text-white shadow-[0_8px_20px_rgba(255,0,91,0.32)] transition-transform hover:scale-[1.03] sm:px-4 md:text-[13px]"
+                        className="inline-flex shrink-0 items-center gap-1.5 whitespace-nowrap rounded-full bg-accent px-3 py-2 text-[12px] font-extrabold text-white shadow-[0_8px_20px_rgba(255,77,45,0.32)] transition-transform hover:scale-[1.03] sm:px-4 md:text-[13px]"
                       >
                         <Ticket className="size-3.5" />
                         Book tickets

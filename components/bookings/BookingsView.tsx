@@ -73,10 +73,10 @@ export function BookingsView() {
         Result ({filtered.length})
       </p>
 
-      <div className="space-y-3">
+      <div className="space-y-5">
         {!data ? (
           [0, 1, 2].map((i) => (
-            <div key={i} className="h-[108px] animate-pulse rounded-[20px] bg-surface" />
+            <div key={i} className="h-[260px] animate-pulse rounded-[20px] bg-surface" />
           ))
         ) : filtered.length === 0 ? (
           <div className="rounded-[24px] border border-border bg-surface px-6 py-12 text-center">

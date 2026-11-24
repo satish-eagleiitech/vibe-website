@@ -110,7 +110,7 @@ function GlassRail({
       >
         <Link
           href="/"
-          aria-label="VYBE home"
+          aria-label="VYBZ home"
           className="flex size-11 shrink-0 items-center justify-center rounded-full bg-white/10 text-[15px] font-extrabold text-rail-ink ring-1 ring-white/15 transition-transform hover:scale-105 dark:bg-black/8 dark:ring-black/10"
         >
           V
@@ -120,7 +120,7 @@ function GlassRail({
             pinned ? "ml-1 opacity-100" : "w-0 opacity-0 group-hover/rail:ml-1 group-hover/rail:w-auto group-hover/rail:opacity-100 group-focus-within/rail:ml-1 group-focus-within/rail:w-auto group-focus-within/rail:opacity-100"
           }`}
         >
-          VYBE
+          VYBZ
         </span>
         {pinned && onClose ? (
           <button
@@ -378,7 +378,7 @@ export function AccountShell({ children }: { children: ReactNode }) {
               <LogOut className="size-5" />
             </span>
             <h2 id="logout-title" className="mt-4 text-[18px] font-extrabold text-text">
-              Log out of VYBE?
+              Log out of VYBZ?
             </h2>
             <p className="mt-1 text-[13px] text-text-secondary">
               Your profile details on this device will be cleared.

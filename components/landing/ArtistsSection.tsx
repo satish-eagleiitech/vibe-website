@@ -96,7 +96,7 @@ function ArtistShowcaseCard({
   artist: LandingArtist;
   eager?: boolean;
 }) {
-  const tag = artist.tag ?? "ON VYBE";
+  const tag = artist.tag ?? "ON VYBZ";
 
   return (
     <div className="group relative h-[300px] w-[188px] shrink-0 overflow-hidden rounded-[28px] border border-white/25 bg-neutral-900 shadow-[0_20px_50px_rgba(17,24,39,0.28)] ring-1 ring-black/10 transition-shadow duration-500 sm:h-[340px] sm:w-[208px] md:h-[360px] md:w-[220px] dark:ring-white/15 dark:shadow-[0_28px_70px_rgba(0,0,0,0.55)]">
@@ -120,7 +120,7 @@ function ArtistShowcaseCard({
       <Link
         href={artist.href}
         className="absolute inset-0 z-10 rounded-[28px]"
-        aria-label={`View ${artist.name} on VYBE`}
+        aria-label={`View ${artist.name} on VYBZ`}
       />
       <div className="absolute inset-x-3 bottom-3 z-20">
         <div className="flex items-center gap-3 rounded-2xl border border-white/15 bg-white/10 px-3 py-2.5 backdrop-blur-xl">
@@ -311,7 +311,7 @@ export function ArtistsSection({ artists }: ArtistsSectionProps) {
                 marginTop: "clamp(0.1rem, 0.5vw, 0.3rem)",
               }}
             >
-              VYBE
+              VYBZ
             </span>
           </div>
         </div>

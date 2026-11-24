@@ -64,7 +64,7 @@ export function MovieTrailersRail({ videos, metaLine }: MovieTrailersRailProps) 
                 sizes="(max-width: 640px) 72vw, 260px"
               />
               <span className="absolute inset-0 flex items-center justify-center bg-black/20">
-                <span className="inline-flex size-11 items-center justify-center rounded-full bg-black/45 text-white backdrop-blur-[2px] transition-transform group-hover:scale-105 sm:size-12">
+                <span className="inline-flex size-11 items-center justify-center rounded-full bg-[#FF4D2D] text-white shadow-[0_8px_20px_rgba(255,77,45,0.4)] transition-transform group-hover:scale-105 sm:size-12">
                   <Play className="size-5 fill-white" />
                 </span>
               </span>

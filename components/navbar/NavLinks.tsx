@@ -56,7 +56,7 @@ export function NavLinks({ overlay = false }: NavLinksProps) {
                   : "text-text"
                 : overlay
                   ? "text-white/82 hover:text-white"
-                  : "text-[#4b4b4b] hover:text-text dark:text-white/70 dark:hover:text-white"
+                  : "text-[#4b4b4b] hover:text-accent dark:text-white/70 dark:hover:text-accent"
             }`}
           >
             {ICONS[item.href]}

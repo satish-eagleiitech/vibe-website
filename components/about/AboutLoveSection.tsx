@@ -9,28 +9,28 @@ import { Container } from "@/components/common/Container";
 const testimonials = [
   {
     quote:
-      "Booked movie seats and a play slot on VYBE the same evening. Both QRs scanned fine at entry.",
+      "Booked movie seats and a play slot on VYBZ the same evening. Both QRs scanned fine at entry.",
     name: "Ananya Reddy",
     role: "Product designer · Hyderabad",
     image: "/images/about/about-avatar-ananya.jpg",
   },
   {
     quote:
-      "Comedy nights, parks and movies used to mean three different sites. On VYBE I browse and pay in one place.",
+      "Comedy nights, parks and movies used to mean three different sites. On VYBZ I browse and pay in one place.",
     name: "Karthik Mehta",
     role: "Founder · Bengaluru",
     image: "/images/about/about-avatar-karthik.jpg",
   },
   {
     quote:
-      "Cancelled a play booking from the ticket page. The refund followed VYBE’s policy and landed on my UPI.",
+      "Cancelled a play booking from the ticket page. The refund followed VYBZ’s policy and landed on my UPI.",
     name: "Meera Sharma",
     role: "Marketing lead · Mumbai",
     image: "/images/about/about-avatar-meera.jpg",
   },
   {
     quote:
-      "Booked an activity and a concert on VYBE. Both tickets stayed under Profile with directions ready.",
+      "Booked an activity and a concert on VYBZ. Both tickets stayed under Profile with directions ready.",
     name: "Rohan Iyer",
     role: "Student · Chennai",
     image: "/images/about/about-avatar-rohan.jpg",
@@ -54,14 +54,14 @@ export function AboutLoveSection() {
         <div className="mb-14 md:mb-16">
           <div data-about-reveal className="mx-auto mb-8 max-w-[640px] text-center">
             <span className="inline-flex rounded-full border border-[#D4AF37]/35 bg-surface px-3.5 py-1 text-[11px] font-extrabold tracking-[0.16em] text-[#8a6d1f] uppercase shadow-sm dark:text-[#E8D59A]">
-              People love the VYBE
+              People love the VYBZ
             </span>
             <h2 className="mt-4 text-[28px] font-extrabold tracking-tight text-text md:text-[36px]">
-              Why people book on VYBE
+              Why people book on VYBZ
             </h2>
             <p className="mt-3 text-[14px] leading-relaxed text-text-secondary md:text-[15px]">
               Clear booking flows and city-first listings for movies, events, activities
-              and play — all in one VYBE account.
+              and play — all in one VYBZ account.
             </p>
           </div>
 
@@ -84,7 +84,7 @@ export function AboutLoveSection() {
               </div>
               <div className="flex flex-col p-6 md:p-7">
                 <p className="text-[15px] leading-relaxed text-text-secondary md:text-[16px]">
-                  Book showtimes, event passes and hourly play slots on VYBE — your
+                  Book showtimes, event passes and hourly play slots on VYBZ — your
                   tickets stay under Profile with a ready QR.
                 </p>
                 <Link
@@ -113,7 +113,7 @@ export function AboutLoveSection() {
                 <p className="max-w-[22ch] text-[22px] leading-snug font-extrabold text-white md:text-[26px]">
                   Trusted by{" "}
                   <span className="font-[family-name:var(--font-fraunces)] font-semibold italic">
-                    VYBE users across India.
+                    VYBZ users across India.
                   </span>
                 </p>
               </div>
@@ -146,7 +146,7 @@ export function AboutLoveSection() {
               <p className="max-w-[28ch] text-[22px] leading-snug font-extrabold tracking-tight text-text md:text-[26px]">
                 Turns browsing into{" "}
                 <span className="font-[family-name:var(--font-fraunces)] font-semibold text-accent italic">
-                  confirmed VYBE tickets
+                  confirmed VYBZ tickets
                 </span>{" "}
                 for movies, events, activities and play.
               </p>
@@ -173,11 +173,11 @@ export function AboutLoveSection() {
               Testimonials
             </span>
             <h2 className="mt-4 text-[28px] font-extrabold tracking-tight text-text md:text-[36px]">
-              What VYBE users say
+              What VYBZ users say
             </h2>
             <p className="mt-3 text-[14px] leading-relaxed text-text-secondary md:text-[15px]">
               Real feedback from people booking movies, events, activities and play on
-              VYBE.
+              VYBZ.
             </p>
           </div>
 

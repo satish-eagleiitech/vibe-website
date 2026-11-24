@@ -23,12 +23,12 @@ const paths = [
     href: "/list-your-events",
     cta: "Start hosting",
     image: "/images/partner/partner-events-hero.jpg",
-    tone: "from-[#FF005B]/90 via-[#FF005B]/40 to-transparent",
+    tone: "from-[#ff4d2d]/90 via-[#ff4d2d]/40 to-transparent",
   },
   {
     tag: "Venues",
     title: "List your venue",
-    body: "Turfs, courts, studios and game zones with hourly slots, discovery and booking that syncs to the VYBE crowd.",
+    body: "Turfs, courts, studios and game zones with hourly slots, discovery and booking that syncs to the VYBZ crowd.",
     href: "/list-your-venue",
     cta: "List a venue",
     image: "/images/partner/partner-venues-hero.jpg",
@@ -53,12 +53,12 @@ const benefits = [
     icon: BarChart3,
     title: "Live insights",
     body: "Track views, interest and tickets sold as your listing goes live.",
-    tone: "bg-[#FFD0E0] text-[#5c1030]",
+    tone: "bg-[#FFD8CC] text-[#7a2a16]",
   },
   {
     icon: ShieldCheck,
     title: "Trusted checkout",
-    body: "Customers pay through VYBE’s secure flow and walk in with a QR.",
+    body: "Customers pay through VYBZ’s secure flow and walk in with a QR.",
     tone: "bg-[#D9D6FF] text-[#1b1640]",
   },
 ];
@@ -79,14 +79,14 @@ const steps = [
   {
     n: "03",
     title: "Go live",
-    body: "Publish to VYBE and start selling to city explorers.",
+    body: "Publish to VYBZ and start selling to city explorers.",
     image: "/images/partner/partner-step-live.jpg",
   },
 ];
 
 const quotes = [
   {
-    quote: "We sold out the first comedy night in under a week once it was on VYBE.",
+    quote: "We sold out the first comedy night in under a week once it was on VYBZ.",
     name: "Rhea · Indie organiser",
   },
   {
@@ -165,7 +165,7 @@ export default function PartnerWithUsPage() {
           <div className="mb-5 flex flex-wrap items-end justify-between gap-3">
             <div>
               <p className="text-[11px] font-extrabold tracking-[0.16em] text-accent uppercase">
-                Why partners choose VYBE
+                Why partners choose VYBZ
               </p>
               <h2 className="mt-1 text-[26px] font-extrabold tracking-tight text-text md:text-[30px]">
                 Built for hosts and venues

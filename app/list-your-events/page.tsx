@@ -28,8 +28,8 @@ const steps = [
   },
   {
     n: "03",
-    title: "Go live on VYBE",
-    body: "Publish and start selling to the VYBE crowd.",
+    title: "Go live on VYBZ",
+    body: "Publish and start selling to the VYBZ crowd.",
     image: "/images/list-events/step-live.jpg",
   },
 ];
@@ -70,7 +70,7 @@ export default function ListYourEventsPage() {
             </p>
             <Link
               href="/list-your-events/get-started"
-              className="mt-7 inline-flex rounded-full bg-accent px-7 py-3.5 text-[15px] font-extrabold text-white shadow-[0_14px_32px_rgba(255,0,91,0.28)] transition-transform hover:-translate-y-0.5"
+              className="mt-7 inline-flex rounded-full bg-accent px-7 py-3.5 text-[15px] font-extrabold text-white shadow-[0_14px_32px_rgba(255,77,45,0.28)] transition-transform hover:-translate-y-0.5"
             >
               Get started
             </Link>
@@ -182,7 +182,7 @@ export default function ListYourEventsPage() {
           <div className="mt-8">
             <Link
               href="/list-your-events/get-started"
-              className="inline-flex h-14 w-full items-center justify-center rounded-full bg-accent px-8 text-[16px] font-extrabold text-white shadow-[0_16px_36px_rgba(255,0,91,0.28)] transition-transform hover:-translate-y-0.5 sm:w-auto"
+              className="inline-flex h-14 w-full items-center justify-center rounded-full bg-accent px-8 text-[16px] font-extrabold text-white shadow-[0_16px_36px_rgba(255,77,45,0.28)] transition-transform hover:-translate-y-0.5 sm:w-auto"
             >
               Start your journey
             </Link>
