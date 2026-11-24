@@ -18,19 +18,19 @@ const steps = [
     n: "01",
     title: "Register",
     body: "Create your organiser profile in minutes.",
-    image: "/images/list-events/step-register.jpg",
+    image: "/images/list-events/step-register-teal.jpg",
   },
   {
     n: "02",
     title: "List your event",
     body: "Add details, visuals, shows and ticket tiers.",
-    image: "/images/list-events/step-ticket.jpg",
+    image: "/images/list-events/step-ticket-teal.jpg",
   },
   {
     n: "03",
     title: "Go live on VYBZ",
     body: "Publish and start selling to the VYBZ crowd.",
-    image: "/images/list-events/step-live.jpg",
+    image: "/images/list-events/step-live-teal.jpg",
   },
 ];
 

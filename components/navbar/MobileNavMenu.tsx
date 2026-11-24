@@ -92,7 +92,7 @@ export function MobileNavMenu({ chrome }: { chrome: string }) {
       <div
         aria-hidden
         onClick={() => setOpen(false)}
-        className={`fixed inset-0 z-[70] bg-black/45 backdrop-blur-[3px] transition-opacity duration-500 ${
+        className={`fixed inset-0 z-[70] bg-black/45 backdrop-blur-[2px] transition-opacity duration-500 ${
           open ? "pointer-events-auto opacity-100" : "pointer-events-none opacity-0"
         }`}
       />
@@ -103,7 +103,7 @@ export function MobileNavMenu({ chrome }: { chrome: string }) {
         aria-modal="true"
         aria-label="Menu"
         inert={!open}
-        className={`fixed inset-y-0 right-0 z-[71] flex w-[min(86vw,360px)] flex-col rounded-l-[28px] bg-(--vybe-nav) shadow-[-24px_0_60px_rgba(0,0,0,0.22)] transition-[translate,visibility] duration-500 ${DRAWER_EASE} dark:shadow-[-24px_0_60px_rgba(0,0,0,0.6)] ${
+        className={`fixed inset-y-0 right-0 z-[71] flex w-[min(86vw,360px)] flex-col rounded-l-[28px] bg-surface shadow-[-24px_0_60px_rgba(0,0,0,0.22)] transition-[translate,visibility] duration-500 ${DRAWER_EASE} dark:bg-(--vybe-nav) dark:shadow-[-24px_0_60px_rgba(0,0,0,0.6)] ${
           open ? "visible translate-x-0" : "invisible translate-x-full"
         }`}
       >

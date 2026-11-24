@@ -74,6 +74,7 @@ export function AccountAvatar({
 
 function GlassRail({
   pinned = false,
+  lightDrawer = false,
   pathname,
   data,
   onLogout,
@@ -82,6 +83,8 @@ function GlassRail({
 }: {
   /** Mobile drawer stays open with labels. Desktop expands with group-hover. */
   pinned?: boolean;
+  /** Light surface panel for mobile drawer (follows theme). */
+  lightDrawer?: boolean;
   pathname: string;
   data: AccountData | null;
   onLogout: () => void;
@@ -94,15 +97,34 @@ function GlassRail({
   const rowLayout = pinned
     ? "gap-2.5 pr-3 pl-1"
     : "justify-center group-hover/rail:justify-start group-hover/rail:gap-2.5 group-hover/rail:pr-3 group-hover/rail:pl-1 group-focus-within/rail:justify-start group-focus-within/rail:gap-2.5 group-focus-within/rail:pr-3 group-focus-within/rail:pl-1";
+  const ink = lightDrawer ? "text-text" : "text-rail-ink";
+  const tileIdle = lightDrawer
+    ? "bg-surface-muted text-text ring-1 ring-border dark:bg-white/8 dark:ring-white/10"
+    : "bg-white/10 text-rail-ink ring-1 ring-white/15 dark:bg-black/8 dark:ring-black/10";
+  const rowHover = lightDrawer
+    ? "hover:bg-surface-muted dark:hover:bg-white/8"
+    : "hover:bg-white/10 dark:hover:bg-black/8";
+  const activeRow = lightDrawer
+    ? "bg-accent-soft text-accent shadow-none"
+    : "bg-rail-active text-rail-on shadow-[0_8px_20px_rgba(0,0,0,0.12)]";
+  const activeIcon = lightDrawer
+    ? "bg-transparent text-accent"
+    : "bg-transparent text-rail-on";
+  const activeLabel = lightDrawer ? "text-accent" : "text-rail-on";
+  const idleLabel = lightDrawer ? "text-text" : "text-rail-ink";
 
   return (
     <div
-      className={`relative flex h-full w-full flex-col rounded-[40px] border border-white/15 bg-rail py-5 text-rail-ink dark:border-black/10 ${
-        pinned ? "overflow-hidden px-3.5" : "px-3"
+      className={`relative flex h-full w-full flex-col rounded-[40px] border pb-5 ${
+        lightDrawer
+          ? "overflow-hidden border-border bg-surface px-3.5 pt-3 text-text shadow-[0_20px_50px_rgba(0,0,0,0.18)] dark:border-white/10 dark:bg-(--vybe-nav)"
+          : pinned
+            ? "overflow-hidden border-white/15 bg-rail px-3.5 pt-3 text-rail-ink dark:border-black/10"
+            : "border-white/15 bg-rail px-3 pt-0 text-rail-ink dark:border-black/10"
       }`}
     >
       <div
-        className={`mb-6 flex items-center ${
+        className={`mb-5 flex h-10 items-center ${
           pinned
             ? "gap-2 px-1"
             : "justify-center group-hover/rail:justify-start group-hover/rail:gap-2 group-hover/rail:px-1 group-focus-within/rail:justify-start group-focus-within/rail:gap-2 group-focus-within/rail:px-1"
@@ -111,12 +133,16 @@ function GlassRail({
         <Link
           href="/"
           aria-label="VYBZ home"
-          className="flex size-11 shrink-0 items-center justify-center rounded-full bg-white/10 text-[15px] font-extrabold text-rail-ink ring-1 ring-white/15 transition-transform hover:scale-105 dark:bg-black/8 dark:ring-black/10"
+          className={`flex size-10 shrink-0 items-center justify-center rounded-full text-[14px] font-extrabold transition-transform hover:scale-105 ${
+            lightDrawer
+              ? "bg-surface-muted text-text ring-1 ring-border dark:bg-white/8 dark:ring-white/10"
+              : "bg-white/10 text-rail-ink ring-1 ring-white/15 dark:bg-black/8 dark:ring-black/10"
+          }`}
         >
           V
         </Link>
         <span
-          className={`overflow-hidden text-[15px] font-extrabold tracking-wide whitespace-nowrap text-rail-ink transition-all duration-300 ${
+          className={`overflow-hidden text-[15px] font-extrabold tracking-wide whitespace-nowrap transition-all duration-300 ${ink} ${
             pinned ? "ml-1 opacity-100" : "w-0 opacity-0 group-hover/rail:ml-1 group-hover/rail:w-auto group-hover/rail:opacity-100 group-focus-within/rail:ml-1 group-focus-within/rail:w-auto group-focus-within/rail:opacity-100"
           }`}
         >
@@ -127,7 +153,11 @@ function GlassRail({
             type="button"
             aria-label="Close menu"
             onClick={onClose}
-            className="ml-auto inline-flex size-9 items-center justify-center rounded-full bg-white/10 text-rail-ink ring-1 ring-white/15 dark:bg-black/8 dark:ring-black/10"
+            className={`ml-auto inline-flex size-9 items-center justify-center rounded-full ring-1 ${
+              lightDrawer
+                ? "bg-surface-muted text-text ring-border dark:bg-white/8 dark:ring-white/10"
+                : "bg-white/10 text-rail-ink ring-white/15 dark:bg-black/8 dark:ring-black/10"
+            }`}
           >
             <X className="size-4" />
           </button>
@@ -146,28 +176,28 @@ function GlassRail({
               onClick={onNavigate}
               aria-current={active ? "page" : undefined}
               title={item.label}
-              className={`relative flex h-12 items-center rounded-full text-rail-ink transition-colors duration-200 ${rowLayout} ${
+              className={`relative flex h-12 items-center rounded-full transition-colors duration-200 ${ink} ${rowLayout} ${
                 active
                   ? pinned
-                    ? "bg-rail-active text-rail-on shadow-[0_8px_20px_rgba(0,0,0,0.12)]"
+                    ? activeRow
                     : "account-rail-curve"
-                  : "hover:bg-white/10 dark:hover:bg-black/8"
+                  : rowHover
               }`}
             >
               <span
                 className={`relative flex size-10 shrink-0 items-center justify-center rounded-full transition-transform duration-200 hover:scale-105 ${
                   active
                     ? pinned
-                      ? "bg-transparent text-rail-on"
+                      ? activeIcon
                       : "bg-rail-active text-rail-on shadow-[0_6px_16px_rgba(0,0,0,0.12)] group-hover/rail:bg-transparent group-hover/rail:shadow-none group-focus-within/rail:bg-transparent group-focus-within/rail:shadow-none"
-                    : "bg-white/10 text-rail-ink ring-1 ring-white/15 dark:bg-black/8 dark:ring-black/10"
+                    : tileIdle
                 }`}
               >
                 <Icon className="size-[18px]" strokeWidth={active ? 2.35 : 1.9} />
               </span>
               <span
                 className={`truncate text-[15px] font-semibold whitespace-nowrap transition-all duration-300 ${labelClass} ${
-                  active ? "text-rail-on" : "text-rail-ink"
+                  active ? (pinned ? activeLabel : "text-rail-on") : idleLabel
                 }`}
               >
                 {item.label}
@@ -194,28 +224,32 @@ function GlassRail({
         onClick={onNavigate}
         title="Settings"
         aria-current={isActive(pathname, "/settings") ? "page" : undefined}
-        className={`flex h-12 items-center rounded-full text-rail-ink transition-colors hover:bg-white/10 dark:hover:bg-black/8 ${rowLayout} ${
+        className={`flex h-12 items-center rounded-full transition-colors ${ink} ${rowHover} ${rowLayout} ${
           isActive(pathname, "/settings")
             ? pinned
-              ? "bg-rail-active text-rail-on shadow-[0_8px_20px_rgba(0,0,0,0.12)]"
+              ? activeRow
               : "account-rail-curve"
             : ""
         }`}
       >
         <span
-          className={`flex size-10 shrink-0 items-center justify-center rounded-full ring-1 transition-transform duration-200 hover:scale-105 ${
+          className={`flex size-10 shrink-0 items-center justify-center rounded-full transition-transform duration-200 hover:scale-105 ${
             isActive(pathname, "/settings")
               ? pinned
-                ? "bg-transparent text-rail-on ring-transparent"
+                ? `${activeIcon} ring-transparent`
                 : "bg-rail-active text-rail-on shadow-[0_6px_16px_rgba(0,0,0,0.12)] ring-transparent group-hover/rail:bg-transparent group-hover/rail:shadow-none group-focus-within/rail:bg-transparent group-focus-within/rail:shadow-none"
-              : "bg-white/10 text-rail-ink ring-white/15 dark:bg-black/8 dark:ring-black/10"
+              : tileIdle
           }`}
         >
           <Settings className="size-[18px]" strokeWidth={isActive(pathname, "/settings") ? 2.35 : 1.9} />
         </span>
         <span
           className={`truncate text-[15px] font-semibold whitespace-nowrap transition-all duration-300 ${labelClass} ${
-            isActive(pathname, "/settings") ? "text-rail-on" : "text-rail-ink"
+            isActive(pathname, "/settings")
+              ? pinned
+                ? activeLabel
+                : "text-rail-on"
+              : idleLabel
           }`}
         >
           Settings
@@ -226,13 +260,13 @@ function GlassRail({
         type="button"
         onClick={onLogout}
         title="Log out"
-        className={`flex h-12 items-center rounded-full text-rail-ink transition-colors hover:bg-white/10 dark:hover:bg-black/8 ${rowLayout}`}
+        className={`flex h-12 items-center rounded-full transition-colors ${ink} ${rowHover} ${rowLayout}`}
       >
-        <span className="flex size-10 shrink-0 items-center justify-center rounded-full bg-white/10 ring-1 ring-white/15 dark:bg-black/8 dark:ring-black/10">
+        <span className={`flex size-10 shrink-0 items-center justify-center rounded-full ${tileIdle}`}>
           <LogOut className="size-[18px]" strokeWidth={1.9} />
         </span>
         <span
-          className={`truncate text-[15px] font-semibold whitespace-nowrap text-rail-ink transition-all duration-300 ${labelClass}`}
+          className={`truncate text-[15px] font-semibold whitespace-nowrap transition-all duration-300 ${idleLabel} ${labelClass}`}
         >
           Log out
         </span>
@@ -279,7 +313,7 @@ export function AccountShell({ children }: { children: ReactNode }) {
       className={`min-h-dvh min-w-[320px] ${profilePage ? "bg-white dark:bg-bg" : "bg-bg"}`}
     >
       <div className="flex min-h-dvh w-full max-w-[1600px] lg:gap-3">
-        <aside className="group/rail sticky top-0 z-20 hidden h-dvh w-[76px] shrink-0 py-4 pl-2 transition-[width] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] hover:w-[260px] focus-within:w-[260px] lg:mr-1 lg:block">
+        <aside className="group/rail sticky top-0 z-20 hidden h-dvh w-[76px] shrink-0 pt-3 pb-3 pl-2 transition-[width] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] hover:w-[260px] focus-within:w-[260px] lg:mr-1 lg:block lg:pt-3">
           <GlassRail
             pathname={pathname}
             data={data}
@@ -289,7 +323,7 @@ export function AccountShell({ children }: { children: ReactNode }) {
 
         <div className="flex min-w-0 flex-1 flex-col">
           <header
-            className={`sticky top-0 z-40 py-3 pr-4 pl-4 backdrop-blur-md sm:pr-6 sm:pl-5 lg:pr-8 lg:pl-6 ${
+            className={`sticky top-0 z-40 py-3 pr-4 pl-4 backdrop-blur-md sm:pr-6 sm:pl-5 lg:pt-3 lg:pr-8 lg:pb-3 lg:pl-6 ${
               profilePage
                 ? "border-0 bg-white/90 dark:bg-bg/90"
                 : "border-b border-border bg-bg/90"
@@ -330,11 +364,11 @@ export function AccountShell({ children }: { children: ReactNode }) {
         </div>
       </div>
 
-      {/* Mobile / tablet drawer */}
+      {/* Mobile / tablet drawer — shaded overlay, light-theme panel */}
       <div
         aria-hidden
         onClick={() => setDrawerOpen(false)}
-        className={`fixed inset-0 z-[70] bg-black/50 transition-opacity duration-200 lg:hidden ${
+        className={`fixed inset-0 z-[70] bg-black/45 backdrop-blur-[2px] transition-opacity duration-200 lg:hidden ${
           drawerOpen ? "opacity-100" : "pointer-events-none opacity-0"
         }`}
       />
@@ -350,6 +384,7 @@ export function AccountShell({ children }: { children: ReactNode }) {
         <div className="h-full pt-[max(0px,env(safe-area-inset-top))] pb-[max(0px,env(safe-area-inset-bottom))]">
           <GlassRail
             pinned
+            lightDrawer
             pathname={pathname}
             data={data}
             onClose={() => setDrawerOpen(false)}

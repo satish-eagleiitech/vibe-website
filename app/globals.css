@@ -72,6 +72,10 @@
   --vybe-sidebar: #14141b;
   --vybe-dash: #eeeef2;
   --vybe-nav: #ffffff;
+  --vybe-rail: #14141b;
+  --vybe-rail-ink: #f4f4f5;
+  --vybe-rail-active: #ffffff;
+  --vybe-rail-on: #14141b;
 }
 
 html.dark {
@@ -100,6 +104,10 @@ html.dark {
   --vybe-sidebar: #16161c;
   --vybe-dash: #0f0f14;
   --vybe-nav: #16161c;
+  --vybe-rail: #1c1c24;
+  --vybe-rail-ink: #f4f4f5;
+  --vybe-rail-active: #f4f4f5;
+  --vybe-rail-on: #0b0b0f;
 }
 
 html,
